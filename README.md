@@ -1,6 +1,7 @@
 Slack Workspace: https://cscc01l0204.slack.com/messages/C748U8MV2/
 ------------------------------------------------------------------
 Member Information:
+---
 
 HI! - Alley Dismay here! a.k.a Andy Lam. - hoyin.lam@mail.utoronto.ca - 647-606-1588
 ---
