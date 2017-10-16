@@ -16,7 +16,7 @@ HI! - Ka-Kit Jason Cheung here! You can call me Jason.
 
 Info on WeBWorK if anyone wants: https://github.com/openwebwork
 
-README Structure:
+Repository Structure:
 ---
 Deliverable 1: Team Setup.pdf
 Contains information about the team agreement and complete contact information for each team member.
