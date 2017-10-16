@@ -15,3 +15,13 @@ HI! - Ka-Kit Jason Cheung here! You can call me Jason.
 --
 
 Info on WeBWorK if anyone wants: https://github.com/openwebwork
+
+README Structure:
+---
+Deliverable 1: Team Setup.pdf
+Contains information about the team agreement and complete contact information for each team member.
+Completed on September 25, 2017
+
+Deliverable 2: PersonasUserStories.pdf
+Contains the various personas for students and professors who will be using the product as well as the accompanying user stories.
+Completed on October 16, 2017
