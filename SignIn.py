@@ -23,23 +23,40 @@ class Student(User):
     def __init__(self, name, email):
         User.__init__(self, name, email)
 
-def writeName(event):
-    #fi = file("C:\\Users\\Andy\\Desktop\\fi", "w")
+def writeUser(event, filename, User):
+    f = file("filename", "w")
 
-    #fi.write((entry_1).get())
-    #fi.write((entry_2).get())
+    if User.isinstance(Student):
+        f.writelines("student" + " " + User.getName() + " " + User.getName())
 
-    #fi.close()
-    return 0
+    if User.isinstance(Professor):
+        f.writelines("professor" + " " + User.getName() + " " + User.getName())
 
-def readName(event):
-    #fi = file("C:\\Users\\Andy\\Desktop\\fi", "w")
+    f.close()
 
-    #fi.write((entry_1).get())
-    #fi.write((entry_2).get())
+def readUsers(event, filename):
+    f = file("filename", "r")
 
-    #fi.close()
-    return 0
+    Users = []
+
+    # Need to count lines as that line count is the index for the users in Users that you're presumably returning!
+
+    # Gonna call it "li for now..."
+
+    for line in f.readlines():
+        l = line.split()
+
+        # Could make the user and email pair now, instead of doing it when making the object...
+
+        if l[0] == "professor":
+            Users[li] = Professor(l[1], l[2])
+
+        if l[0] == "student":
+            Users[li] = Student(l[1], l[2])
+
+    f.close()
+
+    return Users
 
 def SignInForm(typeof):
     label_1 = Label(root, text="Name")
@@ -60,18 +77,19 @@ def SignInForm(typeof):
     c.grid(columnspan=2)
 
     button_1 = Button(root, text="Print Message")
-    button_1.bind("<Button-1>", writeName)
+
+    button_1.bind("<Button-1>", writeUser)
     button_1.grid(columnspan=3)
 
     if checked: print("hi!")#Do stuff
 
 button_1 = Button(root, text="Sign in as Professor")
 button_1.bind("<Button-1>", SignInForm("professor"))
-button_1.grid(side=BOTTOM)
+button_1.pack()
 
 button_1 = Button(root, text="Sign in as Student")
 button_1.bind("<Button-1>", SignInForm("student"))
-button_1.grid(side=BOTTOM)
+button_1.pack(side=BOTTOM)
 
 root.mainloop()
 
