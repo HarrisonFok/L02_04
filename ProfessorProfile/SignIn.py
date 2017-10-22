@@ -58,7 +58,7 @@ def readUsers(event, filename):
 
     return Users
 
-def SignInForm(typeof):
+def SignInForm(event):
     label_1 = Label(root, text="Name")
     label_2 = Label(root, text="Email")
     entry_1 = Entry(root)
@@ -81,14 +81,14 @@ def SignInForm(typeof):
     button_1.bind("<Button-1>", writeUser)
     button_1.grid(columnspan=3)
 
-    if checked: print("hi!")#Do stuff
+    if checked: print("hi!") #Do stuff
 
 button_1 = Button(root, text="Sign in as Professor")
-button_1.bind("<Button-1>", SignInForm("professor"))
+button_1.bind("<Button-1>", SignInForm)
 button_1.pack()
 
 button_2 = Button(root, text="Sign in as Student")
-button_2.bind("<Button-1>", SignInForm("student"))
+button_2.bind("<Button-1>", SignInForm)
 button_2.pack(side=BOTTOM)
 
 root.mainloop()
