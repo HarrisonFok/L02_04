@@ -93,10 +93,14 @@ root = Tk()
 CredFrame = Frame(root)
 CredFrame.pack()
 
+entrytext = StringVar()
+
 NameLabel = Label(CredFrame, text="Name")
 label_2 = Label(CredFrame, text="Email")
-NameEntry = Entry(CredFrame)
-Email = Entry(CredFrame)
+NameEntry = Entry(CredFrame, textvariable=entrytext)
+Email = Entry(CredFrame, textvariable=entrytext)
+
+entrytext.set("Test")
 
 # widgets centered by default, sticky option to change
 NameLabel.grid(row=0, sticky=E)
