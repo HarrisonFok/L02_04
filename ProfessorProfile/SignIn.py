@@ -1,7 +1,5 @@
 from tkinter import *
 
-root = Tk()
-
 class User():
     def __init__(self, name, email):
         self.name = name
@@ -23,21 +21,32 @@ class Student(User):
     def __init__(self, name, email):
         User.__init__(self, name, email)
 
-def writeUser(event, filename, User):
-    f = file("filename", "w")
+def writeUser(User):
+    f = open("Users.txt", "w")
 
-    if User.isinstance(Student):
-        f.writelines("student" + " " + User.getName() + " " + User.getName())
+    if isinstance(User, Student):
+        f.writelines("S" + " " + User.getName() + " " + User.getName())
 
-    if User.isinstance(Professor):
-        f.writelines("professor" + " " + User.getName() + " " + User.getName())
+    if isinstance(User, Professor):
+        f.writelines("P" + " " + User.getName() + " " + User.getName())
 
     f.close()
 
-def readUsers(event, filename):
-    f = file("filename", "r")
+def writeUserFile(filename, User):
+    f = open("filename", "w")
 
-    Users = []
+    if isinstance(User, Student):
+        f.writelines("S" + " " + User.getName() + " " + User.getName())
+
+    if isinstance(User, Professor):
+        f.writelines("P" + " " + User.getName() + " " + User.getName())
+
+    f.close()
+
+def readProf(event, filename):
+    f = file("filename" + ".txt", "r")
+
+    Prof = []
 
     # Need to count lines as that line count is the index for the users in Users that you're presumably returning!
 
@@ -48,60 +57,74 @@ def readUsers(event, filename):
 
         # Could make the user and email pair now, instead of doing it when making the object...
 
-        if l[0] == "Professor":
+        if l[0] == "P":
             Users[li] = Professor(l[1], l[2])
 
-        if l[0] == "Student":
+        if l[0] == "S":
             Users[li] = Student(l[1], l[2])
 
     f.close()
 
-    return Users
+    return 0
 
-def SignInFormProf(event):
-    SignInForm("Professor")
+## Remember, Python or Tkinter or whatever doesn't check if these frames exist. these functions, when called by a buttonpress, act as if they're in the same scope as the button, or something.
 
-def SignInFormStud(event):
+def Registering(event):
+    ButtonFrame.pack_forget()
+
+    PassFrame = Frame(BottomFrame)
+    PassFrame.pack(side=BOTTOM)
+
+    button_1 = Button(PassFrame, text="Print Message")
+    button_1.bind("<Button-1>", writeUser(User(NameEntry.get(), Email.get())))
+    button_1.pack()
+
+def SignIn(event):
+    CredFrame.pack_forget()
     SignInForm("Student")
 
 def SignInForm(Type):
-
-    print(Type)
-
-    label_1 = Label(root, text="Name")
-    label_2 = Label(root, text="Email")
-    entry_1 = Entry(root)
-    entry_2 = Entry(root)
-
-    # widgets centered by default, sticky option to change
-    label_1.grid(row=0, sticky=E)
-    label_2.grid(row=1, sticky=E)
-
-    entry_1.grid(row=0, column=1)
-    entry_2.grid(row=1, column=1)
-
-    checked = 0
-
-    c = Checkbutton(root, text="Keep me logged in", variable=checked)
-    c.grid(columnspan=2)
-
-    button_1 = Button(root, text="Print Message")
-
-    button_1.bind("<Button-1>", writeUser)
-    button_1.grid(columnspan=3)
-
-    if checked: print("hi!") #Do stuff
-
+    return Type
 
 #### Okay... So bound functions can't take parameters...
 
-button_1 = Button(root, text="Sign in as Professor")
-button_1.bind("<Button-1>", SignInFormProf)
-button_1.pack()
+root = Tk()
 
-button_2 = Button(root, text="Sign in as Student")
-button_2.bind("<Button-1>", SignInFormStud)
-button_2.pack()
+CredFrame = Frame(root)
+CredFrame.pack()
+
+NameLabel = Label(CredFrame, text="Name")
+label_2 = Label(CredFrame, text="Email")
+NameEntry = Entry(CredFrame)
+Email = Entry(CredFrame)
+
+# widgets centered by default, sticky option to change
+NameLabel.grid(row=0, sticky=E)
+label_2.grid(row=1, sticky=E)
+
+NameEntry.grid(row=0, column=1)
+Email.grid(row=1, column=1)
+
+checked = 0
+
+c = Checkbutton(CredFrame, text="Keep me logged in", variable=checked)
+c.grid(columnspan=2)
+
+BottomFrame = Frame(root)
+BottomFrame.pack(side=BOTTOM)
+
+ButtonFrame = Frame(BottomFrame)
+ButtonFrame.pack(side=BOTTOM)
+
+if checked: print("hi!") #Do stuff
+
+RegisterButton = Button(ButtonFrame, text="Register")
+RegisterButton.bind("<Button-1>", Registering)
+RegisterButton.pack(side=LEFT)
+
+SignInButton = Button(ButtonFrame, text="Sign In")
+SignInButton.bind("<Button-1>", SignIn)
+SignInButton.pack(side=RIGHT)
 
 root.mainloop()
 
