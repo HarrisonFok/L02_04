@@ -87,9 +87,9 @@ button_1 = Button(root, text="Sign in as Professor")
 button_1.bind("<Button-1>", SignInForm("professor"))
 button_1.pack()
 
-button_1 = Button(root, text="Sign in as Student")
-button_1.bind("<Button-1>", SignInForm("student"))
-button_1.pack(side=BOTTOM)
+button_2 = Button(root, text="Sign in as Student")
+button_2.bind("<Button-1>", SignInForm("student"))
+button_2.pack(side=BOTTOM)
 
 root.mainloop()
 
