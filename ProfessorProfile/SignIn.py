@@ -48,17 +48,26 @@ def readUsers(event, filename):
 
         # Could make the user and email pair now, instead of doing it when making the object...
 
-        if l[0] == "professor":
+        if l[0] == "Professor":
             Users[li] = Professor(l[1], l[2])
 
-        if l[0] == "student":
+        if l[0] == "Student":
             Users[li] = Student(l[1], l[2])
 
     f.close()
 
     return Users
 
-def SignInForm(event):
+def SignInFormProf(event):
+    SignInForm("Professor")
+
+def SignInFormStud(event):
+    SignInForm("Student")
+
+def SignInForm(Type):
+
+    print(Type)
+
     label_1 = Label(root, text="Name")
     label_2 = Label(root, text="Email")
     entry_1 = Entry(root)
@@ -83,13 +92,16 @@ def SignInForm(event):
 
     if checked: print("hi!") #Do stuff
 
+
+#### Okay... So bound functions can't take parameters...
+
 button_1 = Button(root, text="Sign in as Professor")
-button_1.bind("<Button-1>", SignInForm)
+button_1.bind("<Button-1>", SignInFormProf)
 button_1.pack()
 
 button_2 = Button(root, text="Sign in as Student")
-button_2.bind("<Button-1>", SignInForm)
-button_2.pack(side=BOTTOM)
+button_2.bind("<Button-1>", SignInFormStud)
+button_2.pack()
 
 root.mainloop()
 
