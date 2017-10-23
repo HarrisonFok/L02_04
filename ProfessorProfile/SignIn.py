@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter.messagebox
 
 class User():
     def __init__(self, name, email):
@@ -22,50 +23,20 @@ class Student(User):
         User.__init__(self, name, email)
 
 def writeUser(User):
-    f = open("Users.txt", "w")
-
-    if isinstance(User, Student):
-        f.writelines("S" + " " + User.getName() + " " + User.getName())
-
-    if isinstance(User, Professor):
-        f.writelines("P" + " " + User.getName() + " " + User.getName())
-
-    f.close()
+    writeUserFile("Users.txt", User)
 
 def writeUserFile(filename, User):
-    f = open("filename", "w")
+    f = open(filename, "w")
 
     if isinstance(User, Student):
-        f.writelines("S" + " " + User.getName() + " " + User.getName())
+        f.writelines("S" + " " + User.getName() + " " + User.getEmail())
 
     if isinstance(User, Professor):
-        f.writelines("P" + " " + User.getName() + " " + User.getName())
-
+        f.writelines("P" + " " + User.getName() + " " + User.getEmail())
     f.close()
 
 def readUser():
-    f = file("Users.txt", "r")
-
-    Users = []
-    
-    lines = f.readlines()
-    
-    for i in len(lines):
-        l = line.split()
-
-        # Could make the user and email pair now, instead of doing it when making the object...
-
-        if l[0] == "P":
-            Users[i] = Professor(l[1], l[2])
-
-        if l[0] == "S":
-            Users[i] = Student(l[1], l[2])
-
-    f.close()
-
-    # Should set it so it returns 0 if the file isn't there, then report that to the user.
-    
-    return Users
+    readUserFile("Users.txt")
     
 def readUserFile(filename):
     f = file("filename" + ".txt", "r")
@@ -99,13 +70,39 @@ def Registering(event):
     PassFrame = Frame(BottomFrame)
     PassFrame.pack(side=BOTTOM)
 
-    button_1 = Button(PassFrame, text="Print Message")
-    button_1.bind("<Button-1>", writeUser(User(NameEntry.get(), Email.get())))
+    button_1 = Button(PassFrame, text="Register")
+    button_1.bind("<Button-1>", writeUser(User(NameEntry.get(), EmailEntry.get())))
     button_1.pack()
 
 def SignIn(event):
-    CredFrame.pack_forget()
-    SignInForm("Student")
+    
+    Usrs = readUser()
+    
+    Nam = NameEntry.get()
+    
+    Em = EmailEntry.get()
+
+    # Check if either name or email exist separately. Bad for security? Maybe not.
+    
+    NamEx = 0
+    EmEx = 0
+
+    for Usr in Usrs:
+        if ((Usr.getName() == Nam) & (Usr.getEmail() == Em)):
+            tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
+            break
+    
+    if (NamEx & EmEx):
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + "and an email of" + "Em" + "."))
+        
+    elif NamEx:
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is a user that\'s named:' + " " + Nam + ", but they don't have an email of" + "Em" + "."))
+    
+    elif EmEx:
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + ", but there is someone with an email of" + "Em" + "."))    
+    
+    else:
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + "and an email of" + "Em" + "."))
 
 def SignInForm(Type):
     return Type
@@ -120,18 +117,18 @@ CredFrame.pack()
 entrytext = StringVar()
 
 NameLabel = Label(CredFrame, text="Name")
-label_2 = Label(CredFrame, text="Email")
+EmailLabel = Label(CredFrame, text="Email")
 NameEntry = Entry(CredFrame, textvariable=entrytext)
-Email = Entry(CredFrame, textvariable=entrytext)
+EmailEntry = Entry(CredFrame, textvariable=entrytext)
 
 entrytext.set("Test")
 
 # widgets centered by default, sticky option to change
 NameLabel.grid(row=0, sticky=E)
-label_2.grid(row=1, sticky=E)
+EmailLabel.grid(row=1, sticky=E)
 
 NameEntry.grid(row=0, column=1)
-Email.grid(row=1, column=1)
+EmailEntry.grid(row=1, column=1)
 
 checked = 0
 
