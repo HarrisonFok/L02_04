@@ -39,7 +39,7 @@ def readUser():
     readUserFile("Users.txt")
     
 def readUserFile(filename):
-    f = file("filename" + ".txt", "r")
+    f = open(filename, "r")
 
     Users = []
     
