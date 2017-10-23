@@ -1,40 +1,26 @@
 try:
     # for Python2
-    from Tkinter import *
+    import Tkinter as tk
 except ImportError:
     # for Python3
-    from tkinter import *
+    import tkinter as tk
 
-class SelectQuestions:
-	def __init__(self, master):
-		self.master = master
-		master.title("Select Questions to be on the Assignment")
+class SelectQuestions(tk.Frame):
 
-		self.asNumQues = 0
-		self.questions = None
-		self.allQuestions = None
-		self.singleQuestion = None
-		self.chosenQuestions = None
+    def __init__(self, *args, **kwargs):
+        tk.Frame.__init__(self, *args, **kwargs)
 
-		self.entry = Entry(master)
+        self.label = tk.Label(self, text="WELCOME!!\nPlease choose questions to appear on an assignment\n")
+        self.label.pack()
 
-		# Have a greeting to make it user-friendly
-		self.greetings = Label(master, text="WELCOME!!\nPlease choose questions to appear on an assignment\n")
-		self.greetings.pack()
+        self.display_button = tk.Button(self, text="Display Questions", command=self.display)
+        self.display_button.pack()
 
-		# TODO (FEATURE)
-		# This keeps track of the number of questions chosen by the user
-		self.currNum = Label(master, text="Current number of questions: " + str(self.asNumQues) + "\n\n")
-		self.currNum.pack()
+        self.submit_button = tk.Button(self, text="Submit", command=self.create_window)
 
-		# Create a button with the text "Display Questions"
-		self.display_button = Button(master, text="Display Questions", command=self.display)
-		self.display_button.pack()
+        self.entry = tk.Entry(self)
 
-		# Create a button with the text "Submit"
-		self.submit_button = Button(master, text="Submit", command=self.submit)
-
-	def display(self):
+    def display(self):
 		# Display every question below and have a checkbox beside every one of them
 		with open('questions.txt', 'r') as f:
 			# read the file and then split them by newline character
@@ -52,10 +38,10 @@ class SelectQuestions:
 				'''
 
 				# display the question
-				self.singleQuestion = Label(self.master, text=self.allQuestions[i])
+				self.singleQuestion = tk.Label(self, text=str(i) + ":" + self.allQuestions[i])
 				self.singleQuestion.pack(side="left")
 
-		self.submit_button.pack()
+		self.submit_button.pack(side="bottom")
 
 		# TODO: To be user-friendly, add a label telling the user that the question numbers
 		#       start from 1
@@ -63,40 +49,25 @@ class SelectQuestions:
 		# format of a, b, c, etc., where a,b,c are integers
 		self.entry.pack()
 
-	'''
-	def update(self, is_checked):
-		print("HELLO")
-		print(is_checked.get())
-	'''
+    def create_window(self):
+    	# Create a new window for the assignment
+        assignmentWindow = tk.Toplevel(self)
+        assignmentWindow.wm_title("ASSIGNMENT")
 
-	def submit(self):
-		print(self.entry.get())
+        # Get the list of question numbers the user chose and search in the text file
+        chosenQuestionNums = self.entry.get().split(',')
 
-		# Get the question numbers (starting from one) that the user chose
-		self.chosenQuestions = self.entry.get().split(',')
-		self.asNumQues = len(self.chosenQuestions)
-		# Transition to Assignment.py
-
-class Assignment:
-	def __init__(self, master):
-		self.master = master
-		master.title("EXERCISE")
-
-		# Read questions.txt and all questions
-		with open('questions.txt', 'r') as f:
+        # Read all the questions in questions.txt and split them into a list
+        with open('questions.txt', 'r') as f:
 			self.questions = f.read()
-			self.allQuestions = self.questions.split('\n')
+			self.allQuestions = self.questions.split('\n') #["Hey?", "Bye?", "Yo?", "Nunu?", "Mumu?", "LoL?"]
 
-		self.title = Label(master, text="EXERCISE\n\n")
-		self.title.pack()
+			for questionNum in range(len(self.allQuestions)):
+				if str(questionNum) in chosenQuestionNums:
+					self.question = tk.Label(assignmentWindow, text=self.allQuestions[questionNum])
+					self.question.pack()
 
-		self.intro = Label(master, text="Please answer the following questions to the best of your ability\n\n\n")
-		self.intro.pack()
-
-		self.extractQuestions()
-
-root = Tk()
-
-addGui = SelectQuestions(root)
-
-mainloop()
+root = tk.Tk()
+main = SelectQuestions(root)
+main.pack(side="top", fill="both", expand=True)
+root.mainloop()

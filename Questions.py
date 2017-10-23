@@ -5,8 +5,6 @@ except ImportError:
     # for Python3
     from tkinter import *
 
-questionNum = 0
-
 class Questions:
 	def __init__(self, master):
 		self.questionNum = 0
@@ -32,14 +30,9 @@ class Questions:
 			with open('questions.txt', 'a') as f:
 				# str(self.questionNum+1)
 				f.write(self.entry.get() + '\n')
-			self.questionNum += 1
 
 		# TODO (feature): notify the user that the question has been added to the text file and
 		#                 clear what the user just wrote
-
-	def retrieve(self, questionNum):
-		# TODO: retrieve the question
-		print("HI")
 
 root = Tk()
 
