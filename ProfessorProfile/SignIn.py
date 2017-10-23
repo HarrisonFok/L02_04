@@ -43,29 +43,53 @@ def writeUserFile(filename, User):
 
     f.close()
 
-def readProf(event, filename):
-    f = file("filename" + ".txt", "r")
+def readUser():
+    f = file("Users.txt", "r")
 
-    Prof = []
-
-    # Need to count lines as that line count is the index for the users in Users that you're presumably returning!
-
-    # Gonna call it "li for now..."
-
-    for line in f.readlines():
+    Users = []
+    
+    lines = f.readlines()
+    
+    for i in len(lines):
         l = line.split()
 
         # Could make the user and email pair now, instead of doing it when making the object...
 
         if l[0] == "P":
-            Users[li] = Professor(l[1], l[2])
+            Users[i] = Professor(l[1], l[2])
 
         if l[0] == "S":
-            Users[li] = Student(l[1], l[2])
+            Users[i] = Student(l[1], l[2])
 
     f.close()
 
-    return 0
+    # Should set it so it returns 0 if the file isn't there, then report that to the user.
+    
+    return Users
+    
+def readUserFile(filename):
+    f = file("filename" + ".txt", "r")
+
+    Users = []
+    
+    lines = f.readlines()
+    
+    for i in len(lines):
+        l = line.split()
+
+        # Could make the user and email pair now, instead of doing it when making the object...
+
+        if l[0] == "P":
+            Users[i] = Professor(l[1], l[2])
+
+        if l[0] == "S":
+            Users[i] = Student(l[1], l[2])
+
+    f.close()
+
+    # Should set it so it returns 0 if the file isn't there, then report that to the user.
+    
+    return Users
 
 ## Remember, Python or Tkinter or whatever doesn't check if these frames exist. these functions, when called by a buttonpress, act as if they're in the same scope as the button, or something.
 
