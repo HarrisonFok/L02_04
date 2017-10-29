@@ -35,14 +35,6 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
             # add every question to the GUI
             for i in range(len(self.allQuestions)-1):
-                # TODO (FEATURE)
-                '''
-                is_checked = IntVar()
-                # create a checkbox 
-                c = Checkbutton(self.master, variable=is_checked, \
-                command=lambda: self.update(is_checked))
-                c.pack(side="left")
-                '''
 
                 # display the question
                 self.singleQuestion = tk.Label(self, text=str(i) + ":" + \
@@ -53,11 +45,6 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
         self.submit_button.pack()
 
-        # TODO: To be user-friendly, add a label telling the user that the 
-        # question numbers start from 1
-        # IMPORTANT: For now, we will have the user choose the questions in the
-        # format of num1, num2, num3, etc., where num1, num2, and num3 are
-        # integers
         self.entry.pack()
 
     def create_window(self):
