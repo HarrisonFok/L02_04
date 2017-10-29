@@ -22,6 +22,8 @@ to appear on an assignment\n")
                                        command=self.create_window)
 
         self.entry = tk.Entry(self)
+        
+        self.assignmentEntry = None
 
     def display(self):
         # Display every question below and have a checkbox beside everyone
@@ -52,7 +54,8 @@ to appear on an assignment\n")
         # TODO: To be user-friendly, add a label telling the user that the 
         # question numbers start from 1
         # IMPORTANT: For now, we will have the user choose the questions in the
-        # format of a, b, c, etc., where a,b,c are integers
+        # format of num1, num2, num3, etc., where num1, num2, and num3 are
+        # integers
         self.entry.pack()
 
     def create_window(self):
@@ -67,12 +70,26 @@ to appear on an assignment\n")
         # Read all the questions in questions.txt and split them into a list
         with open('questions.txt', 'r') as f:
             self.questions = f.read()
-            self.allQuestions = self.questions.split('\n') 
+            self.allQuestions = self.questions.split('\n')
+            
+            instructions = tk.Label(assignmentWindow, text="Please answer the\
+following questions to the best of your abilities\n\n")
+            instructions.pack()
+            
+            # If any chosen question numbers appear in the list, add the label
+            # to the new screen
             for questionNum in range(len(self.allQuestions)):
                 if str(questionNum) in chosenQuestionNums:
                     self.question = tk.Label\
                         (assignmentWindow,text=self.allQuestions[questionNum])
                     self.question.pack()
+                    self.assignmentEntry = tk.Entry(assignmentWindow)
+                    self.assignmentEntry.pack()
+            assignmentWindow.geometry("%dx%d" % (450, 400))
+            
+            assignment_submit_button = tk.Button(assignmentWindow,\
+                                                 text = "Submit")
+            assignment_submit_button.pack()
 
 root = tk.Tk()
 main = SelectQuestions(root)
