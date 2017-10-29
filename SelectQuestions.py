@@ -51,7 +51,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
                 
                 self.singleQuestion.pack()
 
-        self.submit_button.pack(side="bottom")
+        self.submit_button.pack()
 
         # TODO: To be user-friendly, add a label telling the user that the 
         # question numbers start from 1
@@ -75,7 +75,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
             self.allQuestions = self.questions.split('\n')
             
             instructions = tk.Label(assignmentWindow, text="Please answer the\
-following questions to the best of your abilities\n\n")
+following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             instructions.pack()
             
             # If any chosen question numbers appear in the list, add the label
@@ -83,17 +83,19 @@ following questions to the best of your abilities\n\n")
             for questionNum in range(len(self.allQuestions)):
                 if str(questionNum) in chosenQuestionNums:
                     self.question = tk.Label\
-                        (assignmentWindow,text=self.allQuestions[questionNum])
+                        (assignmentWindow,text=self.allQuestions[questionNum],\
+                         font=("Helvetica", 28))
                     self.question.pack()
                     self.assignmentEntry = tk.Entry(assignmentWindow)
                     self.assignmentEntry.pack()
-            assignmentWindow.geometry("%dx%d" % (2000, 400))
+            assignmentWindow.geometry("%dx%d" % (2000, 2000))
             
             assignment_submit_button = tk.Button(assignmentWindow,\
                                                  text = "Submit")
             assignment_submit_button.pack()
 
 root = tk.Tk()
+root.geometry('%sx%s' % (2000, 2000))
 main = SelectQuestions(root)
 main.pack(side="top", fill="both", expand=True)
 root.mainloop()
