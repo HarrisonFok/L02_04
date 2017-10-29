@@ -50,6 +50,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
     def create_window(self):
         # Create a new window for the assignment
         assignmentWindow = tk.Toplevel(self)
+        root.withdraw()
         assignmentWindow.wm_title("ASSIGNMENT")
 
         # Get the list of question numbers the user chose and search in the 
