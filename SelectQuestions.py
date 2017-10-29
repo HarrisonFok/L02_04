@@ -11,7 +11,7 @@ class SelectQuestions(tk.Frame):
         tk.Frame.__init__(self, *args, **kwargs)
 
         self.label = tk.Label(self, text="WELCOME!!\nPlease choose questions\
-to appear on an assignment\n")
+to appear on an assignment\n", font=("Helvetica", 32))
         self.label.pack()
 
         self.display_button = tk.Button(self, text="Display Questions", \
@@ -46,8 +46,10 @@ to appear on an assignment\n")
 
                 # display the question
                 self.singleQuestion = tk.Label(self, text=str(i) + ":" + \
-                                               self.allQuestions[i])
-                self.singleQuestion.pack(side="left")
+                                               self.allQuestions[i],
+                                               font=("Helvetica", 28))
+                
+                self.singleQuestion.pack()
 
         self.submit_button.pack(side="bottom")
 
@@ -85,7 +87,7 @@ following questions to the best of your abilities\n\n")
                     self.question.pack()
                     self.assignmentEntry = tk.Entry(assignmentWindow)
                     self.assignmentEntry.pack()
-            assignmentWindow.geometry("%dx%d" % (450, 400))
+            assignmentWindow.geometry("%dx%d" % (2000, 400))
             
             assignment_submit_button = tk.Button(assignmentWindow,\
                                                  text = "Submit")
