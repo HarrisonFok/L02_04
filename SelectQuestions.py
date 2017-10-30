@@ -10,7 +10,7 @@ class SelectQuestions(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
 
-        self.label = tk.Label(self, text="WELCOME!!\nPlease choose questions\
+        self.label = tk.Label(self, text="WELCOME!!\nPlease choose questions \
 to appear on an assignment\n", font=("Helvetica", 32))
         self.label.pack()
 
@@ -62,7 +62,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
             self.questions = f.read()
             self.allQuestions = self.questions.split('\n')
             
-            instructions = tk.Label(assignmentWindow, text="Please answer the\
+            instructions = tk.Label(assignmentWindow, text="Please answer the \
 following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             instructions.pack()
             
@@ -76,6 +76,7 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
                     self.question.pack()
                     self.assignmentEntry = tk.Entry(assignmentWindow)
                     self.assignmentEntry.pack()
+                    tk.Label(assignmentWindow, text="\n").pack()
             assignmentWindow.geometry("%dx%d" % (2000, 2000))
             
             assignment_submit_button = tk.Button(assignmentWindow,\
