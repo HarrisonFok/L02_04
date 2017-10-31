@@ -5,13 +5,18 @@ class User():
     def __init__(self, name, email):
         self.name = name
         self.email = email
-
+        
     def getName(self):
         return self.name
 
     def getEmail(self):
         return self.email
 
+    def setName(self, name):
+        self.name = name
+
+    def setEmail(self, email):
+        self.email = email
 
 class Professor(User):
     def __init__(self, name, email):
@@ -66,7 +71,6 @@ def readUserFile(filename):
 
 def Registering(event):
     ButtonFrame.pack_forget()
-
     
     PassFrame = Frame(BottomFrame)
     PassFrame.pack(side=BOTTOM)
