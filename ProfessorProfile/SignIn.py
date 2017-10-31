@@ -67,6 +67,7 @@ def readUserFile(filename):
 def Registering(event):
     ButtonFrame.pack_forget()
 
+    
     PassFrame = Frame(BottomFrame)
     PassFrame.pack(side=BOTTOM)
 
@@ -114,14 +115,16 @@ root = Tk()
 CredFrame = Frame(root)
 CredFrame.pack()
 
-entrytext = StringVar()
+NameText = StringVar()
+EmailText = StringVar()
 
 NameLabel = Label(CredFrame, text="Name")
 EmailLabel = Label(CredFrame, text="Email")
-NameEntry = Entry(CredFrame, textvariable=entrytext)
-EmailEntry = Entry(CredFrame, textvariable=entrytext)
+NameEntry = Entry(CredFrame, textvariable=NameText)
+EmailEntry = Entry(CredFrame, textvariable=EmailText)
 
-entrytext.set("Test")
+NameText.set("Test")
+EmailText.set("Test")
 
 # widgets centered by default, sticky option to change
 NameLabel.grid(row=0, sticky=E)
