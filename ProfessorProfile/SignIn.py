@@ -75,8 +75,8 @@ def Registering(event):
     PassFrame = Frame(BottomFrame)
     PassFrame.pack(side=BOTTOM)
 
-    button_1 = Button(PassFrame, text="Register")
-    button_1.bind("<Button-1>", writeUser(User(NameEntry.get(), EmailEntry.get())))
+    button_1 = Button(PassFrame, text="Register as Professor")
+    button_1.bind("<Button-1>", writeUser(Professor(NameEntry.get(), EmailEntry.get())))
     button_1.pack()
 
 def SignIn(event):
