@@ -1,3 +1,7 @@
+# MCQ - multiple choice
+# FIB - fill in blanks
+# The assignment creates one for each student
+
 try:
     # for Python2
     import Tkinter as tk
