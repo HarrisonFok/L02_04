@@ -24,10 +24,12 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
         self.submit_button = tk.Button(self, text="Submit", \
                                        command=self.create_window)
-
+        
         self.entry = tk.Entry(self)
         
         self.assignmentEntry = None
+        
+        self.questions_dict = {}
 
     def display(self):
         # Display every question below and have a checkbox beside everyone
@@ -38,11 +40,12 @@ to appear on an assignment\n", font=("Helvetica", 32))
             self.allQuestions = self.questions.split('\n')
 
             # add every question to the GUI
-            for i in range(len(self.allQuestions)-1):
+            for i in range(len(self.allQuestions)):
 
                 # display the question
-                self.singleQuestion = tk.Label(self, text=str(i) + ":" + \
-                                               self.allQuestions[i],
+                self.singleQuestion = tk.Label(self, text="question " + str(i)\
+                                               + ":" + self.allQuestions[i].\
+                                               split('|||')[0].split(':')[1],
                                                font=("Helvetica", 28))
                 
                 self.singleQuestion.pack()
@@ -84,8 +87,12 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             assignmentWindow.geometry("%dx%d" % (2000, 2000))
             
             assignment_submit_button = tk.Button(assignmentWindow,\
-                                                 text = "Submit")
+                                                 text = "Submit",\
+                                                 command=self.validate)
             assignment_submit_button.pack()
+            
+    def validate(self):
+        pass
 
 root = tk.Tk()
 root.geometry('%sx%s' % (2000, 2000))
