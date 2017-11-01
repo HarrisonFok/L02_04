@@ -1,7 +1,1 @@
-Hey?
-Bye?
-Yo?
-Nunu?
-Nunu?
-LoL?
-lasd;fjsaliuf??
+MCQ_10079093: What is  VAR0 +  VAR1 ? ||| Answer Formula:VAR0 + VAR1
