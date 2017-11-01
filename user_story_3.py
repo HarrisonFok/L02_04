@@ -5,7 +5,7 @@ QID = 00000000
 def MCQ():
     li = [0]
     def write_questions():
-        nq = 'MCQ'+"_"+str(random.randrange(99999999)) + ": " + new_question.get('1.0',END).strip() +' ||| Answer Formula:'+ answer_formula.get('1.0',END)
+        nq = get_topic() + ' MCQ'+"_"+str(random.randrange(10000000,99999999)) +" " +str(li[0]) +"_Vars" +": " + new_question.get('1.0',END).strip() +' ||| Answer Formula:'+ answer_formula.get('1.0',END)
         fh = open('questions.txt', 'a')
         fh.write(nq)
         fh.close()
@@ -20,11 +20,22 @@ def MCQ():
     def insert_time():
         answer_formula.insert("insert", " * ")
     def insert_divided():
-        answer_formula.insert("insert", " / ")    
+        answer_formula.insert("insert", " / ")
+    def get_topic():
+        return topic_num.get()
         
     question_window = Toplevel(root)
     question_window.geometry('600x530')
-    question_window.title('Multiple Choice window')   
+    question_window.title('Multiple Choice window')
+    
+    topic_L = Label(question_window, text='Related topic:', font=20,pady=20)
+    topic_L.pack()
+    topic_L.place(bordermode=OUTSIDE, x=10, y=0)
+    topic_num = StringVar(question_window)
+    topic_num.set("choose here") # default value
+    topic = OptionMenu(question_window, topic_num, "Topic_1", "Topic_2", "Topic_3", "Topic_4", "Topic_5")
+    topic.pack()
+    topic.place(bordermode=OUTSIDE, x=10, y=50)
     
     Label(question_window, text='Type your quetion here: ', font=20,pady=20).pack()
     new_question = Text(question_window, width=40, height=10)
@@ -59,12 +70,12 @@ def MCQ():
     exit_button = Button(question_window,text='Exit', command=question_window.destroy)
     confirm_button.pack(side=LEFT,padx=150)
     exit_button.pack(side=LEFT,padx=50)
-  
+    
 def FBQ():
     li = [0]
     
     def write_questions():
-        nq = 'FBQ'+"_"+str(random.randrange(99999999)) + ": " + new_question.get('1.0',END).strip() +' ||| Answer Formula:'+ answer_formula.get('1.0',END)
+        nq = get_topic() + ' FBQ'+"_"+str(random.randrange(10000000,99999999)) +" " +str(li[0]) +"_Vars" +": " + new_question.get('1.0',END).strip() +' ||| Answer Formula:'+ answer_formula.get('1.0',END)
         fh = open('questions.txt', 'a')
         fh.write(nq)
         fh.close()
@@ -79,11 +90,22 @@ def FBQ():
     def insert_time():
         answer_formula.insert("insert", " * ")
     def insert_divided():
-        answer_formula.insert("insert", " / ")    
+        answer_formula.insert("insert", " / ")
+    def get_topic():
+        return topic_num.get()    
         
     question_window = Toplevel(root)
     question_window.geometry('600x530')
     question_window.title('Fill in the blank window')   
+    
+    topic_L = Label(question_window, text='Related topic:', font=20,pady=20)
+    topic_L.pack()
+    topic_L.place(bordermode=OUTSIDE, x=10, y=0)
+    topic_num = StringVar(question_window)
+    topic_num.set("choose here") # default value
+    topic = OptionMenu(question_window, topic_num, "Topic_1", "Topic_2", "Topic_3", "Topic_4", "Topic_5")
+    topic.pack()
+    topic.place(bordermode=OUTSIDE, x=10, y=50)    
     
     Label(question_window, text='Type your quetion here: ', font=20,pady=20).pack()
     new_question = Text(question_window, width=40, height=10)
