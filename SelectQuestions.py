@@ -29,7 +29,9 @@ to appear on an assignment\n", font=("Helvetica", 32))
         
         self.assignmentEntry = None
         
-        self.questions_dict = {}
+        # For the chosen questions, put the question and the answer formula
+        # as key-value pairs
+        self.chosenquestions_answers_dict = {}
 
     def display(self):
         # Display every question below and have a checkbox beside everyone
@@ -38,20 +40,20 @@ to appear on an assignment\n", font=("Helvetica", 32))
             # read the file and then split them by newline character
             self.questions = f.read()
             self.allQuestions = self.questions.split('\n')
+            
+            tk.Label(self, text="Please enter the question numbers in the\
+format of question number #1, question number #2, question number #3\n", \
+                           font=("Helvetica", 28)).pack()
 
             # add every question to the GUI
             for i in range(len(self.allQuestions)):
-
                 # display the question
                 self.singleQuestion = tk.Label(self, text="question " + str(i)\
                                                + ":" + self.allQuestions[i].\
                                                split('|||')[0].split(':')[1],
                                                font=("Helvetica", 28))
-                
                 self.singleQuestion.pack()
-
         self.submit_button.pack()
-
         self.entry.pack()
 
     def create_window(self):
@@ -78,8 +80,8 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             for questionNum in range(len(self.allQuestions)):
                 if str(questionNum) in chosenQuestionNums:
                     self.question = tk.Label\
-                        (assignmentWindow,text=self.allQuestions[questionNum],\
-                         font=("Helvetica", 28))
+                        (assignmentWindow,text=self.allQuestions[questionNum]\
+                         .split('|||')[0].split(':')[1], font=("Helvetica", 28))
                     self.question.pack()
                     self.assignmentEntry = tk.Entry(assignmentWindow)
                     self.assignmentEntry.pack()
