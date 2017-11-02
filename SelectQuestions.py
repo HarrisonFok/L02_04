@@ -1,6 +1,6 @@
 # MCQ - multiple choice
 # FIB - fill in blanks
-# The assignment creates one for each student
+# Creates one assignment for each student
 
 try:
     # for Python2
@@ -93,7 +93,14 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
                                                  command=self.validate)
             assignment_submit_button.pack()
             
+        tk.Button(assignmentWindow, text="Exit",\
+                  command=assignmentWindow.destroy).pack()
+            
     def validate(self):
+        # Reocrd the student answers
+        # Compare them with the actual answers (put values into the answer
+        # formula)
+        # Display a CORRECT label if they match. INCORRECT otherwise
         pass
 
 root = tk.Tk()
