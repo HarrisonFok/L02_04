@@ -10,24 +10,36 @@ def createStudent(event):
 	pwdDup = passwordDupEntry.get()
 	studentNum = studentNumEntry.get()
 
-	if matchPasswords(pwd, pwdDup):
-		# create student object
-		s = Student(name, email, pwd, studentNum)
-		# print out contents
-		outputString = ""
-		outputString += s.getName() + ", "
-		outputString += s.getEmail() + ", "
-		outputString += s.getPassword() + ", "
-		outputString += s.getStudentNumber()
-		resultLabel.config(text=outputString)
+	# check if fields are empty
+	if (entryIsEmpty(name) or entryIsEmpty(email) or entryIsEmpty(pwd)
+		or entryIsEmpty(pwdDup) or entryIsEmpty(studentNum)):
+		resultLabel.config(text="One or more fields are empty.")
 	else:
-		resultLabel.config(text="Passwords don't match")
+		if matchPasswords(pwd, pwdDup):
+			# create student object
+			s = Student(name, email, pwd, studentNum)
+			resultLabel.config(text="Profile Successfully Created!")
+			# insert into CSV
+			s.insertStudent()
+			# clear fields
+			nameEntry.delete(0, 'end')
+			emailEntry.delete(0, 'end')
+			passwordEntry.delete(0, 'end')
+			passwordDupEntry.delete(0, 'end')
+			studentNumEntry.delete(0, 'end')
+		else:
+			resultLabel.config(text="Passwords don't match")
 
 def matchPasswords(pwd, pwdDup):
 	if pwd == pwdDup:
 		return True
 	return False
 
+def entryIsEmpty(entry):
+	if len(entry) == 0:
+		return True
+	else:
+		return False
 # GUI 
 
 root = Tk()

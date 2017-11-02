@@ -1,3 +1,6 @@
+import io
+import csv
+
 class Student(object):
 	"""docstring for Student"""
 	def __init__(self, name, email, password, studentNumber):
@@ -33,6 +36,21 @@ class Student(object):
 	def setStudentNumber(self, sn):
 		this._studentNumber = sn
 
+	def getType(self):
+		return self._type
+
 	def insertStudent(self):
-		# insert this student object into the csv file
-		pass
+		# prepare data
+		data = []
+		data.append(self.getName())
+		data.append(self.getEmail())
+		data.append(self.getPassword())
+		data.append(self.getStudentNumber())
+		data.append(self.getType())
+		# insert data into the csv file
+		csv_file = open("Students.csv", "a")
+		writer = csv.writer(csv_file)
+		writer.writerow(data)
+		csv_file.close()
+
+
