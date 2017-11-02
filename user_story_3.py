@@ -37,7 +37,7 @@ def MCQ():
     topic.pack()
     topic.place(bordermode=OUTSIDE, x=10, y=50)
     
-    Label(question_window, text='Type your quetion here(use[min, max]after insert a Variable for its range): ', font=20,pady=20).pack()
+    Label(question_window, text='Type your quetion here: ', font=20,pady=20).pack()
     new_question = Text(question_window, width=40, height=10)
     new_question.pack()
     
@@ -81,7 +81,7 @@ def FBQ():
         fh.close()
         question_window.destroy()
     def insert_var():
-        new_question.insert("insert", " $VAR"+str(li[0])+'$')
+        new_question.insert("insert", " VAR"+str(li[0])+' ')
         li[0]+=1
     def insert_plus():
         answer_formula.insert("insert", " + ")
@@ -107,7 +107,7 @@ def FBQ():
     topic.pack()
     topic.place(bordermode=OUTSIDE, x=10, y=50)    
     
-    Label(question_window, text='Type your quetion here(use[min, max]after insert a Variable for its range): ', font=20,pady=20).pack()
+    Label(question_window, text='Type your quetion here: ', font=20,pady=20).pack()
     new_question = Text(question_window, width=40, height=10)
     new_question.pack()
     
