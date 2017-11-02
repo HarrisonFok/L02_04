@@ -30,6 +30,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
         
         self.assignmentEntry = None
         
+        # This will be the list of actual questions chosen
         self.chosenQuestions = []
 
     def display(self):
@@ -65,8 +66,10 @@ to appear on an assignment\n", font=("Helvetica", 32))
         chosenQuestionNums = self.entry.get().split(',')
         
         # WILLIAM'S CODE GOES HERE - CREATE ASSIGNMENT BY RANDOMIZATION (.txt)
-        # THEN EXTRACT QUESTIONS AND DISPLAY ON UI
-        # Record student answers to Assignment.txt
+        # EXTRACT QUESTIONS AND DISPLAY ON UI
+        # ALSO RECORD STUDENT ANSWERS TO Assignment.txt (using the same format
+        # as questions.txt - for validation later)
+        # I will call the validation method when the Submit button is pressed
 
         # Read all the questions in questions.txt and split them into a list
         with open('questions.txt', 'r') as f:
@@ -82,6 +85,10 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             # to the new screen
             for questionNum in range(len(self.allQuestions)):
                 if str(questionNum) in chosenQuestionNums:
+                    # THIS IS THE QUESTION (which now is still in $VAR0$ state)
+                    # THAT I'M GRABBING FROM THE FILE
+                    # Instead, this should grab the question after the 
+                    # randomization
                     currentQuestion = self.allQuestions[questionNum]\
                         .split('|||')[0].split(':')[1]
                     
@@ -157,6 +164,7 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
         return random.randint(L[0], L[1])
             
     def validate(self):
+        # TODO later
         pass
 
 root = tk.Tk()
