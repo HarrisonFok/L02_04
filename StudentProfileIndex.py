@@ -31,11 +31,13 @@ def createStudent(event):
 			resultLabel.config(text="Passwords don't match")
 
 def matchPasswords(pwd, pwdDup):
+	""" Returns true iff the password and confirm password fields match """
 	if pwd == pwdDup:
 		return True
 	return False
 
 def entryIsEmpty(entry):
+	""" Returns true iff a field is empty """
 	if len(entry) == 0:
 		return True
 	else:

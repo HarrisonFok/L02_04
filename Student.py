@@ -40,6 +40,7 @@ class Student(object):
 		return self._type
 
 	def insertStudent(self):
+		""" Inserts student's information into the CSV file """
 		# prepare data
 		data = []
 		data.append(self.getName())
