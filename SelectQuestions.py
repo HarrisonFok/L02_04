@@ -1,6 +1,6 @@
 # MCQ - multiple choice
 # FIB - fill in blanks
-# Creates one assignment for each student
+# The assignment creates one for each student
 
 try:
     # for Python2
@@ -24,14 +24,10 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
         self.submit_button = tk.Button(self, text="Submit", \
                                        command=self.create_window)
-        
+
         self.entry = tk.Entry(self)
         
         self.assignmentEntry = None
-        
-        # For the chosen questions, put the question and the answer formula
-        # as key-value pairs
-        self.chosenquestions_answers_dict = {}
 
     def display(self):
         # Display every question below and have a checkbox beside everyone
@@ -40,20 +36,20 @@ to appear on an assignment\n", font=("Helvetica", 32))
             # read the file and then split them by newline character
             self.questions = f.read()
             self.allQuestions = self.questions.split('\n')
-            
-            tk.Label(self, text="Please enter the question numbers in the\
-format of question number #1, question number #2, question number #3\n", \
-                           font=("Helvetica", 28)).pack()
 
             # add every question to the GUI
-            for i in range(len(self.allQuestions)):
+            for i in range(len(self.allQuestions)-1):
+
                 # display the question
-                self.singleQuestion = tk.Label(self, text="question " + str(i)\
-                                               + ":" + self.allQuestions[i].\
+                self.singleQuestion = tk.Label(self, text=str(i) + ":" + \
+                                               self.allQuestions[i].\
                                                split('|||')[0].split(':')[1],
                                                font=("Helvetica", 28))
+                
                 self.singleQuestion.pack()
+
         self.submit_button.pack()
+
         self.entry.pack()
 
     def create_window(self):
@@ -81,7 +77,8 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
                 if str(questionNum) in chosenQuestionNums:
                     self.question = tk.Label\
                         (assignmentWindow,text=self.allQuestions[questionNum]\
-                         .split('|||')[0].split(':')[1], font=("Helvetica", 28))
+                         .split('|||')[0].split(':')[1],\
+                         font=("Helvetica", 28))
                     self.question.pack()
                     self.assignmentEntry = tk.Entry(assignmentWindow)
                     self.assignmentEntry.pack()
@@ -89,19 +86,11 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             assignmentWindow.geometry("%dx%d" % (2000, 2000))
             
             assignment_submit_button = tk.Button(assignmentWindow,\
-                                                 text = "Submit",\
-                                                 command=self.validate)
+                                                 text = "Submit")
             assignment_submit_button.pack()
             
-        tk.Button(assignmentWindow, text="Exit",\
-                  command=assignmentWindow.destroy).pack()
-            
-    def validate(self):
-        # Reocrd the student answers
-        # Compare them with the actual answers (put values into the answer
-        # formula)
-        # Display a CORRECT label if they match. INCORRECT otherwise
-        pass
+            tk.Button(assignmentWindow, text="Exit",\
+                      command=assignmentWindow.destroy).pack()            
 
 root = tk.Tk()
 root.geometry('%sx%s' % (2000, 2000))
