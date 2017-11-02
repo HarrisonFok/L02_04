@@ -8,6 +8,7 @@ try:
 except ImportError:
     # for Python3
     import tkinter as tk
+import random
 
 class SelectQuestions(tk.Frame):
 
@@ -28,10 +29,11 @@ to appear on an assignment\n", font=("Helvetica", 32))
         self.entry = tk.Entry(self)
         
         self.assignmentEntry = None
+        
+        self.chosenQuestions = []
 
     def display(self):
-        # Display every question below and have a checkbox beside everyone
-        # of them
+        # Display every question formula below
         with open('questions.txt', 'r') as f:
             # read the file and then split them by newline character
             self.questions = f.read()
@@ -61,12 +63,17 @@ to appear on an assignment\n", font=("Helvetica", 32))
         # Get the list of question numbers the user chose and search in the 
         # text file
         chosenQuestionNums = self.entry.get().split(',')
+        
+        # WILLIAM'S CODE GOES HERE - CREATE ASSIGNMENT BY RANDOMIZATION (.txt)
+        # THEN EXTRACT QUESTIONS AND DISPLAY ON UI
+        # Record student answers to Assignment.txt
 
         # Read all the questions in questions.txt and split them into a list
         with open('questions.txt', 'r') as f:
             self.questions = f.read()
             self.allQuestions = self.questions.split('\n')
             
+            # write instruction
             instructions = tk.Label(assignmentWindow, text="Please answer the \
 following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             instructions.pack()
@@ -75,22 +82,82 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             # to the new screen
             for questionNum in range(len(self.allQuestions)):
                 if str(questionNum) in chosenQuestionNums:
+                    currentQuestion = self.allQuestions[questionNum]\
+                        .split('|||')[0].split(':')[1]
+                    
+                    # put the current chosen question on the screen
                     self.question = tk.Label\
-                        (assignmentWindow,text=self.allQuestions[questionNum]\
-                         .split('|||')[0].split(':')[1],\
+                        (assignmentWindow,text=currentQuestion,\
                          font=("Helvetica", 28))
                     self.question.pack()
+                    
+                    # add the question to the list
+                    self.chosenQuestions += currentQuestion
+                    
+                    # add an entry for the user to input
                     self.assignmentEntry = tk.Entry(assignmentWindow)
                     self.assignmentEntry.pack()
+                    
+                    # add a blank line to the GUI
                     tk.Label(assignmentWindow, text="\n").pack()
             assignmentWindow.geometry("%dx%d" % (2000, 2000))
             
             assignment_submit_button = tk.Button(assignmentWindow,\
-                                                 text = "Submit")
+                                                 text = "Submit",\
+                                                 command=self.validate)
             assignment_submit_button.pack()
             
             tk.Button(assignmentWindow, text="Exit",\
-                      command=assignmentWindow.destroy).pack()            
+                      command=assignmentWindow.destroy).pack()
+
+    def makeAssignment(Assignment):
+        """
+        !!!to Harrison i dont know where is the lines in ur code to make the assignment.txt
+        read the following code to add them to urs I comment for select questions
+    
+        :param Assignment: a file Assignment.txt with all selected questions variable unknown
+        :return: 0 but the variable all randomized
+        """
+        Ques = open("question.txt", 'r')
+        allQ = Ques.readlines()
+        # select the questiones in ur way as sel_Q
+        # sel_Q is the list of every questions seperated by \n
+        sel_Q = self.chosenQuestions
+    
+        AS = open("Assignment.txt", 'w')
+        for question in sel_Q:
+            # replace the var with the random value using the range after them and save them in Assignment.txt
+            nl = ""
+            formatq = question
+            while(formatq.find('$')!=-1):
+                left = formatq.find('$')
+                right = formatq.find('$', left + 1)
+                nl += formatq[:left]
+                minv = int(formatq[formatq.find('[') + 1])
+                maxv = int(formatq[formatq.find(']') - 1])
+                L = [minv, maxv]
+                var = str(self.RandomInRange(L))
+                nl = nl + ' ' + var + ' '
+                formatq = formatq[maxv + 2:]
+            nl += '\n'
+            AS.write(nl)
+        AS.close()
+        
+    def RandomInRange(L):
+        """
+        len(L) == 2
+        list[int(min), int(max)] -> int
+        min <= max
+        a function that return a integer randomly in the range(min,max)
+    
+        //RandomInRange(2, 6)
+        //5
+    
+        """
+        return random.randint(L[0], L[1])
+            
+    def validate(self):
+        pass
 
 root = tk.Tk()
 root.geometry('%sx%s' % (2000, 2000))
