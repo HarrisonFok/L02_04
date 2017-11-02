@@ -10,7 +10,8 @@ class Student(object):
 		self._password = password
 		self._studentNumber = studentNumber
 		self._type = "S"
-
+		self._id = int(self.getLatestId())
+	
 	# getters and setters for class attributes
 	def getName(self):
 		return self._name
@@ -38,11 +39,16 @@ class Student(object):
 
 	def getType(self):
 		return self._type
+	
+	def getId(self):
+		return self._id
 
+	# CSV HELPER METHODS
 	def insertStudent(self):
 		""" Inserts student's information into the CSV file """
 		# prepare data
 		data = []
+		data.append(self.getId())
 		data.append(self.getName())
 		data.append(self.getEmail())
 		data.append(self.getPassword())
@@ -54,4 +60,11 @@ class Student(object):
 		writer.writerow(data)
 		csv_file.close()
 
-
+	def getLatestId(self):
+		csv_file = open("Students.csv", "r")
+		reader = csv.reader(csv_file)
+		# else, calculate the number of rows
+		rowCount = len(list(reader))
+		# close CSV file
+		csv_file.close()
+		return rowCount
