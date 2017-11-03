@@ -35,13 +35,13 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
     def display(self):
         # Display every question formula below
-        with open('questions.txt', 'r') as f:
+        with open('questions.csv', 'r') as f:
             # read the file and then split them by newline character
             self.questions = f.read()
             self.allQuestions = self.questions.split('\n')
 
             # add every question to the GUI
-            for i in range(len(self.allQuestions)-1):
+            for i in range(len(self.allQuestions)):
 
                 # display the question
                 self.singleQuestion = tk.Label(self, text=str(i) + ":" + \
@@ -54,6 +54,8 @@ to appear on an assignment\n", font=("Helvetica", 32))
         self.submit_button.pack()
 
         self.entry.pack()
+        
+        self.display_button.config(state = 'disabled')
 
     def create_window(self):
         # Create a new window for the assignment
@@ -72,7 +74,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
         # I will call the validation method when the Submit button is pressed
 
         # Read all the questions in questions.txt and split them into a list
-        with open('questions.txt', 'r') as f:
+        with open('questions.csv', 'r') as f:
             self.questions = f.read()
             self.allQuestions = self.questions.split('\n')
             
