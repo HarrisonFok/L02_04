@@ -78,27 +78,49 @@ def SignIn(event):
 
     Em = EmailEntry.get()
 
+    Pass = PassEntry.get()
+
     # Check if either name or email exist separately. Bad for security? Maybe not.
 
-    NamEx = 0
-    EmEx = 0
+    NamEx = False
+    EmEx = False
+    PassEx = False
+
+    Correct = set()
 
     for Usr in Usrs:
-        if ((Usr.getName() == Nam) & (Usr.getEmail() == Em)):
-            tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
-            break
 
-    if (NamEx & EmEx):
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + "and an email of" + "Em" + "."))
+        if (Usr.getName() == Nam):
+            NamEx = True
 
-    elif NamEx:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is a user that\'s named:' + " " + Nam + ", but they don't have an email of" + "Em" + "."))
 
-    elif EmEx:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + ", but there is someone with an email of" + "Em" + "."))
+        if (Usr.getEmail() == Em):
+            EmEx = True
+
+        if (Usr.getPassword() == Pass):
+            PassEx = True
+
+    if not (NamEx & EmEx):
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + "and an email of" + Em + "."))
+        NamEx = False
+        EmEx = False
+        continue
+
+    elif not NamEx:
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is a user that\'s named:' + " " + Nam + ", but they don't have an email of" + Em + "."))
+        NamEx = False
+        continue
+
+    elif not EmEx:
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + ", but there is someone with an email of" + Em + "."))
+        EmEx = False
+        continue
 
     else:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + " " + "and an email of" + " " + "Em" +  "."))
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + " " + "and an email of" + " " + Em +  "."))
+
+    tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
+    break
 
 def SignInForm(Type):
     return Type
