@@ -51,7 +51,7 @@ def readUserFile(filename):
     lines = f.readlines()
 
     for i in range(len(lines)):
-        l = line.split()
+        l = lines[i].split()
 
         # Could make the user and email pair now, instead of doing it when making the object...
 
@@ -75,9 +75,17 @@ def Registering(event):
     PassFrame = Frame(BottomFrame)
     PassFrame.pack(side=BOTTOM)
 
-    button_1 = Button(PassFrame, text="Register as Professor")
-    button_1.bind("<Button-1>", writeUser(Professor(NameEntry.get(), EmailEntry.get())))
-    button_1.pack()
+    RegProf = Button(PassFrame, text="Register as Professor")
+    RegProf.bind("<Button-1>", writeUser(Professor(NameEntry.get(), EmailEntry.get())))
+    RegProf.pack()
+
+    RegStudBut = Button(PassFrame, text="Register as Student")
+    RegStudBut.bind("<Button-1>", writeUser(Student(NameEntry.get(), EmailEntry.get())))
+    RegStudBut.pack()
+
+    PassFrame.pack_forget()
+    ButtonFrame.pack()
+    SignInButton.pack(side=RIGHT)
 
 def SignIn(event):
 
@@ -156,9 +164,10 @@ RegisterButton = Button(ButtonFrame, text="Register")
 RegisterButton.bind("<Button-1>", Registering)
 RegisterButton.pack(side=LEFT)
 
+SignInButton = Button(ButtonFrame, text="Sign In")
+SignInButton.bind("<Button-1>", SignIn)
+
 if Usrs is not None:
-    SignInButton = Button(ButtonFrame, text="Sign In")
-    SignInButton.bind("<Button-1>", SignIn)
     SignInButton.pack(side=RIGHT)
 
 root.mainloop()
