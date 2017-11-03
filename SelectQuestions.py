@@ -92,14 +92,14 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
                     currentQuestion = self.allQuestions[questionNum]\
                         .split('|||')[0].split(':')[1]
                     
+                    # add the question to the list
+                    self.chosenQuestions.append(currentQuestion)
+                    
                     # put the current chosen question on the screen
                     self.question = tk.Label\
                         (assignmentWindow,text=currentQuestion,\
                          font=("Helvetica", 28))
                     self.question.pack()
-                    
-                    # add the question to the list
-                    self.chosenQuestions += currentQuestion
                     
                     # add an entry for the user to input
                     self.assignmentEntry = tk.Entry(assignmentWindow)
