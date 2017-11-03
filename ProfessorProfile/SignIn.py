@@ -1,93 +1,19 @@
 from tkinter import *
 import tkinter.messagebox
-from student import *
+from Student import *
 
 ## Parent Class for all users
 
-class User():
-    """docstring for Student"""
-	def __init__(self, name, email, password, type):
-		""" Constructor for Student object """
-		self._name = name
-		self._email = email
-		self._password = password
-		self._studentNumber = studentNumber
-		self._type = "S"
-		self._id = int(self.getLatestId())
-
-	# getters and setters for class attributes
-	def getName(self):
-		return self._name
-
-	def setName(self, name):
-		this._name = name
-
-	def getEmail(self):
-		return self._email
-
-	def setEmail(self, email):
-		this._email = email
-
-	def getPassword(self):
-		return self._password
-
-	def setPassword(self, password):
-		this._password = password
-
-	def getType(self):
-		return self._type
-
-	def getId(self):
-		return self._id
-
-	# CSV HELPER METHODS
-	def getLatestId(self):
-	    """ Returns the last student ID in the csv file. """
-	    csv_file = open("Students.csv", "r")
-	    reader = csv.reader(csv_file)
-	    # else, calculate the number of rows
-	    rowCount = len(list(reader))
-	    # close CSV file
-	    csv_file.close()
-	    return rowCount
+class User(Student):
+    def __init__(self, name, email, password, studentNumber):
+        Student.__init__(self, name, email, password, studentNumber)
 
 class Professor(User):
-    def __init__(self, name, email):
-        User.__init__(self, name, email)
-
-
-class Student(User):
-    """docstring for Student"""
-
     def __init__(self, name, email, password, studentNumber):
-	""" Constructor for Student object """
-	User.__init__(self, name, email, password, "S")
-	self._studentNumber = studentNumber
-
-    def getStudentNumber(self):
-	return self._studentNumber
-
-    def setStudentNumber(self, sn):
-	this._studentNumber = sn
-
-    def insertStudent(self):
-	""" Inserts student's information into the CSV file """
-	# prepare data
-	data = []
-	data.append(self.getId())
-	data.append(self.getName())
-	data.append(self.getEmail())
-	data.append(self.getPassword())
-	data.append(self.getStudentNumber())
-	data.append(self.getType())
-	# insert data into the csv file
-	csv_file = open("Students.csv", "a")
-	writer = csv.writer(csv_file)
-	writer.writerow(data)
-	csv_file.close()
+        User.__init__(self, name, email, password, studentNumber)
 
 def writeUser(User):
-    writeUserFile("Users.txt", User)
+    writeUserFile("Students.csv", User)
 
 def writeUserFile(filename, User):
     f = open(filename, "w")
@@ -100,27 +26,27 @@ def writeUserFile(filename, User):
     f.close()
 
 def readUser():
-    readUserFile("Users.txt")
+    return readUserFile("Students.csv")
 
 def readUserFile(filename):
-    f = open(filename, "r")
+    csv_file = open("Students.csv", "r")
 
     Users = []
 
-    lines = f.readlines()
+    lines = list(csv.reader(csv_file)) # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
 
-    for i in range(len(lines)):
-        l = lines[i].split()
+    for i in list(csv_file):
+        l = lines[i]
 
         # Could make the user and email pair now, instead of doing it when making the object...
 
-        if l[0] == "P":
-            Users[i] = Professor(l[1], l[2])
+        if l[5] == "P":
+            Users[i] = Professor(l[1], l[2], l[3], l[4])
 
-        if l[0] == "S":
-            Users[i] = Student(l[1], l[2])
+        if l[5] == "S":
+            Users[i] = Student(l[1], l[2], l[3], l[4])
 
-    f.close()
+    csv_file.close()
 
     # Should set it so it returns 0 if the file isn't there, then report that to the user.
 
@@ -172,7 +98,7 @@ def SignIn(event):
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + ", but there is someone with an email of" + "Em" + "."))
 
     else:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + "and an email of" + "Em" + "."))
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + " " + "and an email of" + " " + "Em" +  "."))
 
 def SignInForm(Type):
     return Type
@@ -186,21 +112,28 @@ CredFrame.pack()
 
 NameText = StringVar()
 EmailText = StringVar()
+PassText = StringVar()
 
 NameLabel = Label(CredFrame, text="Name")
 EmailLabel = Label(CredFrame, text="Email")
+PassLabel = Label(CredFrame, text="Password")
+
 NameEntry = Entry(CredFrame, textvariable=NameText)
 EmailEntry = Entry(CredFrame, textvariable=EmailText)
+PassEntry = Entry(CredFrame, textvariable=PassText)
 
 NameText.set("Test")
 EmailText.set("Test")
+PassText.set("Pass")
 
 # widgets centered by default, sticky option to change
 NameLabel.grid(row=0, sticky=E)
 EmailLabel.grid(row=1, sticky=E)
+PassLabel.grid(row=2, sticky=E)
 
 NameEntry.grid(row=0, column=1)
 EmailEntry.grid(row=1, column=1)
+PassEntry.grid(row=2, column=1)
 
 checked = 0
 
