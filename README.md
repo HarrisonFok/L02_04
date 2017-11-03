@@ -18,8 +18,6 @@ Info on WeBWorK if anyone wants: https://github.com/openwebwork
 
 Repository Structure:
 ---
-Deliverable 1, 2, 3 reports can be found in the deliverable_reports directory
-
 Deliverable 1: Team Setup.pdf
 Contains information about the team agreement and complete contact information for each team member.
 Completed on September 25, 2017
