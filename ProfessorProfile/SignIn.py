@@ -35,16 +35,15 @@ def readUserFile(filename):
 
     lines = list(csv.reader(csv_file)) # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
 
-    for i in list(csv_file):
-        l = lines[i]
+    for l in lines:
 
         # Could make the user and email pair now, instead of doing it when making the object...
 
         if l[5] == "P":
-            Users[i] = Professor(l[1], l[2], l[3], l[4])
+            Users.append(Professor(l[1], l[2], l[3], l[4]))
 
         if l[5] == "S":
-            Users[i] = Student(l[1], l[2], l[3], l[4])
+            Users.append(Student(l[1], l[2], l[3], l[4]))
 
     csv_file.close()
 
@@ -88,6 +87,10 @@ def SignIn(event):
 
     for Usr in Usrs:
 
+        print(Usr.getName())
+        print(Usr.getEmail())
+        print(Usr.getPassword())
+
         if CurrentUsr is None:
 
             #If we have no idea who the correct user could be...
@@ -119,7 +122,7 @@ def SignIn(event):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
 
     if not (NamEx & EmEx & True):
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + " " + "and an email of" + " " + Em + "."))
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + " " + "and with an email of" + " " + Em + "."))
 
     elif not NamEx:
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is a user that\'s named:' + " " + Nam + " " + ", but they don't have an email of" + " " + Em + "."))
@@ -137,8 +140,6 @@ def SignInForm(Type):
 #### Okay... So bound functions can't take parameters...
 
 root = Tk()
-
-CurrentUsr = None
 
 CredFrame = Frame(root)
 CredFrame.pack()
@@ -184,6 +185,12 @@ if checked: print("hi!") #Do stuff
 global Usrs
 
 Usrs = readUser()
+
+global CurrentUsr
+
+CurrentUsr = None
+
+print(CurrentUsr)
 
 RegisterButton = Button(ButtonFrame, text="Register")
 RegisterButton.bind("<Button-1>", Registering)
