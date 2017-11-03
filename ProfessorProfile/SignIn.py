@@ -81,11 +81,6 @@ def Registering(event):
 
 def SignIn(event):
 
-    Usrs = readUser()
-
-    if Usrs is NoneType:
-        tkinter.messagebox.showinfo('No Users', ('There are no Users. Do you want to register as a user?'))
-
     Nam = NameEntry.get()
 
     Em = EmailEntry.get()
@@ -153,13 +148,18 @@ ButtonFrame.pack(side=BOTTOM)
 
 if checked: print("hi!") #Do stuff
 
+global Usrs
+
+Usrs = readUser()
+
 RegisterButton = Button(ButtonFrame, text="Register")
 RegisterButton.bind("<Button-1>", Registering)
 RegisterButton.pack(side=LEFT)
 
-SignInButton = Button(ButtonFrame, text="Sign In")
-SignInButton.bind("<Button-1>", SignIn)
-SignInButton.pack(side=RIGHT)
+if Usrs is not None:
+    SignInButton = Button(ButtonFrame, text="Sign In")
+    SignInButton.bind("<Button-1>", SignIn)
+    SignInButton.pack(side=RIGHT)
 
 root.mainloop()
 
