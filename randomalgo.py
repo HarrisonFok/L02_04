@@ -1,4 +1,6 @@
 import random
+import io
+import csv
 
 def RandomInRange(L):
     """
@@ -13,35 +15,31 @@ def RandomInRange(L):
     """
     return random.randint(L[0], L[1])
 
-def makeAssignment(Assignment):
-    """
-    !!!to Harrison i dont know where is the lines in ur code to make the assignment.txt
-    read the following code to add them to urs I comment for select questions
+def makeAssignment(L):
+    '''
 
-    :param Assignment: a file Assignment.txt with all selected questions variable unknown
-    :return: 0 but the variable all randomized
-    """
-    Ques = open("question.txt", 'r')
-    allQ = Ques.readlines()
-    # select the questiones in ur way as sel_Q
-    # sel_q is the list of every questions seperated by \n
+    :param L: the list of all the selected questions [[q1], [q2], [q3]]
+    '''
+    result = []
+    for question in L:
+        allrange = question[3].split(',')
+        vals = []
+        for index in allrange:
+            vals.append(RandomInRange(index.split('|')))
+        i = 0
+        for val in vals:
+            old = "VAR"+ str(i)
+            Q_B = question[2]
+            Q_A = question[4]
+            Q_B.replace(old, vals[i])
+            Q_A.replace(old, vals[i])
+            i += 1
+        result.append([question[1], Q_B, Q_A])
+
+    with open("Assignment.csv", "a") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(result)
 
 
-    AS = open("Assignment.txt", 'w')
-    for question in sel_Q:
-        # replace the var with the random value using the range after them and save them in Assignment.txt
-        nl = ""
-        formatq = question
-        while(formatq.find('$')!=-1):
-            left = formatq.find('$')
-            right = formatq.find('$', left + 1)
-            nl += formatq[:left]
-            minv = int(formatq[formatq.find('[') + 1])
-            maxv = int(formatq[formatq.find(']') - 1])
-            L = [minv, maxv]
-            var = str(L.RandomInRange())
-            nl = nl + ' ' + var + ' '
-            formatq = formatq[maxv + 2:]
-        nl += '\n'
-        AS.write(nl)
-    AS.close()
+if __name__ == '__main__':
+    makeAssignment()
