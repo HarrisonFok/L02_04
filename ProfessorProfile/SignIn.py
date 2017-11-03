@@ -119,13 +119,13 @@ def SignIn(event):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
 
     if not (NamEx & EmEx & True):
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + "and an email of" + Em + "."))
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + " " + "and an email of" + " " + Em + "."))
 
     elif not NamEx:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is a user that\'s named:' + " " + Nam + ", but they don't have an email of" + Em + "."))
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is a user that\'s named:' + " " + Nam + " " + ", but they don't have an email of" + " " + Em + "."))
 
     elif not EmEx:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + ", but there is someone with an email of" + Em + "."))
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + " " + ", but there is someone with an email of" + " " + Em + "."))
 
     else:
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + " " + "nor an email of" + " " + Em +  "."))
