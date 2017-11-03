@@ -73,6 +73,11 @@ def Registering(event):
 
 def SignIn(event):
 
+    # Need to declare globals locally, if modifying them, from inside a function?
+
+    global CurrentUsr
+    global Usrs
+
     Nam = NameEntry.get()
 
     Em = EmailEntry.get()
@@ -87,9 +92,9 @@ def SignIn(event):
 
     for Usr in Usrs:
 
-        print(Usr.getName())
-        print(Usr.getEmail())
-        print(Usr.getPassword())
+        #print(Usr.getName())
+        #print(Usr.getEmail())
+        #print(Usr.getPassword())
 
         if CurrentUsr is None:
 
@@ -120,22 +125,16 @@ def SignIn(event):
 
             if (NamEx & EmEx & PassEx & True):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
+                break
 
     if not (NamEx & EmEx & True):
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + " " + "and with an email of" + " " + Em + "."))
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + " " + "nor an email of" + " " + Em +  "."))
 
     elif not NamEx:
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is a user that\'s named:' + " " + Nam + " " + ", but they don't have an email of" + " " + Em + "."))
 
     elif not EmEx:
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + " " + ", but there is someone with an email of" + " " + Em + "."))
-
-    else:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + " " + "nor an email of" + " " + Em +  "."))
-
-
-def SignInForm(Type):
-    return Type
 
 #### Okay... So bound functions can't take parameters...
 
@@ -190,7 +189,7 @@ global CurrentUsr
 
 CurrentUsr = None
 
-print(CurrentUsr)
+#print(CurrentUsr)
 
 RegisterButton = Button(ButtonFrame, text="Register")
 RegisterButton.bind("<Button-1>", Registering)
