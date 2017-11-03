@@ -37,13 +37,13 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
     def display(self):
         # Display every question formula below
-        with open('questions.csv', 'r') as f:
+        with open('questions.txt', 'r') as f:
             # read the file and then split them by newline character
             self.questions = f.read()
             self.allQuestions = self.questions.split('\n')
 
             # add every question to the GUI
-            for i in range(len(self.allQuestions)):
+            for i in range(len(self.allQuestions)-1):
 
                 # display the question
                 self.singleQuestion = tk.Label(self, text=str(i) + ":" + \
@@ -57,7 +57,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
         self.entry.pack()
         
-        self.display_button.config(state = 'disabled')
+        #self.display_button.config(state = 'disabled')
 
     def create_window(self):
         # Create a new window for the assignment
@@ -72,7 +72,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
         # Will call the validation method when the Submit button is pressed
 
         # Read all the questions in questions.txt and split them into a list
-        with open('questions.csv', 'r') as f:
+        with open('questions.txt', 'r') as f:
             self.questions = f.read()
             self.allQuestions = self.questions.split('\n')
             
@@ -83,7 +83,7 @@ following questions to the best of your abilities\n\n", font=("Helvetica", 28))
             
             # If any chosen question numbers appear in the list, add the label
             # to the new screen
-            for questionNum in range(len(self.allQuestions)):
+            for questionNum in range(len(self.allQuestions)-1):
                 if str(questionNum) in chosenQuestionNums:
                     currentQuestion = self.allQuestions[questionNum]\
                         .split('|||')[0].split(':')[1]
