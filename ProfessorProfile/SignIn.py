@@ -1,22 +1,55 @@
 from tkinter import *
 import tkinter.messagebox
+from student import *
+
+## Parent Class for all users
 
 class User():
-    def __init__(self, name, email):
-        self.name = name
-        self.email = email
+    """docstring for Student"""
+	def __init__(self, name, email, password, type):
+		""" Constructor for Student object """
+		self._name = name
+		self._email = email
+		self._password = password
+		self._studentNumber = studentNumber
+		self._type = "S"
+		self._id = int(self.getLatestId())
 
-    def getName(self):
-        return self.name
+	# getters and setters for class attributes
+	def getName(self):
+		return self._name
 
-    def getEmail(self):
-        return self.email
+	def setName(self, name):
+		this._name = name
 
-    def setName(self, name):
-        self.name = name
+	def getEmail(self):
+		return self._email
 
-    def setEmail(self, email):
-        self.email = email
+	def setEmail(self, email):
+		this._email = email
+
+	def getPassword(self):
+		return self._password
+
+	def setPassword(self, password):
+		this._password = password
+
+	def getType(self):
+		return self._type
+
+	def getId(self):
+		return self._id
+
+	# CSV HELPER METHODS
+	def getLatestId(self):
+	    """ Returns the last student ID in the csv file. """
+	    csv_file = open("Students.csv", "r")
+	    reader = csv.reader(csv_file)
+	    # else, calculate the number of rows
+	    rowCount = len(list(reader))
+	    # close CSV file
+	    csv_file.close()
+	    return rowCount
 
 class Professor(User):
     def __init__(self, name, email):
@@ -24,8 +57,34 @@ class Professor(User):
 
 
 class Student(User):
-    def __init__(self, name, email):
-        User.__init__(self, name, email)
+    """docstring for Student"""
+
+    def __init__(self, name, email, password, studentNumber):
+	""" Constructor for Student object """
+	User.__init__(self, name, email, password, "S")
+	self._studentNumber = studentNumber
+
+    def getStudentNumber(self):
+	return self._studentNumber
+
+    def setStudentNumber(self, sn):
+	this._studentNumber = sn
+
+    def insertStudent(self):
+	""" Inserts student's information into the CSV file """
+	# prepare data
+	data = []
+	data.append(self.getId())
+	data.append(self.getName())
+	data.append(self.getEmail())
+	data.append(self.getPassword())
+	data.append(self.getStudentNumber())
+	data.append(self.getType())
+	# insert data into the csv file
+	csv_file = open("Students.csv", "a")
+	writer = csv.writer(csv_file)
+	writer.writerow(data)
+	csv_file.close()
 
 def writeUser(User):
     writeUserFile("Users.txt", User)
