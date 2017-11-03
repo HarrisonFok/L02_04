@@ -5,7 +5,7 @@ class User():
     def __init__(self, name, email):
         self.name = name
         self.email = email
-        
+
     def getName(self):
         return self.name
 
@@ -42,15 +42,15 @@ def writeUserFile(filename, User):
 
 def readUser():
     readUserFile("Users.txt")
-    
+
 def readUserFile(filename):
     f = open(filename, "r")
 
     Users = []
-    
+
     lines = f.readlines()
-    
-    for i in len(lines):
+
+    for i in range(len(lines)):
         l = line.split()
 
         # Could make the user and email pair now, instead of doing it when making the object...
@@ -64,14 +64,14 @@ def readUserFile(filename):
     f.close()
 
     # Should set it so it returns 0 if the file isn't there, then report that to the user.
-    
+
     return Users
 
 ## Remember, Python or Tkinter or whatever doesn't check if these frames exist. these functions, when called by a buttonpress, act as if they're in the same scope as the button, or something.
 
 def Registering(event):
     ButtonFrame.pack_forget()
-    
+
     PassFrame = Frame(BottomFrame)
     PassFrame.pack(side=BOTTOM)
 
@@ -80,15 +80,18 @@ def Registering(event):
     button_1.pack()
 
 def SignIn(event):
-    
+
     Usrs = readUser()
-    
+
+    if Usrs is NoneType:
+        tkinter.messagebox.showinfo('No Users', ('There are no Users. Do you want to register as a user?'))
+
     Nam = NameEntry.get()
-    
+
     Em = EmailEntry.get()
 
     # Check if either name or email exist separately. Bad for security? Maybe not.
-    
+
     NamEx = 0
     EmEx = 0
 
@@ -96,16 +99,16 @@ def SignIn(event):
         if ((Usr.getName() == Nam) & (Usr.getEmail() == Em)):
             tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
             break
-    
+
     if (NamEx & EmEx):
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + "and an email of" + "Em" + "."))
-        
+
     elif NamEx:
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is a user that\'s named:' + " " + Nam + ", but they don't have an email of" + "Em" + "."))
-    
+
     elif EmEx:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + ", but there is someone with an email of" + "Em" + "."))    
-    
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s named:' + " " + Nam + ", but there is someone with an email of" + "Em" + "."))
+
     else:
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + "and an email of" + "Em" + "."))
 
