@@ -73,7 +73,7 @@ def Registering(event):
 
 def SignIn(event):
 
-    # Need to declare globals locally, if modifying them, from inside a function?
+    # It appears that we need to declare globals locally, if we're modifying them, from inside a function. Not sure if true, but haven't found a workaround.
 
     global CurrentUsr
     global Usrs
@@ -83,8 +83,6 @@ def SignIn(event):
     Em = EmailEntry.get()
 
     Pass = PassEntry.get()
-
-    # Check if either name or email exist separately. Bad for security? Maybe not.
 
     NamEx = False
     EmEx = False
