@@ -61,6 +61,7 @@ class Student(object):
 		csv_file.close()
 
 	def getLatestId(self):
+		""" Returns the last student ID in the csv file. """
 		csv_file = open("Students.csv", "r")
 		reader = csv.reader(csv_file)
 		# else, calculate the number of rows
