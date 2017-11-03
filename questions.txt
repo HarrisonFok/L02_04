@@ -1,1 +1,0 @@
-Topic_3 MCQ_52784881 2_Vars: What is $VAR0$ + $VAR1$? ||| Answer Formula:VAR0 + VAR1
