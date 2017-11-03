@@ -86,19 +86,37 @@ def SignIn(event):
     EmEx = False
     PassEx = False
 
-    Correct = set()
-
     for Usr in Usrs:
 
-        if (Usr.getName() == Nam):
-            NamEx = True
+        if CurrentUsr is None:
 
+            #If we have no idea who the correct user could be...
 
-        if (Usr.getEmail() == Em):
-            EmEx = True
+            if (Usr.getName() == Nam):
+                NamEx = True
+                CurrentUsr = Usr
 
-        if (Usr.getPassword() == Pass):
-            PassEx = True
+            if (Usr.getEmail() == Em):
+                EmEx = True
+                CurrentUsr = Usr
+
+            if (Usr.getPassword() == Pass):
+                PassEx = True
+                CurrentUsr = Usr
+
+        if not (CurrentUsr is None):
+
+            if (Usr.getName() == Nam):
+                NamEx = True
+
+            if (Usr.getEmail() == Em):
+                EmEx = True
+
+            if (Usr.getPassword() == Pass):
+                PassEx = True
+
+            if (NamEx & EmEx & PassEx & True):
+                tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
 
     if not (NamEx & EmEx):
         tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user that\'s both named:' + " " + Nam + "and an email of" + Em + "."))
@@ -117,10 +135,9 @@ def SignIn(event):
         continue
 
     else:
-        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + " " + "and an email of" + " " + Em +  "."))
+        if
+        tkinter.messagebox.showinfo('Invalid Credentials', ('There is no user with the name of:' + " " + Nam + " " + "nor an email of" + " " + Em +  "."))
 
-    tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
-    break
 
 def SignInForm(Type):
     return Type
@@ -128,6 +145,8 @@ def SignInForm(Type):
 #### Okay... So bound functions can't take parameters...
 
 root = Tk()
+
+CurrentUsr = None
 
 CredFrame = Frame(root)
 CredFrame.pack()
