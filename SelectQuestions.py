@@ -36,6 +36,8 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         self.chosenQuestions = []
         
         self.questionNumPair = {}
+        
+        self.passList = []
 
     def display(self):
         # Read all the questions in questions.csv and display them on the
@@ -61,24 +63,24 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         assignmentWindow = tk.Toplevel(self)
         root.withdraw()
         assignmentWindow.wm_title("ASSIGNMENT")
-
-        # Get the list of question numbers the user chose and search in the 
-        # text file
+        
         chosenQuestionNums = self.entry.get()
         questionNumChosen = chosenQuestionNums.split(',')
         
-        # Will call the validation method when the Submit button is pressed
-        
-        # Get the questions and store them in self.chosenQuestions
-        for key, value in self.questionNumPair.items():
-            for chosenNum in questionNumChosen:
-                if str(key).strip() == str(chosenNum).strip():
-                    # Add the question into self.chosenQuestions in the way
-                    # that makeAssignment requires
-                    self.chosenQuestions.append([self.questionNumPair.get(key)])
+        with open("questions.csv", "r") as csvFile:
+            reader = csv.reader(csvFile, delimiter="\n")
+            for row in reader:
+                for num in questionNumChosen:
+                    if num.strip() in row[0]:
+                        self.chosenQuestions.append(row[0])
+
+        # For every element in self.chosenQuestions, split it by comma
+        for csvInfo in self.chosenQuestions:
+            indivList = csvInfo.split(',')
+            self.passList.append(indivList)
         
         # Make an assignment and store it inside Assignment.csv
-        makeAssignment(self.chosenQuestions)
+        self.makeAssignment(self.passList)
 
     def RandomInRange(L):
         """
