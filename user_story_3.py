@@ -6,7 +6,11 @@ root = Tk()
 def MCQ():
     li = [0]
     def write_questions():
-        nq = (str(random.randrange(10000000,99999999)),get_topic(), 'MCQ', new_question.get('1.0',END).strip(), answer_formula.get('1.0',END))
+        new_q = new_question.get('1.0',END).strip()
+        # get the range
+        varRanges = getRange(new_q)
+
+        nq = (str(random.randrange(10000000,99999999)),get_topic(), 'MCQ', new_q, varRanges, answer_formula.get('1.0',END))
         fh = open('questions.csv', 'a')
         writer = csv.writer(fh, delimiter=',')
         writer.writerow(nq)
@@ -25,7 +29,21 @@ def MCQ():
         answer_formula.insert("insert", " / ")
     def get_topic():
         return topic_num.get()
-        
+
+    def getRange(new_q):
+        ''' Parses the new variables for their ranges '''
+        varRanges = ""
+        for i in range(len(new_q)):
+            if new_q[i].isnumeric():
+                if (new_q[i-1] != 'R'):
+                    varRanges += new_q[i]
+            elif new_q[i] == ",":
+                varRanges += "|"
+            elif new_q[i] == ")":
+                varRanges += ","
+
+        return varRanges[:len(varRanges)-1]
+
     question_window = Toplevel(root)
     question_window.geometry('600x530')
     question_window.title('Multiple Choice window')
@@ -75,9 +93,12 @@ def MCQ():
     
 def FBQ():
     li = [0]
-    
+    new_q = new_question.get('1.0',END).strip()
+    # get the range
+    varRanges = getRange(new_q)
+
     def write_questions():
-        nq = (str(random.randrange(10000000,99999999)),get_topic(), 'FBQ', new_question.get('1.0',END).strip(), answer_formula.get('1.0',END))
+        nq = (str(random.randrange(10000000,99999999)),get_topic(), 'FBQ', new_q, varRanges, answer_formula.get('1.0',END))
         fh = open('questions.csv', 'a')
         writer = csv.writer(fh, delimiter=',')
         writer.writerow(nq)
