@@ -65,7 +65,6 @@ def SignIn(event):
     PassEx = False
 
     for Usr in Usrs:
-        print(Usr.getName() + ", " + Usr.getType())
 
         if CurrentUsr is None:
 
