@@ -92,7 +92,7 @@ global UserAttribs, StudAttribs, ProfAttribs # User, Student, and Professor Attr
 
 UserAttribs = {"Name":[], "Email":[]}
 
-UserWords = [StringVar()]*len(UserAttribs)
+UserWords = [StringVar()]*len(UserAttribs) ## This is where it breaks. I have no idea why I can't use StringVar() like this...
 
 FormFrame(UserAttribs, UserWords, root)
 
