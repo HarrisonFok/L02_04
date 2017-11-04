@@ -8,6 +8,7 @@ try:
 except ImportError:
     # for Python3
     import tkinter as tk
+    
 import random
 import io
 import csv
@@ -64,9 +65,11 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         root.withdraw()
         assignmentWindow.wm_title("ASSIGNMENT")
         
+        # Get the user input
         chosenQuestionNums = self.entry.get()
         questionNumChosen = chosenQuestionNums.split(',')
         
+        # Get the chosen questions and append to the list self.chosenQuestions
         with open("questions.csv", "r") as csvFile:
             reader = csv.reader(csvFile, delimiter="\n")
             for row in reader:
@@ -79,7 +82,7 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
             indivList = csvInfo.split(',')
             
             # Add the element at index 5 with the one at index 4
-            indivList[4] = indivList[4] + "," + indivList[5]
+            indivList[4] = indivList[4] + ", " + indivList[5]
             
             # Delete the 5th element
             del indivList[5]
@@ -89,7 +92,7 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         # Make an assignment and store it inside Assignment.csv
         self.makeAssignment(self.passList)
 
-    def RandomInRange(L):
+    def RandomInRange(self, L):
         """
         len(L) == 2
         list[int(min), int(max)] -> int
@@ -100,7 +103,7 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         """
         return random.randint(L[0], L[1])
     
-    def makeAssignment(L):
+    def makeAssignment(self, L):
         '''
         :param L: the list of all the selected questions [[q1], [q2], [q3]]
         '''
@@ -109,7 +112,7 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
             allrange = question[3].split(',')
             vals = []
             for index in allrange:
-                vals.append(RandomInRange(index.split('|')))
+                vals.append(self.RandomInRange(index.split('|')))
             i = 0
             for val in vals:
                 old = "VAR"+ str(i)
