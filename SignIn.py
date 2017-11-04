@@ -1,32 +1,13 @@
 from tkinter import *
 import tkinter.messagebox
 from Student import *
+from Professor import *
 import StudentProfileIndex
+import ProfessorProfileIndex
 import csv
 import io
 
 ## Parent Class for all users
-
-class User(Student):
-    def __init__(self, name, email, password, studentNumber):
-        Student.__init__(self, name, email, password, studentNumber)
-
-class Professor(User):
-    def __init__(self, name, email, password, studentNumber):
-        User.__init__(self, name, email, password, studentNumber)
-
-def writeUser(User):
-    writeUserFile("Users.csv", User)
-
-def writeUserFile(filename, User):
-    f = open(filename, "w")
-
-    if isinstance(User, Student):
-        f.writelines("S" + " " + User.getName() + " " + User.getEmail())
-
-    if isinstance(User, Professor):
-        f.writelines("P" + " " + User.getName() + " " + User.getEmail())
-    f.close()
 
 def readUser():
     return readUserFile("Users.csv")
@@ -44,23 +25,27 @@ def readUserFile(filename):
 
         if l[5] == "P":
             Users.append(Professor(l[1], l[2], l[3], l[4]))
-
-        if l[5] == "S":
+        elif l[5] == "S":
             Users.append(Student(l[1], l[2], l[3], l[4]))
 
     csv_file.close()
-
     # Should set it so it returns 0 if the file isn't there, then report that to the user.
 
     return Users
 
 ## Remember, Python or Tkinter or whatever doesn't check if these frames exist. these functions, when called by a buttonpress, act as if they're in the same scope as the button, or something.
 
-def Registering(event):
+def StudentRegistering(event):
     """ Execute the registration menu """
 
     newWindow = Toplevel()
     StudentProfileIndex.signUpIndex(newWindow)
+
+def ProfessorRegistering(event):
+    """ Execute the registration menu """ 
+
+    newWindow = Toplevel()
+    ProfessorProfileIndex.signUpIndex(newWindow)
 
 def SignIn(event):
 
@@ -80,10 +65,11 @@ def SignIn(event):
     PassEx = False
 
     for Usr in Usrs:
+        print(Usr.getName() + ", " + Usr.getType())
+
         if CurrentUsr is None:
 
             #If we have no idea who the correct user could be...
-            print(Usr.getName())
             if (Usr.getEmail() == Em):
                 EmEx = True
                 CurrentUsr = Usr
@@ -105,7 +91,11 @@ def SignIn(event):
 
                 # open a new window with the credentials of the user
                 newWindow = Toplevel()
-                StudentProfileIndex.displayProfile(newWindow, Usr)
+                if Usr.getType() == 'S':
+                    StudentProfileIndex.displayProfile(newWindow, Usr)
+                elif Usr.getType() == 'P':
+                    ProfessorProfileIndex.displayProfile(newWindow, Usr)
+
                 newWindow.geometry("400x400")
                 break
 
@@ -157,9 +147,13 @@ global CurrentUsr
 
 CurrentUsr = None
 
-RegisterButton = Button(ButtonFrame, text="Register")
+RegisterButton = Button(ButtonFrame, text="Student Registration")
 RegisterButton.pack(side=LEFT)
-RegisterButton.bind("<Button-1>", Registering)
+RegisterButton.bind("<Button-1>", StudentRegistering)
+
+RegisterButton = Button(ButtonFrame, text="Professor Registration")
+RegisterButton.pack(side=LEFT)
+RegisterButton.bind("<Button-1>", ProfessorRegistering)
 
 SignInButton = Button(ButtonFrame, text="Sign In")
 SignInButton.bind("<Button-1>", SignIn)

@@ -3,8 +3,8 @@ from User import *
 class Professor(User):
 	"""docstring for Professor"""
 	def __init__(self, name, email, password, employeeNumber):
-		""" Constructor for Student object """
-		super().__init__(name, email, password, employeeNumber, "T")
+		""" Constructor for Professor object """
+		super().__init__(name, email, password, employeeNumber, "P")
 		self._courses = []
 
 	def insertProfessor(self):
