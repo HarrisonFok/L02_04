@@ -2,6 +2,82 @@ import random
 import io
 import csv
 
+
+# judgment a char is a operation or not
+def is_operation(oper):
+    if oper == '+' or oper == '-' or oper == '*' or oper == '/':
+        return True
+    else:
+        return False
+
+
+# split expression
+def mixed_operation(exp):
+    exp_list = list(exp)
+    temp = ''
+    behavor_list = []
+    i = 0
+    length = len(exp_list)
+    for item in exp_list:
+        if is_operation(item):
+            behavor_list.append(int(temp))
+            behavor_list.append(item)
+            temp = ''
+        else:
+            temp += item
+
+        if i == length - 1:
+            behavor_list.append(int(temp))
+            break;
+
+        i += 1
+
+    return behavor_list
+
+
+# cal a o b
+def get_aob(a, o, b):
+    if o == '+':
+        return a + b
+    elif o == '-':
+        return a - b
+    elif o == '*':
+        return a * b
+    elif o == '/':
+        return a / b
+
+
+# Calculation op1 and op2('*' and '/' or '+' and '-')
+def cal_op1_op2(exp_list, op1, op2):
+    if len(exp_list) == 1:
+        return exp_list
+
+    i = 0
+    has_op = False
+    for i in range(2, len(exp_list), 2):
+        a = exp_list[i - 2]
+        o = exp_list[i - 1]
+        b = exp_list[i]
+        if o == op1 or o == op2:
+            has_op = True
+            exp_list[i - 2] = get_aob(a, o, b)
+            del exp_list[i]
+            del exp_list[i - 1]
+            break
+
+    if has_op == False:
+        return exp_list
+
+    return cal_op1_op2(exp_list, op1, op2)
+
+
+# cal exp
+def cal_exp(exp_list):
+    exp_list = cal_op1_op2(exp_list, '*', '/')
+    exp_list = cal_op1_op2(exp_list, '+', '-')
+
+    return exp_list[0]
+
 def RandomInRange(L):
     """
     len(L) == 2
@@ -34,7 +110,8 @@ def makeAssignment(L):
             Q_B = Q_B.replace(old, str(vals[i]))
             Q_A = Q_A.replace(old, str(vals[i]))
             i += 1
-        result.append([question[0], question[2], Q_B, Q_A])
+        answer = cal_exp(mixed_operation(Q_A))
+        result.append([question[0], question[2], Q_B, answer])
 
     with open("Assignment.csv", "a") as csvfile:
         writer = csv.writer(csvfile)
