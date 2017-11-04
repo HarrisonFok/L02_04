@@ -77,6 +77,13 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         # For every element in self.chosenQuestions, split it by comma
         for csvInfo in self.chosenQuestions:
             indivList = csvInfo.split(',')
+            
+            # Add the element at index 5 with the one at index 4
+            indivList[4] = indivList[4] + "," + indivList[5]
+            
+            # Delete the 5th element
+            del indivList[5]
+            
             self.passList.append(indivList)
         
         # Make an assignment and store it inside Assignment.csv
