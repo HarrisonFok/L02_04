@@ -86,7 +86,7 @@ def displayProfile(root, user):
 	""" Display the information about a user in a window with these widgets. """
 	nameLabel = Label(root, text="Name: " + user.getName()).pack()
 	emailLabel = Label(root, text="Email: " + user.getEmail()).pack()
-	studentNumLabel = Label(root, text="Student Number: " + user.getStudentNumber()).pack()
+	studentNumLabel = Label(root, text="Student Number: " + user.getPersonnelNumber()).pack()
 
 
 

@@ -2,6 +2,9 @@ from tkinter import *
 import tkinter.messagebox
 from Student import *
 import StudentProfileIndex
+import csv
+import io
+
 ## Parent Class for all users
 
 class User(Student):
@@ -13,7 +16,7 @@ class Professor(User):
         User.__init__(self, name, email, password, studentNumber)
 
 def writeUser(User):
-    writeUserFile("Students.csv", User)
+    writeUserFile("Users.csv", User)
 
 def writeUserFile(filename, User):
     f = open(filename, "w")
@@ -26,10 +29,10 @@ def writeUserFile(filename, User):
     f.close()
 
 def readUser():
-    return readUserFile("Students.csv")
+    return readUserFile("Users.csv")
 
 def readUserFile(filename):
-    csv_file = open("Students.csv", "r")
+    csv_file = open("Users.csv", "r")
 
     Users = []
 
