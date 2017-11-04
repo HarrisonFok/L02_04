@@ -40,8 +40,6 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         # This will be the list of actual questions chosen
         self.chosenQuestions = []
         
-        #self.questionEntries = []
-        
         self.assignmentAnswerEntry = None
 
     def display(self):
@@ -85,16 +83,13 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         # Read from Assignment.csv and display the questions to the window
         with open('Assignment.csv', 'r') as assignmentFile:
             for question in csv.reader(assignmentFile):
-                questionEntry = tk.Label(self.assignmentWindow, text=question[2],\
-                         font=("Helvetica", 28))
+                questionEntry = tk.Label(self.assignmentWindow, \
+                                         text=question[2],\
+                                         font=("Helvetica", 28))
                 questionEntry.pack()
                 
-                #self.questionEntries.append(questionEntry)
-                
-                #tk.Entry(assignmentWindow).pack()
-                
-        tk.Button(self.assignmentWindow, text="Hand in", font=("Helvetica", 28),\
-                  command=self.validate).pack()
+        tk.Button(self.assignmentWindow, text="Hand in", \
+                  font=("Helvetica", 28), command=self.validate).pack()
         
         self.assignmentAnswersEntry = tk.Entry(self.assignmentWindow, \
                                               font=("Helvetica", 28))
@@ -107,50 +102,17 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         assignmentAnswersList = [x.strip() for x in \
                                  assignmentAnswers.split(',')]
         
+        # For every student answer in assignmentAnswersList, compare them with
+        # the answers        
         with open('Assignment.csv', 'r') as assignmentFile:
             for question in csv.reader(assignmentFile):
                 if question[3] in assignmentAnswersList:
                     tk.Label(self.assignmentWindow, text="Correct").pack()
                 else:
                     tk.Label(self.assignmentWindow, text="Wrong").pack()
-        # For every student answer in assignmentAnswersList, compare them with
-        # the answers
 
 root = tk.Tk()
 root.geometry('%sx%s' % (2000, 2000))
 main = SelectQuestions(root)
 main.pack(side="top", fill="both", expand=True)
 root.mainloop()
-
-'''
-self.question = tk.Label(assignmentWindow, text=\
-                         self.questionNumPair.get(key),\
-                         font=("Helvetica", 28))
-self.question.pack()
-'''
-
-'''
-if row[0].strip() in questionNumChosen:
-    self.chosenQuestions.append(row[0])
-'''
-'''
-for row in reader:
-    for num in questionNumChosen:
-        if num.strip() in row[0]:
-            self.chosenQuestions.append(row[0])
-'''
-        #reader = csv.reader(csvFile, delimiter="\n")
-
-    # For every element in self.chosenQuestions, split it by comma
-    #for csvInfo in self.chosenQuestions:
-        #csvInfo.replace('"', '')
-        
-        #indivList = csvInfo.split(',')
-        
-        # Add the element at index 5 with the one at index 4
-        #indivList[4] = indivList[4] + ', ' + indivList[5]
-        
-        # Delete the 5th element
-        #del indivList[5]
-        
-        #self.passList.append(indivList)
