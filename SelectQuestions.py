@@ -35,12 +35,14 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         
         self.assignmentEntry = None
         
+        self.assignmentWindow = None
+        
         # This will be the list of actual questions chosen
         self.chosenQuestions = []
         
-        self.questionNumPair = {}
+        #self.questionEntries = []
         
-        self.passList = []
+        self.assignmentAnswerEntry = None
 
     def display(self):
         # Read all the questions in questions.csv and display them on the
@@ -49,7 +51,6 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
             reader = csv.reader(csvFile, delimiter="\n")
             for row in reader:
                 splitRow = row[0].split(',')
-                self.questionNumPair[splitRow[0]] = splitRow[3]
                 self.singleQuestion = tk.Label(self, text=splitRow[0] + ":" + \
                                                splitRow[3],\
                                                font=("Helvetica", 28))
@@ -62,10 +63,11 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
             self.display_button.config(state = 'disabled')
 
     def create_window(self):
+        # FIX: WHEN QUESTIONS SPAN MORE THAN THE SCREEN, UNABLE TO SCROLL DOWN
         # Create a new window for the assignment
-        assignmentWindow = tk.Toplevel(self)
+        self.assignmentWindow = tk.Toplevel(self)
         root.withdraw()
-        assignmentWindow.wm_title("ASSIGNMENT")
+        self.assignmentWindow.wm_title("ASSIGNMENT")
         
         # Get the user input
         chosenQuestionNums = self.entry.get()
@@ -76,12 +78,43 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
             for lineList in csv.reader(csvFile):
                 self.chosenQuestions.append(lineList)
         
-        # Make an assignment and store it inside Assignment.csv
+        # Make an assignment and store it inside Assignment.csv (using the
+        # function in randomalgo.py)
         makeAssignment(self.chosenQuestions)
+        
+        # Read from Assignment.csv and display the questions to the window
+        with open('Assignment.csv', 'r') as assignmentFile:
+            for question in csv.reader(assignmentFile):
+                questionEntry = tk.Label(self.assignmentWindow, text=question[2],\
+                         font=("Helvetica", 28))
+                questionEntry.pack()
+                
+                #self.questionEntries.append(questionEntry)
+                
+                #tk.Entry(assignmentWindow).pack()
+                
+        tk.Button(self.assignmentWindow, text="Hand in", font=("Helvetica", 28),\
+                  command=self.validate).pack()
+        
+        self.assignmentAnswersEntry = tk.Entry(self.assignmentWindow, \
+                                              font=("Helvetica", 28))
+        self.assignmentAnswersEntry.pack()
 
     def validate(self):
-        # TODO later
-        pass
+        # I AM ASSUMING THAT STUDENTS WILL ANSWER EVERY QUESTION
+        assignmentAnswers = self.assignmentAnswersEntry.get()
+        #assignmentAnswersList = assignmentAnswers.split(',')
+        assignmentAnswersList = [x.strip() for x in \
+                                 assignmentAnswers.split(',')]
+        
+        with open('Assignment.csv', 'r') as assignmentFile:
+            for question in csv.reader(assignmentFile):
+                if question[3] in assignmentAnswersList:
+                    tk.Label(self.assignmentWindow, text="Correct").pack()
+                else:
+                    tk.Label(self.assignmentWindow, text="Wrong").pack()
+        # For every student answer in assignmentAnswersList, compare them with
+        # the answers
 
 root = tk.Tk()
 root.geometry('%sx%s' % (2000, 2000))
