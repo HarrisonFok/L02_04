@@ -1,17 +1,19 @@
 from tkinter import *
 import random
+import csv
+
 root = Tk()
-QID = 00000000
 def MCQ():
     li = [0]
     def write_questions():
-        nq = get_topic() + ' MCQ'+"_"+str(random.randrange(10000000,99999999)) +" " +str(li[0]) +"_Vars" +": " + new_question.get('1.0',END).strip() +' ||| Answer Formula:'+ answer_formula.get('1.0',END)
-        fh = open('questions.txt', 'a')
-        fh.write(nq)
+        nq = (str(random.randrange(10000000,99999999)),get_topic(), 'MCQ', new_question.get('1.0',END).strip(), answer_formula.get('1.0',END))
+        fh = open('questions.csv', 'a')
+        writer = csv.writer(fh, delimiter=',')
+        writer.writerow(nq)
         fh.close()
         question_window.destroy()
     def insert_var():
-        new_question.insert("insert", " VAR"+str(li[0])+' ')
+        new_question.insert("insert", " VAR"+str(li[0])+"(min, max)"+ ' ')
         li[0]+=1
     def insert_plus():
         answer_formula.insert("insert", " + ")
@@ -75,13 +77,14 @@ def FBQ():
     li = [0]
     
     def write_questions():
-        nq = get_topic() + ' FBQ'+"_"+str(random.randrange(10000000,99999999)) +" " +str(li[0]) +"_Vars" +": " + new_question.get('1.0',END).strip() +' ||| Answer Formula:'+ answer_formula.get('1.0',END)
-        fh = open('questions.txt', 'a')
-        fh.write(nq)
+        nq = (str(random.randrange(10000000,99999999)),get_topic(), 'FBQ', new_question.get('1.0',END).strip(), answer_formula.get('1.0',END))
+        fh = open('questions.csv', 'a')
+        writer = csv.writer(fh, delimiter=',')
+        writer.writerow(nq)
         fh.close()
         question_window.destroy()
     def insert_var():
-        new_question.insert("insert", " VAR"+str(li[0])+' ')
+        new_question.insert("insert"," VAR"+str(li[0])+"(min, max)"+ ' ')
         li[0]+=1
     def insert_plus():
         answer_formula.insert("insert", " + ")
