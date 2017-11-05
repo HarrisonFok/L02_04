@@ -1,4 +1,5 @@
 from User import *
+from QuestionMake import *
 
 class Professor(User):
 	"""docstring for Professor"""
@@ -19,3 +20,6 @@ class Professor(User):
 
 	def getAllCourses(self):
 		return self._courses
+	
+	def QuestionMake(self):
+		QuestionMakeScreen()
