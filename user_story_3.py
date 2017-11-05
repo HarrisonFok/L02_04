@@ -3,6 +3,21 @@ import random
 import csv
 
 root = Tk()
+
+def getRange(new_q):
+        ''' Parses the new variables for their ranges '''
+        varRanges = ""
+        for i in range(len(new_q)):
+            if new_q[i].isnumeric():
+                if (new_q[i-1] != 'R'):
+                    varRanges += new_q[i]
+            elif new_q[i] == ",":
+                varRanges += "|"
+            elif new_q[i] == ")":
+                varRanges += ","
+
+        return varRanges[:len(varRanges)-1]
+
 def MCQ():
     li = [0]
     def write_questions():
@@ -30,20 +45,6 @@ def MCQ():
     def get_topic():
         return topic_num.get()
 
-    def getRange(new_q):
-        ''' Parses the new variables for their ranges '''
-        varRanges = ""
-        for i in range(len(new_q)):
-            if new_q[i].isnumeric():
-                if (new_q[i-1] != 'R'):
-                    varRanges += new_q[i]
-            elif new_q[i] == ",":
-                varRanges += "|"
-            elif new_q[i] == ")":
-                varRanges += ","
-
-        return varRanges[:len(varRanges)-1]
-
     question_window = Toplevel(root)
     question_window.geometry('600x530')
     question_window.title('Multiple Choice window')
@@ -57,7 +58,7 @@ def MCQ():
     topic.pack()
     topic.place(bordermode=OUTSIDE, x=10, y=50)
     
-    Label(question_window, text='Type your quetion here: ', font=20,pady=20).pack()
+    Label(question_window, text='Type your question here: ', font=20,pady=20).pack()
     new_question = Text(question_window, width=40, height=10)
     new_question.pack()
     
@@ -93,11 +94,12 @@ def MCQ():
     
 def FBQ():
     li = [0]
-    new_q = new_question.get('1.0',END).strip()
-    # get the range
-    varRanges = getRange(new_q)
 
     def write_questions():
+        new_q = new_question.get('1.0',END).strip()
+        # get the range
+        varRanges = getRange(new_q)
+
         nq = (str(random.randrange(10000000,99999999)),get_topic(), 'FBQ', new_q, varRanges, answer_formula.get('1.0',END))
         fh = open('questions.csv', 'a')
         writer = csv.writer(fh, delimiter=',')
