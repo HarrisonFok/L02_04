@@ -166,19 +166,16 @@ def FBQ():
     exit_button.pack(side=LEFT,padx=50)
 
 
+def QuestionMakeScreen():
 
-
-top_Label = Label(root, text = 'Choose your question type here:')
-
+    top_Label = Label(root, text = 'Choose your question type here:')
  
-button1=Button(text="Multiple Choice", command=MCQ)
-button2=Button(text="Fill in the blanks", command=FBQ)
+    button1=Button(text="Multiple Choice", command=MCQ)
+    button2=Button(text="Fill in the blanks", command=FBQ)
 
+    root.title("Create Questions")
+    top_Label.pack()
+    button1.pack(side = LEFT)
+    button2.pack(side = LEFT)
 
-
-root.title("Create Questions")
-top_Label.pack()
-button1.pack(side = LEFT)
-button2.pack(side = LEFT)
-
-root.mainloop()
+    root.mainloop()
