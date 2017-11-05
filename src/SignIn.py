@@ -4,6 +4,7 @@ from Student import *
 from Professor import *
 import StudentProfileIndex
 import ProfessorProfileIndex
+import OptionsMenu
 import csv
 import io
 
@@ -92,12 +93,15 @@ def SignIn(event):
                 newWindow = Toplevel()
                 if Usr.getType() == 'S':
                     StudentProfileIndex.displayProfile(newWindow, Usr)
+                    
                 elif Usr.getType() == 'P':
                     ProfessorProfileIndex.displayProfile(newWindow, Usr)
+                    
+                    OptionsMenu.ProfessorOptions()
 
                 newWindow.geometry("400x400")
                 break
-
+                
     if not (EmEx and PassEx):
         tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
 
