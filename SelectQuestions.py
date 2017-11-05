@@ -61,6 +61,10 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
             self.display_button.config(state = 'disabled')
 
     def create_window(self):
+        # If the user input is empty, quit the method
+        if (len(questionNumChosen) == 1 and questionNumChosen[0] == ""):
+            return
+        
         # FIX: WHEN QUESTIONS SPAN MORE THAN THE SCREEN, UNABLE TO SCROLL DOWN
         # Create a new window for the assignment
         self.assignmentWindow = tk.Toplevel(self)
