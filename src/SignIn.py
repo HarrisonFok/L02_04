@@ -2,7 +2,6 @@ from tkinter import *
 import tkinter.messagebox
 from Student import *
 from Professor import *
-import StudentProfileIndex
 import ProfessorProfileIndex
 import csv
 import io
@@ -39,13 +38,16 @@ def StudentRegistering(event):
     """ Execute the registration menu """
 
     newWindow = Toplevel()
-    StudentProfileIndex.signUpIndex(newWindow)
+    Stud = Student()
+    Stud.signUpIndex(newWindow)
 
 def ProfessorRegistering(event):
-    """ Execute the registration menu """ 
+    """ Execute the registration menu """
 
     newWindow = Toplevel()
-    ProfessorProfileIndex.signUpIndex(newWindow)
+
+    Prof = Professor()
+    Prof.signUpIndex(newWindow)
 
 def SignIn(event):
 
@@ -60,40 +62,19 @@ def SignIn(event):
 
     Pass = PassEntry.get()
 
-    # Check if either name or email exist separately. Bad for security? Maybe not.
-    EmEx = False
-    PassEx = False
-
     for Usr in Usrs:
 
-        if CurrentUsr is None:
-
-            #If we have no idea who the correct user could be...
-            if (Usr.getEmail() == Em):
-                EmEx = True
+        if ((Usr.getEmail() == Em) & (Usr.getPassword() == Pass)):
                 CurrentUsr = Usr
 
-            if (Usr.getPassword() == Pass):
-                PassEx = True
-                CurrentUsr = Usr
-
-        if not (CurrentUsr is None):
-
-            if (Usr.getEmail() == Em):
-                EmEx = True
-
-            if (Usr.getPassword() == Pass):
-                PassEx = True
-
-            if (EmEx & PassEx):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
 
                 # open a new window with the credentials of the user
                 newWindow = Toplevel()
-                if Usr.getType() == 'S':
-                    StudentProfileIndex.displayProfile(newWindow, Usr)
-                elif Usr.getType() == 'P':
-                    ProfessorProfileIndex.displayProfile(newWindow, Usr)
+
+                # Both Student and Professor share the display profile method, so you don't need to sort through them.
+
+                Usr.displayProfile(newWindow, Usr)
 
                 newWindow.geometry("400x400")
                 break
