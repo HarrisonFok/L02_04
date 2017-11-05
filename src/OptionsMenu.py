@@ -1,8 +1,8 @@
 from tkinter import *
-import QuestionMake as *
+from QuestionMake import *
 
 def ProfessorOptions():
   QuestionMakeScreen()
-  
+
 def StudentOptions():
   None
