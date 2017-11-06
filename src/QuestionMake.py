@@ -2,8 +2,6 @@ from tkinter import *
 import random
 import csv
 
-root = Tk()
-
 def getRange(new_q):
         ''' Parses the new variables for their ranges '''
         varRanges = ""
@@ -168,6 +166,8 @@ def FBQ():
 
 def QuestionMakeScreen():
 
+    root = Tk()
+        
     top_Label = Label(root, text = 'Choose your question type here:')
  
     button1=Button(text="Multiple Choice", command=MCQ)
