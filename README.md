@@ -30,4 +30,9 @@ Deliverable 3: Project Planning.pdf
 Contains the project planning pdf that includes the product backlog, sprint backlog consisting of a break down of user stories to tasks and provisional schedule and burndown chart.
 Completed on October 22, 2017
 
+Deliverable 4: Project Execution.pdf
+Contains the 4th group deliverable that includes a revised product backlog and the sprint backlog consisting of a sprint plan, sprint report, burndown chart and
+2 taskboard snapshots before and after each sprint for sprints 1 and 2.
+Completed on November 6, 2017
+
 All code regarding the project will be placed in the src/ folder.
