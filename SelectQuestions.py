@@ -21,7 +21,7 @@ class SelectQuestions(tk.Frame):
         tk.Frame.__init__(self, *args, **kwargs)
 
         self.label = tk.Label(self, text="WELCOME!!\nPlease choose questions \
-to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
+to appear on an assignment\n", font=("Helvetica", 32))
         self.label.pack()
 
         self.display_button = tk.Button(self, text="Display Questions", \
@@ -61,10 +61,6 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
             self.display_button.config(state = 'disabled')
 
     def create_window(self):
-        # If the user input is empty, quit the method
-        if (len(questionNumChosen) == 1 and questionNumChosen[0] == ""):
-            return
-        
         # FIX: WHEN QUESTIONS SPAN MORE THAN THE SCREEN, UNABLE TO SCROLL DOWN
         # Create a new window for the assignment
         self.assignmentWindow = tk.Toplevel(self)
@@ -73,6 +69,10 @@ to appear on an assignment (without spaces)\n", font=("Helvetica", 32))
         
         # Get the user input
         chosenQuestionNums = self.entry.get()
+        # If the user input only contains spaces, close the window
+        if (len(chosenQuestionNums.strip()) == 0):
+            self.assignmentWindow.destroy()
+            
         questionNumChosen = chosenQuestionNums.split(',')
         
         # Get the chosen questions and append to the list self.chosenQuestions
