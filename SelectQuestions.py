@@ -112,6 +112,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
                                  assignmentAnswers.split(',')]
         questionsWithStudentAnswers = []
         
+        # Read from Assignment.csv and append/change student answers into a list
         with open('Assignment.csv', 'r') as assignmentFile:
             i = 0
             for question in csv.reader(assignmentFile):
@@ -125,7 +126,8 @@ to appear on an assignment\n", font=("Helvetica", 32))
                 # Add the updated row to a list
                 questionsWithStudentAnswers.append(question)
                 i += 1
-                
+        
+        # Write the list into Assignment.csv
         with open('Assignment.csv', 'w') as assignmentFile:
             writer = csv.writer(assignmentFile)
             writer.writerows(questionsWithStudentAnswers)
@@ -145,11 +147,6 @@ to appear on an assignment\n", font=("Helvetica", 32))
                     self.label.after(1000, self.clear_labels)
                     self.label.pack()
                     self.labels.append(self.label)
-                    
-                    # FIX: RECORD THE LAST ATTEMPT
-                    # FIX: MAKE ASSIGNMENT CLASS AND LET THIS USE IT
-                    # - visibility etc. (look at user class)
-                    # FIX: MAKE QUESTION CLASS
                 # If the student answers are incorrect, output "WRONG"
                 else:
                     self.label = tk.Label(self.assignmentWindow, \
