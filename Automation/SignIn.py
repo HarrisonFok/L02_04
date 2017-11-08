@@ -92,7 +92,10 @@ global UserAttribs, StudAttribs, ProfAttribs # User, Student, and Professor Attr
 
 UserAttribs = {"Name":[], "Email":[]}
 
-UserWords = [StringVar()]*len(UserAttribs) ## This is where it breaks. I have no idea why I can't use StringVar() like this...
+UserWords = [StringVar(root)]*len(UserAttribs)
+
+## You need to give StringVars master frames, to put them in interables...
+## How this affects their functioning is currently unknown.
 
 FormFrame(UserAttribs, UserWords, root)
 
