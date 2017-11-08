@@ -88,7 +88,13 @@ def SignIn(event):
 
             if (EmEx & PassEx):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
-
+                
+                #Forget about the registration frames once you've logged in...
+                #Unless you're editing credentials, then you'd want to pack them again...
+                
+                CredFrame.pack_forget()
+                ButtonFrame.pack_forget()
+                
                 # open a new window with the credentials of the user
                 newWindow = Toplevel()
                 if Usr.getType() == 'S':
