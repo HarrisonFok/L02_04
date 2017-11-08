@@ -47,7 +47,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
         self.label = None
         self.labels = []
         
-        self.numCorrect = 0
+        #self.numCorrect = 0
         
         self.numQuestions = 0
 
@@ -110,34 +110,46 @@ to appear on an assignment\n", font=("Helvetica", 32))
         assignmentAnswers = self.assignmentAnswersEntry.get()
         assignmentAnswersList = [x.strip() for x in \
                                  assignmentAnswers.split(',')]
+        questionsWithStudentAnswers = []
+        
+        with open('Assignment.csv', 'r') as assignmentFile:
+            i = 0
+            for question in csv.reader(assignmentFile):
+                # If first time, append to question
+                if len(question) < 5:
+                    # add the student answer to the row
+                    question.append(assignmentAnswersList[i])
+                # If not first time, change the value
+                else:
+                    question[4] = assignmentAnswersList[i]
+                # Add the updated row to a list
+                questionsWithStudentAnswers.append(question)
+                i += 1
+                
+        with open('Assignment.csv', 'w') as assignmentFile:
+            writer = csv.writer(assignmentFile)
+            writer.writerows(questionsWithStudentAnswers)
         
         # For every student answer in assignmentAnswersList, compare them with
         # the answers. If the student didn't answer all the questions, it would
         # still output "WRONG"
         with open('Assignment.csv', 'r') as assignmentFile:
+            # Display the correct label
             for question in csv.reader(assignmentFile):
-                if question[3] in assignmentAnswersList:
-                    self.numCorrect += 1
+                # If the student answer matches the actual answer, output
+                # "CORRECT"
+                if question[3].strip() == question[4].strip():
+                    #self.numCorrect += 1
                     self.label = tk.Label(self.assignmentWindow, \
                                                  text="CORRECT")
                     self.label.after(1000, self.clear_labels)
                     self.label.pack()
                     self.labels.append(self.label)
                     
-                    # If the number of questions is the same as the number of
-                    # correct attempts, then delete everything in the
-                    # spreadsheet
-                    if (self.numQuestions == self.numCorrect):
-                        # Clear Assignment.csv
-                        f = open('Assignment.csv', "w+")
-                        f.close()
-                        self.handInBut.config(state = 'disabled')
-                        tk.Label(self.assignmentWindow, text="Congratulations! \
-You gotall the questions correct.").pack()
-                        
-                        # The "Close" button will close the assignment window
-                        tk.Button(self.assignmentWindow, text="Close", \
-                                  command=self.assignmentWindow.destroy).pack()
+                    # FIX: RECORD THE LAST ATTEMPT
+                    # FIX: MAKE ASSIGNMENT CLASS AND LET THIS USE IT
+                    # - visibility etc. (look at user class)
+                    # FIX: MAKE QUESTION CLASS
                 # If the student answers are incorrect, output "WRONG"
                 else:
                     self.label = tk.Label(self.assignmentWindow, \
@@ -148,6 +160,7 @@ You gotall the questions correct.").pack()
         
     def clear_labels(self):
         for label in self.labels:
+            # TODO: Check the number of CORRECT labels
             label.destroy()
         
 root = tk.Tk()
@@ -155,3 +168,15 @@ root.geometry('%sx%s' % (2000, 2000))
 main = SelectQuestions(root)
 main.pack(side="top", fill="both", expand=True)
 root.mainloop()
+
+'''
+if (self.numQuestions == self.numCorrect):
+    # TODO: Record the last attempt
+    self.handInBut.config(state = 'disabled')
+    tk.Label(self.assignmentWindow, text="Congratulations! \
+    You gotall the questions correct.").pack()
+    
+    # The "Close" button will close the assignment window
+    tk.Button(self.assignmentWindow, text="Close", \
+              command=self.assignmentWindow.destroy).pack()
+'''
