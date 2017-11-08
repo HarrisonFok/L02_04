@@ -38,7 +38,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
         self.assignmentWindow = None
         
         # This will be the list of actual questions chosen
-        self.chosenQuestions = []
+        self.chosenQuestionFormulas = []
         
         self.assignmentAnswerEntry = None
         
@@ -80,14 +80,15 @@ to appear on an assignment\n", font=("Helvetica", 32))
         chosenQuestionNums = self.entry.get()
         questionNumChosen = chosenQuestionNums.split(',')
         
-        # Get the chosen questions and append to the list self.chosenQuestions
+        # Get the chosen question formulas and append to the list
+        # self.chosenQuestionFormulas
         with open("questions.csv", "r") as csvFile:
             for lineList in csv.reader(csvFile):
-                self.chosenQuestions.append(lineList)
+                self.chosenQuestionFormulas.append(lineList)
         
         # Make an assignment and store it inside Assignment.csv (using the
         # function in randomalgo.py)
-        makeAssignment(self.chosenQuestions)
+        makeAssignment(self.chosenQuestionFormulas)
         
         # Read from Assignment.csv and display the questions to the window
         with open('Assignment.csv', 'r') as assignmentFile:
