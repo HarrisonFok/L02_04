@@ -1,175 +1,184 @@
 from tkinter import *
-import tkinter.messagebox
-from Student import *
-from Professor import *
-import StudentProfileIndex
-import ProfessorProfileIndex
-import OptionsMenu
+import random
 import csv
-import io
 
-## Parent Class for all users
+def getRange(new_q):
+        ''' Parses the new variables for their ranges '''
+        varRanges = ""
+        for i in range(len(new_q)):
+            if new_q[i].isnumeric():
+                if (new_q[i-1] != 'R'):
+                    varRanges += new_q[i]
+            elif new_q[i] == ",":
+                varRanges += "|"
+            elif new_q[i] == ")":
+                varRanges += ","
 
-def readUser():
-    return readUserFile("Users.csv")
+        return varRanges[:len(varRanges)-1]
 
-def readUserFile(filename):
-    csv_file = open("Users.csv", "r")
+def MCQ(rt):
+    li = [0]
+    def write_questions():
+        new_q = new_question.get('1.0',END).strip()
+        # get the range
+        varRanges = getRange(new_q)
 
-    Users = []
+        nq = (str(random.randrange(10000000,99999999)),get_topic(), 'MCQ', new_q, varRanges, answer_formula.get('1.0',END))
+        fh = open('questions.csv', 'a')
+        writer = csv.writer(fh, delimiter=',')
+        writer.writerow(nq)
+        fh.close()
+        question_window.destroy()
+    def insert_var():
+        new_question.insert("insert", " VAR"+str(li[0])+"(min, max)"+ ' ')
+        li[0]+=1
+    def insert_plus():
+        answer_formula.insert("insert", " + ")
+    def insert_minus():
+        answer_formula.insert("insert", " - ")
+    def insert_time():
+        answer_formula.insert("insert", " * ")
+    def insert_divided():
+        answer_formula.insert("insert", " / ")
+    def get_topic():
+        return topic_num.get()
 
-    lines = list(csv.reader(csv_file)) # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
+    question_window = Toplevel(rt)
+    question_window.geometry('600x530')
+    question_window.title('Multiple Choice window')
 
-    for l in lines:
+    topic_L = Label(question_window, text='Related topic:', font=20,pady=20)
+    topic_L.pack()
+    topic_L.place(bordermode=OUTSIDE, x=10, y=0)
+    topic_num = StringVar(question_window)
+    topic_num.set("choose here") # default value
+    topic = OptionMenu(question_window, topic_num, "Topic_1", "Topic_2", "Topic_3", "Topic_4", "Topic_5")
+    topic.pack()
+    topic.place(bordermode=OUTSIDE, x=10, y=50)
 
-        # Could make the user and email pair now, instead of doing it when making the object...
+    Label(question_window, text='Type your question here: ', font=20,pady=20).pack()
+    new_question = Text(question_window, width=40, height=10)
+    new_question.pack()
 
-        if l[5] == "P":
-            Users.append(Professor(l[1], l[2], l[3], l[4]))
-        elif l[5] == "S":
-            Users.append(Student(l[1], l[2], l[3], l[4]))
+    var_button = Button(question_window,text="insert Variable",command=insert_var)
+    var_button.pack()
 
-    csv_file.close()
-    # Should set it so it returns 0 if the file isn't there, then report that to the user.
+    Label(question_window, text='Type your answer formula here: ', font=20,pady=20).pack()
+    answer_formula = Text(question_window, width=40, height=5)
+    answer_formula.pack()
 
-    return Users
+    operator_button1 = Button(question_window,text="insert ' + '",command=insert_plus)
+    operator_button1.pack()
+    operator_button1.place(bordermode=OUTSIDE, x=50, y=320)
 
-## Remember, Python or Tkinter or whatever doesn't check if these frames exist. these functions, when called by a buttonpress, act as if they're in the same scope as the button, or something.
+    operator_button2 = Button(question_window,text="insert ' - '",command=insert_minus)
+    operator_button2.pack()
+    operator_button2.place(bordermode=OUTSIDE, x=50, y=370)
 
-def StudentRegistering(event):
-    """ Execute the registration menu """
+    operator_button3 = Button(question_window,text="insert ' * '",command=insert_time)
+    operator_button3.pack()
+    operator_button3.place(bordermode=OUTSIDE, x=480, y=320)
 
-    newWindow = Toplevel()
-    StudentProfileIndex.signUpIndex(newWindow)
-
-def ProfessorRegistering(event):
-    """ Execute the registration menu """ 
-
-    newWindow = Toplevel()
-    ProfessorProfileIndex.signUpIndex(newWindow)
-
-def SignIn(event):
-
-    # Need to declare globals locally, if modifying them, from inside a function?
-
-    global CurrentUsr
-    global Usrs
-
-    Usrs = readUser()
-
-    Em = EmailEntry.get()
-
-    Pass = PassEntry.get()
-
-    # Check if either name or email exist separately. Bad for security? Maybe not.
-    EmEx = False
-    PassEx = False
-
-    for Usr in Usrs:
-
-        if CurrentUsr is None:
-
-            #If we have no idea who the correct user could be...
-            if (Usr.getEmail() == Em):
-                EmEx = True
-                CurrentUsr = Usr
-
-            if (Usr.getPassword() == Pass):
-                PassEx = True
-                CurrentUsr = Usr
-
-        if not (CurrentUsr is None):
-
-            if (Usr.getEmail() == Em):
-                EmEx = True
-
-            if (Usr.getPassword() == Pass):
-                PassEx = True
-
-            if (EmEx & PassEx):
-                tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
-                
-                #Forget about the registration frames once you've logged in...
-                #Unless you're editing credentials, then you'd want to pack them again...
-                
-                CredFrame.pack_forget()
-                ButtonFrame.pack_forget()
-                
-                # open a new window with the credentials of the user
-                newWindow = Toplevel()
-                if Usr.getType() == 'S':
-                    StudentProfileIndex.displayProfile(newWindow, Usr)
-                    
-                elif Usr.getType() == 'P':
-                    ProfessorProfileIndex.displayProfile(newWindow, Usr)
-                    
-                    OptionsMenu.ProfessorOptions()
-
-                newWindow.geometry("400x400")
-                break
-                
-    if not (EmEx and PassEx):
-        tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
+    operator_button4 = Button(question_window,text="insert ' / '",command=insert_divided)
+    operator_button4.pack()
+    operator_button4.place(bordermode=OUTSIDE, x=480, y=370)
 
 
-#### Okay... So bound functions can't take parameters...
+    Label(question_window, text='', font=20,pady=20).pack()
+    confirm_button = Button(question_window,text='Confirm', command=write_questions)
+    exit_button = Button(question_window,text='Exit', command=question_window.destroy)
+    confirm_button.pack(side=LEFT,padx=150)
+    exit_button.pack(side=LEFT,padx=50)
 
-root = Tk()
+def FBQ(rt):
+    li = [0]
 
-CredFrame = Frame(root)
-CredFrame.pack()
+    def write_questions():
 
-EmailText = StringVar()
-PassText = StringVar()
+        new_q = new_question.get('1.0',END).strip()
+        # get the range
+        varRanges = getRange(new_q)
 
-EmailLabel = Label(CredFrame, text="Email")
-PassLabel = Label(CredFrame, text="Password")
+        nq = (str(random.randrange(10000000,99999999)),get_topic(), 'FBQ', new_q, varRanges, answer_formula.get('1.0',END))
+        fh = open('questions.csv', 'a')
+        writer = csv.writer(fh, delimiter=',')
+        writer.writerow(nq)
+        fh.close()
+        question_window.destroy()
 
-EmailEntry = Entry(CredFrame, textvariable=EmailText)
-PassEntry = Entry(CredFrame, show="*", textvariable=PassText)
+    def insert_var():
+        new_question.insert("insert"," VAR"+str(li[0])+"(min, max)"+ ' ')
+        li[0]+=1
 
-# widgets centered by default, sticky option to change
-EmailLabel.grid(row=1, sticky=E)
-PassLabel.grid(row=2, sticky=E)
+    def insert_plus():
+        answer_formula.insert("insert", " + ")
+    def insert_minus():
+        answer_formula.insert("insert", " - ")
+    def insert_time():
+        answer_formula.insert("insert", " * ")
+    def insert_divided():
+        answer_formula.insert("insert", " / ")
+    def get_topic():
+        return topic_num.get()
 
-EmailEntry.grid(row=1, column=1)
-PassEntry.grid(row=2, column=1)
+    question_window = Toplevel(rt)
+    question_window.geometry('600x530')
+    question_window.title('Fill in the blank window')
 
-checked = 0
+    topic_L = Label(question_window, text='Related topic:', font=20,pady=20)
+    topic_L.pack()
+    topic_L.place(bordermode=OUTSIDE, x=10, y=0)
+    topic_num = StringVar(question_window)
+    topic_num.set("choose here") # default value
+    topic = OptionMenu(question_window, topic_num, "Topic_1", "Topic_2", "Topic_3", "Topic_4", "Topic_5")
+    topic.pack()
+    topic.place(bordermode=OUTSIDE, x=10, y=50)
 
-c = Checkbutton(CredFrame, text="Keep me logged in", variable=checked)
-c.grid(columnspan=2)
+    Label(question_window, text='Type your quetion here: ', font=20,pady=20).pack()
+    new_question = Text(question_window, width=40, height=10)
+    new_question.pack()
 
-BottomFrame = Frame(root)
-BottomFrame.pack(side=BOTTOM)
+    var_button = Button(question_window,text="insert Variable",command=insert_var)
+    var_button.pack()
 
-ButtonFrame = Frame(BottomFrame)
-ButtonFrame.pack(side=BOTTOM)
+    Label(question_window, text='Type your answer formula here: ', font=20,pady=20).pack()
+    answer_formula = Text(question_window, width=40, height=5)
+    answer_formula.pack()
 
-if checked: print("hi!") #Do stuff
+    operator_button1 = Button(question_window,text="insert ' + '",command=insert_plus)
+    operator_button1.pack()
+    operator_button1.place(bordermode=OUTSIDE, x=50, y=320)
 
-global Usrs
+    operator_button2 = Button(question_window,text="insert ' - '",command=insert_minus)
+    operator_button2.pack()
+    operator_button2.place(bordermode=OUTSIDE, x=50, y=370)
 
-Usrs = readUser()
+    operator_button3 = Button(question_window,text="insert ' * '",command=insert_time)
+    operator_button3.pack()
+    operator_button3.place(bordermode=OUTSIDE, x=480, y=320)
 
-global CurrentUsr
+    operator_button4 = Button(question_window,text="insert ' / '",command=insert_divided)
+    operator_button4.pack()
+    operator_button4.place(bordermode=OUTSIDE, x=480, y=370)
 
-CurrentUsr = None
+    confirm_button = Button(question_window,text='Confirm', command=write_questions)
+    exit_button = Button(question_window,text='Exit', command=question_window.destroy)
+    confirm_button.pack(side=LEFT,padx=150)
+    exit_button.pack(side=LEFT,padx=50)
 
-RegisterButton = Button(ButtonFrame, text="Student Registration")
-RegisterButton.pack(side=LEFT)
-RegisterButton.bind("<Button-1>", StudentRegistering)
 
-RegisterButton = Button(ButtonFrame, text="Professor Registration")
-RegisterButton.pack(side=LEFT)
-RegisterButton.bind("<Button-1>", ProfessorRegistering)
+def QuestionMakeScreen():
 
-SignInButton = Button(ButtonFrame, text="Sign In")
-SignInButton.bind("<Button-1>", SignIn)
+    root = Tk()
 
-if Usrs is not None:
-    SignInButton.pack(side=RIGHT)
+    top_Label = Label(root, text = 'Choose your question type here:')
 
-root.mainloop()
+    button1=Button(text="Multiple Choice", command=MCQ(root))
+    button2=Button(text="Fill in the blanks", command=FBQ(root))
 
-### You can also put the form code inside the def function to make a form pop up when you click that button...:
+    root.title("Create Questions")
+    top_Label.pack()
+    button1.pack(side = LEFT)
+    button2.pack(side = LEFT)
+
+    root.mainloop()
