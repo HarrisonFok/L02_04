@@ -5,7 +5,6 @@ def displayAssignmentWindow(root, studentID, assignmentID):
 	""" Displays the window for completing the assignment """
 
 	header = Label(root, text="Answer the following questions.").grid(row=0)
-
 	# get a list of assignments and display them
 	questions = getQuestionsFromAssignment(assignmentID)
 
@@ -27,30 +26,42 @@ def displayAssignmentWindow(root, studentID, assignmentID):
 		rowNum+=1
 
 	# compare answers if the submit button is clicked
-	submitBtn = Button(root, text="Submit", command = lambda: compareAnswers(questionStudentAnsPair))
+	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair))
 	submitBtn.grid(row = rowNum)
 
 
+
+def getStudentAnswers(questionStudentAnsPair):
+	""" This method replaces the values of the questionStudentAnsPair dictionary with the entries 
+		in the form. """
+	questionStudentAnsCopy = questionStudentAnsPair.copy()
+	# replace the entry with the student's answer
+	for question in questionStudentAnsCopy:
+		tempAnswer = questionStudentAnsCopy[question].get().strip()
+		questionStudentAnsCopy[question] = tempAnswer
+
+	compareAnswers(questionStudentAnsCopy)
 
 def compareAnswers(questionStudentAnsPair):
 	""" Retrieves the answers from the entry fields and compares it against
 	the correct answer. Also overwrites the answer.csv to store this latest
 	attempt. """
-
+	total = len(questionStudentAnsPair.keys())
+	mark = 0
 	# open Assignment.csv
+	assignmentCSV = open("Assignment.csv", "r")
+	assignmentReader = csv.reader(assignmentCSV)
 
 	# iterate through the value of the questionStudentAnsPair dictionary
+	for q in questionStudentAnsPair:
+		studentAns = questionStudentAnsPair[q]
+		for row in assignmentReader:
+			if (row[3].strip() == studentAns.strip()):
+				mark+=1
+				break
 
-		# given the question body, find the correct answer in Assignment.csv
-
-		# compare the answer with the entry value
-
-	# keep track of how many questions were right and how many were wrong
-
-		# call another method to display the results in another window
-
-
-	pass
+	numRows = len(questionStudentAnsPair)
+	totalMark = Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
 
 def getQuestionsFromAssignment(assignmentID):
 	""" Returns a list of questions for that assignment """
@@ -63,18 +74,16 @@ def getQuestionsFromAssignment(assignmentID):
 	# iterate through each row checking for the proper assignmentID
 	for line in reader:
 		# check if question belongs to assignmentID
-		assignmentIdColumn = 5
+		assignmentIdColumn = 4
 		questionBodyColumn = 2
 		# append it to the list
 		if (line[assignmentIdColumn] == str(assignmentID)):
-
 			questions.append(line[questionBodyColumn])
 
 	csvFile.close()
 	# return this list
 	return questions
 
-if __name__ == "__main__":
-	root = Tk()
-	displayAssignmentWindow(root, 1, 0)
-	root.mainloop()
+root = Tk()
+displayAssignmentWindow(root, 1, 0)
+root.mainloop()
