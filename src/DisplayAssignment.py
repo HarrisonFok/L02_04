@@ -26,8 +26,31 @@ def displayAssignmentWindow(root, studentID, assignmentID):
 		questionStudentAnsPair[questionBody].grid(row = rowNum, column = 1)
 		rowNum+=1
 
-	submitBtn = Button(root, text="Submit").grid(row = rowNum)
+	# compare answers if the submit button is clicked
+	submitBtn = Button(root, text="Submit", command = lambda: compareAnswers(questionStudentAnsPair))
+	submitBtn.grid(row = rowNum)
 
+
+
+def compareAnswers(questionStudentAnsPair):
+	""" Retrieves the answers from the entry fields and compares it against
+	the correct answer. Also overwrites the answer.csv to store this latest
+	attempt. """
+
+	# open Assignment.csv
+
+	# iterate through the value of the questionStudentAnsPair dictionary
+
+		# given the question body, find the correct answer in Assignment.csv
+
+		# compare the answer with the entry value
+
+	# keep track of how many questions were right and how many were wrong
+
+		# call another method to display the results in another window
+
+
+	pass
 
 def getQuestionsFromAssignment(assignmentID):
 	""" Returns a list of questions for that assignment """
@@ -47,6 +70,7 @@ def getQuestionsFromAssignment(assignmentID):
 
 			questions.append(line[questionBodyColumn])
 
+	csvFile.close()
 	# return this list
 	return questions
 
