@@ -2,6 +2,8 @@ import random
 import io
 import csv
 
+from Assignment import *
+from Question import *
 
 # judgment a char is a operation or not
 def is_operation(oper):
@@ -93,6 +95,7 @@ def makeAssignment(L):
     '''
     :param L: the list of all the selected questions [[q1], [q2], [q3]]
     '''
+    questionObjs = []
     result = []
     for question in L:
         allrange = question[4].split(',')
@@ -108,12 +111,19 @@ def makeAssignment(L):
             Q_A = Q_A.replace(old, str(vals[i]))
             i += 1
         answer = cal_exp(mixed_operation(Q_A))
+        # Initialize a new Question object
+        newQ = Question(question[0], question[2], Q_B, answer)
+        # Append the new question into questionObjs
+        questionObjs.append(newQ)
         result.append([question[0], question[2], Q_B, answer])
 
+    newAssignmentObj = Assignment(questionObjs)
+    
     with open("Assignment.csv", "a") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerows(result)
 
+    return newAssignmentObj
 
 if __name__ == '__main__':
     makeAssignment([["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"],["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"] ])

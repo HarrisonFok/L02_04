@@ -47,13 +47,14 @@ to appear on an assignment\n", font=("Helvetica", 32))
         self.label = None
         self.labels = []
         
-        #self.numCorrect = 0
-        
+        self.numCorrect = 0
         self.numQuestions = 0
+        
+        self.assignment = None
 
     def display(self):
-        # Read all the questions in questions.csv and display them on the
-        # screen
+        # Read all the question formulas in questions.csv and display them to
+        # the screen
         with open("questions.csv", "r") as csvFile:
             reader = csv.reader(csvFile, delimiter="\n")
             for row in reader:
@@ -70,7 +71,6 @@ to appear on an assignment\n", font=("Helvetica", 32))
             self.display_button.config(state = 'disabled')
 
     def create_window(self):
-        # FIX: WHEN QUESTIONS SPAN MORE THAN THE SCREEN, UNABLE TO SCROLL DOWN
         # Create a new window for the assignment
         self.assignmentWindow = tk.Toplevel(self)
         root.withdraw()
@@ -79,26 +79,33 @@ to appear on an assignment\n", font=("Helvetica", 32))
         # Get the user input
         chosenQuestionNums = self.entry.get()
         questionNumChosen = chosenQuestionNums.split(',')
+        chosenQ = []
+        for qNumWithSpace in questionNumChosen:
+            qNum = qNumWithSpace.replace(' ','')
+            chosenQ.append(qNum)
         
         # Get the chosen question formulas and append to the list
         # self.chosenQuestionFormulas
         with open("questions.csv", "r") as csvFile:
             for lineList in csv.reader(csvFile):
-                self.chosenQuestionFormulas.append(lineList)
+                # if the question is one of the chosen questions, then add it
+                # to self.chosenQuestionFormulas
+                if lineList[0] in chosenQ:
+                    self.chosenQuestionFormulas.append(lineList)
         
         # Make an assignment and store it inside Assignment.csv (using the
         # function in randomalgo.py)
-        makeAssignment(self.chosenQuestionFormulas)
+        self.assignment = makeAssignment(self.chosenQuestionFormulas)
         
         # Read from Assignment.csv and display the questions to the window
-        with open('Assignment.csv', 'r') as assignmentFile:
-            for question in csv.reader(assignmentFile):
-                self.numQuestions += 1
-                questionEntry = tk.Label(self.assignmentWindow, \
-                                         text=question[2],\
-                                         font=("Helvetica", 28))
-                questionEntry.pack()
-                
+        listOfQ = self.assignment.getListOfQuestions()
+        self.numQuestions = len(listOfQ)
+        for question in listOfQ:
+            questionEntry = tk.Label(self.assignmentWindow, \
+                                     text=question.getQuestion(), \
+                                     font=("Helvetica", 28))
+            questionEntry.pack()
+
         self.handInBut = tk.Button(self.assignmentWindow, text="Hand in", \
                   font=("Helvetica", 28), command=self.validate)
         self.handInBut.pack()
@@ -113,9 +120,16 @@ to appear on an assignment\n", font=("Helvetica", 32))
                                  assignmentAnswers.split(',')]
         questionsWithStudentAnswers = []
         
+        # Update the Question objects in the Assignment object
+        for i in range(len(assignmentAnswersList)):
+            for j in range(self.assignment.getNumQuestions()):
+                if i == j:
+                    self.assignment.\
+                        setStudentAnswerAtIndex(j, assignmentAnswersList[i])
+        
+        i = 0
         # Read from Assignment.csv and append/change student answers into a list
         with open('Assignment.csv', 'r') as assignmentFile:
-            i = 0
             for question in csv.reader(assignmentFile):
                 # If first time, append to question
                 if len(question) < 5:
@@ -124,7 +138,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
                 # If not first time, change the value
                 else:
                     question[4] = assignmentAnswersList[i]
-                # Add the updated row to a list
+                # Add the updated row to the list questionsWithStudentAnswers
                 questionsWithStudentAnswers.append(question)
                 i += 1
         
@@ -136,29 +150,32 @@ to appear on an assignment\n", font=("Helvetica", 32))
         # For every student answer in assignmentAnswersList, compare them with
         # the answers. If the student didn't answer all the questions, it would
         # still output "WRONG"
-        with open('Assignment.csv', 'r') as assignmentFile:
-            # Display the correct label
-            for question in csv.reader(assignmentFile):
-                # If the student answer matches the actual answer, output
-                # "CORRECT"
-                if question[3].strip() == question[4].strip():
-                    #self.numCorrect += 1
-                    self.label = tk.Label(self.assignmentWindow, \
-                                                 text="CORRECT")
-                    self.label.after(1000, self.clear_labels)
-                    self.label.pack()
-                    self.labels.append(self.label)
-                # If the student answers are incorrect, output "WRONG"
-                else:
-                    self.label = tk.Label(self.assignmentWindow, \
-                                                   text="WRONG")
-                    self.label.after(1000, self.clear_labels)
-                    self.label.pack()
-                    self.labels.append(self.label)
-        
+        for question in self.assignment.getListOfQuestions():
+            # if the student answer is correct, output "CORRECT"
+            if int(question.getStudentAnswer()) == question.getAnswer():
+                self.numCorrect += 1
+                self.label = tk.Label(self.assignmentWindow, \
+                                             text="CORRECT")
+                self.label.after(1000, self.clear_labels)
+                self.label.pack()
+                self.labels.append(self.label)
+                
+                # if the student got perfect, then disable the hand in button
+                # and output the grade
+                if self.numCorrect == self.numQuestions:
+                    self.handInBut.config(state='disabled')
+                    tk.Label(self.assignmentWindow, text=str(self.numCorrect)\
+                             + "/" + str(self.numQuestions)).pack()  
+            # if the student answers are incorrect, output "WRONG"
+            else:
+                self.label = tk.Label(self.assignmentWindow, \
+                                               text="WRONG")
+                self.label.after(1000, self.clear_labels)
+                self.label.pack()
+                self.labels.append(self.label)
+                
     def clear_labels(self):
         for label in self.labels:
-            # TODO: Check the number of CORRECT labels
             label.destroy()
         
 root = tk.Tk()
@@ -166,15 +183,3 @@ root.geometry('%sx%s' % (2000, 2000))
 main = SelectQuestions(root)
 main.pack(side="top", fill="both", expand=True)
 root.mainloop()
-
-'''
-if (self.numQuestions == self.numCorrect):
-    # TODO: Record the last attempt
-    self.handInBut.config(state = 'disabled')
-    tk.Label(self.assignmentWindow, text="Congratulations! \
-    You gotall the questions correct.").pack()
-    
-    # The "Close" button will close the assignment window
-    tk.Button(self.assignmentWindow, text="Close", \
-              command=self.assignmentWindow.destroy).pack()
-'''

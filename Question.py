@@ -2,39 +2,45 @@ class Question:
     '''Class for a question'''
     
     def __init__(self, question_id, question_type, question, answer,\
-                 student_answer):
+                 student_answer=None):
         self._question_id = question_id
-        self.question_type = question_type
-        self.question = question
-        self.answer = answer
-        self.student_answer = student_answer
+        self._question_type = question_type
+        self._question = question
+        self._answer = answer
+        self._student_answer = student_answer
         
-    def get_question_id(self):
+    def getQuestionId(self):
         return self._question_id
     
-    def set_question_id(self, question_id):
+    def setQuestionId(self, question_id):
         self._question_id = question_id
         
-    def get_question_type(self):
+    def getQuestionType(self):
         return self.question_type
     
-    def set_question_type(self, question_type):
-        self.question_type = question_type
+    def setQuestionType(self, question_type):
+        self._question_type = question_type
         
-    def get_question(self):
-        return self.question
+    def getQuestion(self):
+        return self._question
     
-    def set_question(self, question):
-        self.question = question
+    def setQuestion(self, question):
+        self._question = question
         
-    def get_answer(self):
-        return self.answer
+    def getAnswer(self):
+        return self._answer
     
-    def set_answer(self, answer):
-        self.answer = answer
+    def setAnswer(self, answer):
+        self._answer = answer
         
-    def get_student_answer(self):
-        return self.student_answer
+    def getStudentAnswer(self):
+        return self._student_answer
     
-    def set_student_answer(self, student_answer):
-        self.student_answer = student_answer
+    def setStudentAnswer(self, student_answer):
+        self._student_answer = student_answer
+        
+    def __eq__(self, otherQ):
+        return ((self._question_id == otherQ._question_id) and
+                (self._question_type == otherQ._question_type) and 
+                (self._question == otherQ._question) and 
+                (self._answer == otherQ._answer))
