@@ -49,7 +49,6 @@ def entryIsEmpty(entry):
 
 def signUpIndex(root):
 	""" Index page for the Profile Registration """
-	# root = Tk()
 
 	header = Label(root, text="Student Profile Registration").grid(row=0,column=1)
 
@@ -79,8 +78,6 @@ def signUpIndex(root):
 
 	# set fixed window size
 	root.resizable(width=False, height=False)
-
-	# root.mainloop()
 
 def displayProfile(root, user):
 	""" Display the information about a user in a window with these widgets. """
