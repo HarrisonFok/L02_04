@@ -127,22 +127,17 @@ to appear on an assignment\n", font=("Helvetica", 32))
         
         # Create a new spreadsheet that stores only the question and the
         # student answer
-        assignmentFileName = "assignment_"+self.assignment.getAssignmentId()
-        '''
-        i = 0
-        # Read from Assignment.csv and append/change student answers into a list
-        with open('Assignment.csv', 'r') as assignmentFile:
-            for question in csv.reader(assignmentFile):
-                question.append(assignmentAnswersList[i])
-                # Add the updated row to the list questionsWithStudentAnswers
-                questionsWithStudentAnswers.append(question)
-                i += 1
+        assignmentFileName = "assignment_"+ \
+            str(self.assignment.getAssignmentId()) + ".csv"
         
-        # Write the list into Assignment.csv
-        with open('Assignment.csv', 'w') as assignmentFile:
+        questionAnswerCorrectness = []
+        
+        with open(assignmentFileName, 'w') as assignmentFile:
+            for question in self.assignment.getListOfQuestions():
+                questionAnswerCorrectness.append([question.getStudentAnswer(),\
+                                           question.getAnswer()])
             writer = csv.writer(assignmentFile)
-            writer.writerows(questionsWithStudentAnswers)
-        '''
+            writer.writerows(questionAnswerCorrectness)
         
         # For every student answer in assignmentAnswersList, compare them with
         # the answers. If the student didn't answer all the questions, it would
