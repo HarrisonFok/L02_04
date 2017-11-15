@@ -36,3 +36,12 @@ Contains the 4th group deliverable that includes a revised product backlog and t
 Completed on November 6, 2017
 
 All code regarding the project will be placed in the src/ folder.
+
+How to run the project
+----------------------
+
+1. Open the terminal and create a directory where you want the project to be in.
+
+2. Execute the command `git clone https://github.com/CSCC01F17/L02_04.git` in the terminal to clone the project.
+
+3. To run the project, executre `python3 SignIn.py`. This will prompt a Sign In page where the user can login and sign up as a Professor or Student.
