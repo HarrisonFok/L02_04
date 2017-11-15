@@ -2,12 +2,13 @@ class Question:
     '''Class for a question'''
     
     def __init__(self, question_id, question_type, question, answer,\
-                 student_answer=None):
+                 student_answer=None, correctness=False):
         self._question_id = question_id
         self._question_type = question_type
         self._question = question
         self._answer = answer
         self._student_answer = student_answer
+        self._correctness = correctness
         
     def getQuestionId(self):
         return self._question_id
@@ -38,6 +39,18 @@ class Question:
     
     def setStudentAnswer(self, student_answer):
         self._student_answer = student_answer
+        
+    def getCorrect(self):
+        return self._correct
+    
+    def getCorrectness(self):
+        return self._correctness
+    
+    def setCorrectness(self, correctness):
+        '''(Question, bool) -> NoneType
+        Sets whether the question is answered correctly
+        '''
+        self._correctness = correctness
         
     def __eq__(self, otherQ):
         return ((self._question_id == otherQ._question_id) and

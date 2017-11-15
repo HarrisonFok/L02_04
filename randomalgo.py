@@ -118,6 +118,10 @@ def makeAssignment(L):
         result.append([question[0], question[2], Q_B, answer])
 
     newAssignmentObj = Assignment(questionObjs)
+    newAssignmentId = newAssignmentObj.getAssignmentId()
+    
+    for questionInfo in result:
+        questionInfo.append(newAssignmentId)
     
     with open("Assignment.csv", "a") as csvfile:
         writer = csv.writer(csvfile)

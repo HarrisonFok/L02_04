@@ -32,12 +32,10 @@ to appear on an assignment\n", font=("Helvetica", 32))
                                        command=self.create_window)
 
         self.entry = tk.Entry(self)
-        
         self.assignmentEntry = None
-        
         self.assignmentWindow = None
         
-        # This will be the list of actual questions chosen
+        # This will be the list of chosen question formulas
         self.chosenQuestionFormulas = []
         
         self.assignmentAnswerEntry = None
@@ -127,17 +125,15 @@ to appear on an assignment\n", font=("Helvetica", 32))
                     self.assignment.\
                         setStudentAnswerAtIndex(j, assignmentAnswersList[i])
         
+        # Create a new spreadsheet that stores only the question and the
+        # student answer
+        assignmentFileName = "assignment_"+self.assignment.getAssignmentId()
+        '''
         i = 0
         # Read from Assignment.csv and append/change student answers into a list
         with open('Assignment.csv', 'r') as assignmentFile:
             for question in csv.reader(assignmentFile):
-                # If first time, append to question
-                if len(question) < 5:
-                    # add the student answer to the row
-                    question.append(assignmentAnswersList[i])
-                # If not first time, change the value
-                else:
-                    question[4] = assignmentAnswersList[i]
+                question.append(assignmentAnswersList[i])
                 # Add the updated row to the list questionsWithStudentAnswers
                 questionsWithStudentAnswers.append(question)
                 i += 1
@@ -146,26 +142,29 @@ to appear on an assignment\n", font=("Helvetica", 32))
         with open('Assignment.csv', 'w') as assignmentFile:
             writer = csv.writer(assignmentFile)
             writer.writerows(questionsWithStudentAnswers)
+        '''
         
         # For every student answer in assignmentAnswersList, compare them with
         # the answers. If the student didn't answer all the questions, it would
         # still output "WRONG"
-        for question in self.assignment.getListOfQuestions():
+        listOfQ = self.assignment.getListOfQuestions()
+        for question in listOfQ:
             # if the student answer is correct, output "CORRECT"
             if int(question.getStudentAnswer()) == question.getAnswer():
                 self.numCorrect += 1
+                question.setCorrectness(True)
                 self.label = tk.Label(self.assignmentWindow, \
                                              text="CORRECT")
                 self.label.after(1000, self.clear_labels)
                 self.label.pack()
                 self.labels.append(self.label)
-                
+
                 # if the student got perfect, then disable the hand in button
                 # and output the grade
-                if self.numCorrect == self.numQuestions:
+                if self.assignment.checkIfPerfect():
                     self.handInBut.config(state='disabled')
                     tk.Label(self.assignmentWindow, text=str(self.numCorrect)\
-                             + "/" + str(self.numQuestions)).pack()  
+                             + "/" + str(self.numQuestions)).pack()               
             # if the student answers are incorrect, output "WRONG"
             else:
                 self.label = tk.Label(self.assignmentWindow, \

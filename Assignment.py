@@ -1,5 +1,7 @@
 from Question import *
 
+from random import randint
+
 class Assignment:
     '''Class for an assignment'''
     
@@ -7,9 +9,15 @@ class Assignment:
         '''(Assignment, String, [Question]) -> NoneType
         Initialize an Assignment object
         '''
-        #self._assignment_no = assignment_no
+        self._assignment_id = randint(000000000, 999999999)
         self._visibility = False
         self._list_of_questions = list_of_questions
+        
+    def getAssignmentId(self):
+        return self._assignment_id
+    
+    def setAssignmentId(self, newId):
+        self._assignment_id = newId
         
     def getNumQuestions(self):
         return len(self.getListOfQuestions())
@@ -33,6 +41,21 @@ class Assignment:
         for i in range(len(self.getListOfQuestions())):
             if i == index:
                 self.getListOfQuestions()[i].setStudentAnswer(studentAnswer)
+                
+    def checkIfPerfect(self):
+        '''(Assignment) -> bool
+        Returns whether or not the assignment is done perfectly
+        '''
+        perfect = False
+        numCorrect = 0
+        for Q in self.getListOfQuestions():
+            if Q.getCorrectness() == True:
+                numCorrect += 1
+        
+        if numCorrect == len(self.getListOfQuestions()):
+            perfect = True
+            
+        return perfect
         
     def assignTo(self, student):
         '''(Assignment, Student) -> NoneType
