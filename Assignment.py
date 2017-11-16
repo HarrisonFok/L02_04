@@ -12,6 +12,16 @@ class Assignment:
         self._assignment_id = randint(000000000, 999999999)
         self._visibility = False
         self._list_of_questions = list_of_questions
+        self._deadline = None
+        
+    def getDeadline(self):
+        return self._deadline
+    
+    def setDeadline(self, newDeadline):
+        '''(Assignment, str) -> NoneType
+        Sets the deadline of the assignment
+        '''
+        self._deadline = newDeadline
         
     def getAssignmentId(self):
         return self._assignment_id
