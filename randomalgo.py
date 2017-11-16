@@ -115,6 +115,7 @@ def makeAssignment(L):
         newQ = Question(question[0], question[2], Q_B, answer)
         # Append the new question into questionObjs
         questionObjs.append(newQ)
+        # Append the necessary question info into result
         result.append([question[0], question[2], Q_B, answer])
 
     newAssignmentObj = Assignment(questionObjs)

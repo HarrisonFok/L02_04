@@ -20,33 +20,27 @@ class SelectQuestions(tk.Frame):
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
 
-        self.label = tk.Label(self, text="WELCOME!!\nPlease choose questions \
+        self._label = tk.Label(self, text="WELCOME!!\nPlease choose questions \
 to appear on an assignment\n", font=("Helvetica", 32))
-        self.label.pack()
+        self._label.pack()
 
-        self.display_button = tk.Button(self, text="Display Questions", \
+        self._display_button = tk.Button(self, text="Display Questions", \
                                         command=self.display)
-        self.display_button.pack()
+        self._display_button.pack()
 
-        self.submit_button = tk.Button(self, text="Submit", \
-                                       command=self.create_window)
-
-        self.entry = tk.Entry(self)
-        self.assignmentEntry = None
-        self.assignmentWindow = None
+        self._entry = tk.Entry(self)
+        self._assignmentWindow = None
         
         # This will be the list of chosen question formulas
-        self.chosenQuestionFormulas = []
+        self._chosenQuestionFormulas = []
         
-        self.assignmentAnswerEntry = None
+        self._handInBut = None
         
-        self.handInBut = None
+        self._label = None
+        self._labels = []
         
-        self.label = None
-        self.labels = []
-        
-        self.numCorrect = 0
-        self.numQuestions = 0
+        self._numCorrect = 0
+        self._numQuestions = 0
         
         self.assignment = None
 
@@ -62,20 +56,20 @@ to appear on an assignment\n", font=("Helvetica", 32))
                                                font=("Helvetica", 28))
                 self.singleQuestion.pack()
                 
-            self.submit_button.pack()
+            tk.Button(self, text="Submit", command=self.create_window).pack()
     
-            self.entry.pack()
+            self._entry.pack()
             
             self.display_button.config(state = 'disabled')
 
     def create_window(self):
         # Create a new window for the assignment
-        self.assignmentWindow = tk.Toplevel(self)
+        self._assignmentWindow = tk.Toplevel(self)
         root.withdraw()
-        self.assignmentWindow.wm_title("ASSIGNMENT")
+        self._assignmentWindow.wm_title("ASSIGNMENT")
         
         # Get the user input
-        chosenQuestionNums = self.entry.get()
+        chosenQuestionNums = self._entry.get()
         questionNumChosen = chosenQuestionNums.split(',')
         chosenQ = []
         for qNumWithSpace in questionNumChosen:
@@ -83,32 +77,32 @@ to appear on an assignment\n", font=("Helvetica", 32))
             chosenQ.append(qNum)
         
         # Get the chosen question formulas and append to the list
-        # self.chosenQuestionFormulas
+        # self._chosenQuestionFormulas
         with open("questions.csv", "r") as csvFile:
             for lineList in csv.reader(csvFile):
                 # if the question is one of the chosen questions, then add it
-                # to self.chosenQuestionFormulas
+                # to self._chosenQuestionFormulas
                 if lineList[0] in chosenQ:
-                    self.chosenQuestionFormulas.append(lineList)
+                    self._chosenQuestionFormulas.append(lineList)
         
         # Make an assignment and store it inside Assignment.csv (using the
         # function in randomalgo.py)
-        self.assignment = makeAssignment(self.chosenQuestionFormulas)
+        self.assignment = makeAssignment(self._chosenQuestionFormulas)
         
         # Read from Assignment.csv and display the questions to the window
         listOfQ = self.assignment.getListOfQuestions()
-        self.numQuestions = len(listOfQ)
+        self._numQuestions = len(listOfQ)
         for question in listOfQ:
-            questionEntry = tk.Label(self.assignmentWindow, \
+            questionEntry = tk.Label(self._assignmentWindow, \
                                      text=question.getQuestion(), \
                                      font=("Helvetica", 28))
             questionEntry.pack()
 
-        self.handInBut = tk.Button(self.assignmentWindow, text="Hand in", \
+        self._handInBut = tk.Button(self._assignmentWindow, text="Hand in", \
                   font=("Helvetica", 28), command=self.validate)
-        self.handInBut.pack()
+        self._handInBut.pack()
         
-        self.assignmentAnswersEntry = tk.Entry(self.assignmentWindow, \
+        self.assignmentAnswersEntry = tk.Entry(self._assignmentWindow, \
                                               font=("Helvetica", 28))
         self.assignmentAnswersEntry.pack()
 
@@ -146,30 +140,30 @@ to appear on an assignment\n", font=("Helvetica", 32))
         for question in listOfQ:
             # if the student answer is correct, output "CORRECT"
             if int(question.getStudentAnswer()) == question.getAnswer():
-                self.numCorrect += 1
+                self._numCorrect += 1
                 question.setCorrectness(True)
-                self.label = tk.Label(self.assignmentWindow, \
+                self._label = tk.Label(self._assignmentWindow, \
                                              text="CORRECT")
-                self.label.after(1000, self.clear_labels)
-                self.label.pack()
-                self.labels.append(self.label)
+                self._label.after(1000, self.clear_labels)
+                self._label.pack()
+                self._labels.append(self._label)
 
                 # if the student got perfect, then disable the hand in button
                 # and output the grade
                 if self.assignment.checkIfPerfect():
-                    self.handInBut.config(state='disabled')
-                    tk.Label(self.assignmentWindow, text=str(self.numCorrect)\
-                             + "/" + str(self.numQuestions)).pack()               
+                    self._handInBut.config(state='disabled')
+                    tk.Label(self._assignmentWindow, text=str(self._numCorrect)\
+                             + "/" + str(self._numQuestions)).pack()               
             # if the student answers are incorrect, output "WRONG"
             else:
-                self.label = tk.Label(self.assignmentWindow, \
+                self._label = tk.Label(self._assignmentWindow, \
                                                text="WRONG")
-                self.label.after(1000, self.clear_labels)
-                self.label.pack()
-                self.labels.append(self.label)
+                self._label.after(1000, self.clear_labels)
+                self._label.pack()
+                self._labels.append(self._label)
                 
     def clear_labels(self):
-        for label in self.labels:
+        for label in self._labels:
             label.destroy()
         
 root = tk.Tk()
