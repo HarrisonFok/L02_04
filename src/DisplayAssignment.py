@@ -1,5 +1,6 @@
 from tkinter import *
 import csv
+import io
 
 def displayAssignmentWindow(root, studentID, assignmentID):
 	""" Displays the window for completing the assignment """
@@ -26,23 +27,25 @@ def displayAssignmentWindow(root, studentID, assignmentID):
 		rowNum+=1
 
 	# compare answers if the submit button is clicked
-	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair))
+	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair, studentID, assignmentID))
 	submitBtn.grid(row = rowNum)
 
 
 
-def getStudentAnswers(questionStudentAnsPair):
+def getStudentAnswers(questionStudentAnsPair, studentID, assignmentID):
 	""" This method replaces the values of the questionStudentAnsPair dictionary with the entries 
 		in the form. """
-	questionStudentAnsCopy = questionStudentAnsPair.copy()
-	# replace the entry with the student's answer
-	for question in questionStudentAnsCopy:
-		tempAnswer = questionStudentAnsCopy[question].get().strip()
-		questionStudentAnsCopy[question] = tempAnswer
 
-	compareAnswers(questionStudentAnsCopy)
+	questionStudentAnsCopy = dict()
+	for q in questionStudentAnsPair:
+		q_body = q.cget("text")
+		q_ans = questionStudentAnsPair[q].get().strip()
+		questionStudentAnsCopy[q_body] = q_ans
 
-def compareAnswers(questionStudentAnsPair):
+
+	compareAnswers(questionStudentAnsCopy, studentID, assignmentID)
+
+def compareAnswers(questionStudentAnsPair, studentID, assignmentID):
 	""" Retrieves the answers from the entry fields and compares it against
 	the correct answer. Also overwrites the answer.csv to store this latest
 	attempt. """
@@ -52,16 +55,57 @@ def compareAnswers(questionStudentAnsPair):
 	assignmentCSV = open("Assignment.csv", "r")
 	assignmentReader = csv.reader(assignmentCSV)
 
+	answersDict = dict()
+
+	for row in assignmentReader:
+		if (row[4].strip() == str(assignmentID)):
+			answersDict[row[2].strip()] = row[3].strip()
+
 	# iterate through the value of the questionStudentAnsPair dictionary
-	for q in questionStudentAnsPair:
-		studentAns = questionStudentAnsPair[q]
-		for row in assignmentReader:
-			if (row[3].strip() == studentAns.strip()):
+	for q1 in questionStudentAnsPair:
+		studentAns = questionStudentAnsPair[q1]
+		for q2 in answersDict:
+			if (answersDict[q1] == studentAns):
 				mark+=1
 				break
+			
 
 	numRows = len(questionStudentAnsPair)
 	totalMark = Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
+
+	# write to the assignment_studentNo file
+	filename = "Assignment_" + str(studentID) + ".csv"
+	csvFileWrite = open(filename, "w")
+	csvFileRead = open(filename, "r")
+	writer = csv.writer(csvFileWrite)
+	reader = csv.reader(csvFileRead)
+
+	firstAttempt = True
+	# updates the previous attempt stored in the .csv file
+	for row in reader:
+		if row[3] == assignmentID:
+			firstAttempt = False
+			# find that particular question and modify student's answer
+			q = row[0].strip()
+			# update the column with student's answer
+			row[1] = questionStudentAnsPair[q]
+
+	if (firstAttempt):
+		# appends the most recent attempt to the csv file
+		for q in questionStudentAnsPair:
+			data = []
+			data.append(q)
+			data.append(questionStudentAnsPair[q])
+			data.append(answersDict[q])
+			data.append(assignmentID)
+			# insert into the csv file
+			writer.writerow(data)
+	# close opened CSV files
+	csvFileRead.close()
+	csvFileWrite.close()
+	assignmentCSV.close()
+
+
 
 def getQuestionsFromAssignment(assignmentID):
 	""" Returns a list of questions for that assignment """
