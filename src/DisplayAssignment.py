@@ -4,28 +4,23 @@ import io
 
 def displayAssignmentWindow(root, studentID, assignmentID):
 	""" Displays the window for completing the assignment """
-
 	header = Label(root, text="Answer the following questions.").grid(row=0)
 	# get a list of assignments and display them
 	questions = getQuestionsFromAssignment(assignmentID)
-
 	# dictionary to store the label to display the question and the entry for student's answer
 	questionStudentAnsPair = dict()
-
 	# print out each question vertically with a textbox beside each question
 	for q in questions:
 		# create a label
 		questionLabel = Label(root, text=q)
 		answerEntry = Entry(root, width=50)
 		questionStudentAnsPair[questionLabel] = answerEntry
-	
 	# display the question body along with a field to answer it
 	rowNum = 1
 	for questionBody in questionStudentAnsPair:
 		questionBody.grid(row=rowNum, column = 0)
 		questionStudentAnsPair[questionBody].grid(row = rowNum, column = 1)
 		rowNum+=1
-
 	# compare answers if the submit button is clicked
 	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair, studentID, assignmentID))
 	submitBtn.grid(row = rowNum)
@@ -35,13 +30,11 @@ def displayAssignmentWindow(root, studentID, assignmentID):
 def getStudentAnswers(questionStudentAnsPair, studentID, assignmentID):
 	""" This method replaces the values of the questionStudentAnsPair dictionary with the entries 
 		in the form. """
-
 	questionStudentAnsCopy = dict()
 	for q in questionStudentAnsPair:
 		q_body = q.cget("text")
 		q_ans = questionStudentAnsPair[q].get().strip()
 		questionStudentAnsCopy[q_body] = q_ans
-
 
 	compareAnswers(questionStudentAnsCopy, studentID, assignmentID)
 
@@ -56,11 +49,10 @@ def compareAnswers(questionStudentAnsPair, studentID, assignmentID):
 	assignmentReader = csv.reader(assignmentCSV)
 
 	answersDict = dict()
-
+	# create a dictionary to hold all the questions and answers
 	for row in assignmentReader:
 		if (row[4].strip() == str(assignmentID)):
 			answersDict[row[2].strip()] = row[3].strip()
-
 	# iterate through the value of the questionStudentAnsPair dictionary
 	for q1 in questionStudentAnsPair:
 		studentAns = questionStudentAnsPair[q1]
@@ -72,7 +64,6 @@ def compareAnswers(questionStudentAnsPair, studentID, assignmentID):
 
 	numRows = len(questionStudentAnsPair)
 	totalMark = Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
-
 	# write to the assignment_studentNo file
 	filename = "Assignment_" + str(studentID) + ".csv"
 	csvFileWrite = open(filename, "w")
@@ -106,7 +97,6 @@ def compareAnswers(questionStudentAnsPair, studentID, assignmentID):
 	assignmentCSV.close()
 
 
-
 def getQuestionsFromAssignment(assignmentID):
 	""" Returns a list of questions for that assignment """
 	''' Assume 1 file stores all questions'''
@@ -129,5 +119,10 @@ def getQuestionsFromAssignment(assignmentID):
 	return questions
 
 root = Tk()
-displayAssignmentWindow(root, 1, 0)
+
+if __name__ == "__main__":
+	# for testing
+	displayAssignmentWindow(root, 1, 0)
+
 root.mainloop()
+
