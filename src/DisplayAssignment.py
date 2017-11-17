@@ -2,7 +2,7 @@ from tkinter import *
 import csv
 import io
 
-def displayAssignmentWindow(root, studentID, assignmentID):
+def displayAssignmentWindow(root, studentNum, assignmentID):
 	""" Displays the window for completing the assignment """
 	header = Label(root, text="Answer the following questions.").grid(row=0)
 	# get a list of assignments and display them
@@ -22,12 +22,12 @@ def displayAssignmentWindow(root, studentID, assignmentID):
 		questionStudentAnsPair[questionBody].grid(row = rowNum, column = 1)
 		rowNum+=1
 	# compare answers if the submit button is clicked
-	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair, studentID, assignmentID))
+	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID))
 	submitBtn.grid(row = rowNum)
 
 
 
-def getStudentAnswers(questionStudentAnsPair, studentID, assignmentID):
+def getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID):
 	""" This method replaces the values of the questionStudentAnsPair dictionary with the entries 
 		in the form. """
 	questionStudentAnsCopy = dict()
@@ -36,9 +36,9 @@ def getStudentAnswers(questionStudentAnsPair, studentID, assignmentID):
 		q_ans = questionStudentAnsPair[q].get().strip()
 		questionStudentAnsCopy[q_body] = q_ans
 
-	compareAnswers(questionStudentAnsCopy, studentID, assignmentID)
+	compareAnswers(questionStudentAnsCopy, studentNum, assignmentID)
 
-def compareAnswers(questionStudentAnsPair, studentID, assignmentID):
+def compareAnswers(questionStudentAnsPair, studentNum, assignmentID):
 	""" Retrieves the answers from the entry fields and compares it against
 	the correct answer. Also overwrites the answer.csv to store this latest
 	attempt. """
@@ -65,7 +65,7 @@ def compareAnswers(questionStudentAnsPair, studentID, assignmentID):
 	numRows = len(questionStudentAnsPair)
 	totalMark = Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
 	# write to the assignment_studentNo file
-	filename = "Assignment_" + str(studentID) + ".csv"
+	filename = "Assignment_" + str(studentNum) + ".csv"
 	csvFileWrite = open(filename, "w")
 	csvFileRead = open(filename, "r")
 	writer = csv.writer(csvFileWrite)
