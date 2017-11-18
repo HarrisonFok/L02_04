@@ -13,7 +13,6 @@ def displayListOfAssignments(studentNum):
 	profCol = 7
 
 	userType = checkUserType(studentNum)
-	print("userType", userType)
 	if userType == 'S': 
 		typeCol = studentCol
 	else:
@@ -76,7 +75,6 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 		rowNum+=1
 
 	# add button for creating a new assignment if it's a prof
-	print("userType", userType)
 	if userType == 'P':
 		createAssignmentBtn = Button(root, text="New Assignment").grid(row=rowNum)
 

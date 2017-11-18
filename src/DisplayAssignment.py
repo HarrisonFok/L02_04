@@ -79,14 +79,9 @@ def compareAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 	lines = [l for l in r]
 	found = False
 	for line in lines:
-		print("assignmentID", assignmentID)
-		print("row[3]", line[3])
-		print((line[3].strip()) == str(assignmentID))
-		print(line)
 		if (line[3].strip()) == str(assignmentID):
 			found = True
 			line[1] = questionStudentAnsPair[line[0].strip()]
-		print(line)
 
 	writer = csv.writer(open(filename, "w"))
 	writer.writerows(lines)
