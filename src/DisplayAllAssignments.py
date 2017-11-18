@@ -27,7 +27,6 @@ def displayListOfAssignments(studentNum):
 	assignmentsFile.seek(0)
 	reader = csv.reader(assignmentsFile)
 	
-	print(assignmentIdsList)
 	for assignmentId in assignmentIdsList:
 		# reset the reader
 		assignmentsFile.seek(0)
