@@ -29,3 +29,19 @@ Completed on October 16, 2017
 Deliverable 3: Project Planning.pdf
 Contains the project planning pdf that includes the product backlog, sprint backlog consisting of a break down of user stories to tasks and provisional schedule and burndown chart.
 Completed on October 22, 2017
+
+Deliverable 4: Project Execution.pdf
+Contains the 4th group deliverable that includes a revised product backlog and the sprint backlog consisting of a sprint plan, sprint report, burndown chart and
+2 taskboard snapshots before and after each sprint for sprints 1 and 2.
+Completed on November 6, 2017
+
+All code regarding the project will be placed in the src/ folder.
+
+How to run the project
+----------------------
+
+1. Open the terminal and create a directory where you want the project to be in.
+
+2. Execute the command `git clone https://github.com/CSCC01F17/L02_04.git` in the terminal to clone the project.
+
+3. To run the project, executre `python3 SignIn.py`. This will prompt a Sign In page where the user can login and sign up as a Professor or Student.
