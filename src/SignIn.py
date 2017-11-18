@@ -94,7 +94,7 @@ def SignIn(event):
                 systemStr = ""
                 if Usr.getType() == 'S':
                     StudentProfileIndex.displayProfile(newWindow, Usr)
-                    systemStr = 'python DisplayAssignment.py'
+                    systemStr = 'python DisplayAllAssignments.py'
                 elif Usr.getType() == 'P':
                     ProfessorProfileIndex.displayProfile(newWindow, Usr)
                     systemStr = 'python SelectQuestions.py'

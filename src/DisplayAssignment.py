@@ -4,12 +4,13 @@ try:
 except ImportError:
     # for Python3
     import tkinter as tk
+from CheckUserType import *
 import csv
 import io
 
 def displayAssignmentWindow(root, studentNum, assignmentID):
 	""" Displays the window for completing the assignment """
-	header = tk.Label(root, text="Answer the following questions.").grid(row=0)
+	header = Label(root, text="Answer the following questions.").grid(row=0)
 	# get a list of assignments and display them
 	questions = getQuestionsFromAssignment(assignmentID)
 	# dictionary to store the label to display the question and the entry for student's answer
@@ -17,8 +18,8 @@ def displayAssignmentWindow(root, studentNum, assignmentID):
 	# print out each question vertically with a textbox beside each question
 	for q in questions:
 		# create a label
-		questionLabel = tk.Label(root, text=q)
-		answerEntry = tk.Entry(root, width=50)
+		questionLabel = Label(root, text=q)
+		answerEntry = Entry(root, width=50)
 		questionStudentAnsPair[questionLabel] = answerEntry
 	# display the question body along with a field to answer it
 	rowNum = 1
@@ -26,13 +27,20 @@ def displayAssignmentWindow(root, studentNum, assignmentID):
 		questionBody.grid(row=rowNum, column = 0)
 		questionStudentAnsPair[questionBody].grid(row = rowNum, column = 1)
 		rowNum+=1
+
+	userType = checkUserType(studentNum)
+	# if user is a student, show this button.
+	if userType == 'S':
+		submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(root, questionStudentAnsPair, studentNum, assignmentID))
+	else:
+		submitBtn = Button(root, text="Submit", state=DISABLED)
+	# if user is a prof, don't allow for submission
 	# compare answers if the submit button is clicked
-	submitBtn = tk.Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID))
 	submitBtn.grid(row = rowNum)
 
 
 
-def getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID):
+def getStudentAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 	""" This method replaces the values of the questionStudentAnsPair dictionary with the entries 
 		in the form. """
 	questionStudentAnsCopy = dict()
@@ -41,9 +49,9 @@ def getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID):
 		q_ans = questionStudentAnsPair[q].get().strip()
 		questionStudentAnsCopy[q_body] = q_ans
 
-	compareAnswers(questionStudentAnsCopy, studentNum, assignmentID)
+	compareAnswers(root, questionStudentAnsCopy, studentNum, assignmentID)
 
-def compareAnswers(questionStudentAnsPair, studentNum, assignmentID):
+def compareAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 	""" Retrieves the answers from the entry fields and compares it against
 	the correct answer. Also overwrites the answer.csv to store this latest
 	attempt. """
@@ -68,37 +76,33 @@ def compareAnswers(questionStudentAnsPair, studentNum, assignmentID):
 			
 
 	numRows = len(questionStudentAnsPair)
-	totalMark = tk.Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
+	totalMark = Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
 	# write to the assignment_studentNo file
 	filename = "Assignment_" + str(studentNum) + ".csv"
-	csvFileWrite = open(filename, "w")
-	csvFileRead = open(filename, "r")
-	writer = csv.writer(csvFileWrite)
-	reader = csv.reader(csvFileRead)
+	# CHANGING THE VALUES INLINE. IE. if the question has been answered before
+	r = csv.reader(open(filename, "r"))
+	lines = [l for l in r]
+	found = False
+	for line in lines:
+		if (line[3].strip()) == str(assignmentID):
+			found = True
+			line[1] = questionStudentAnsPair[line[0].strip()]
 
-	firstAttempt = True
-	# updates the previous attempt stored in the .csv file
-	for row in reader:
-		if row[3] == assignmentID:
-			firstAttempt = False
-			# find that particular question and modify student's answer
-			q = row[0].strip()
-			# update the column with student's answer
-			row[1] = questionStudentAnsPair[q]
+	writer = csv.writer(open(filename, "w"))
+	writer.writerows(lines)
 
-	if (firstAttempt):
-		# appends the most recent attempt to the csv file
+	# if this is a new question, just append it to the end of the file
+	if not (found):
 		for q in questionStudentAnsPair:
-			data = []
-			data.append(q)
-			data.append(questionStudentAnsPair[q])
-			data.append(answersDict[q])
-			data.append(assignmentID)
-			# insert into the csv file
-			writer.writerow(data)
-	# close opened CSV files
-	csvFileRead.close()
-	csvFileWrite.close()
+			writer = csv.writer(open(filename, "a"))
+			newAns = []
+			newAns.append(q)
+			newAns.append(questionStudentAnsPair[q])
+			newAns.append(answersDict[q])
+			newAns.append(assignmentID)
+			# write to the file
+			writer.writerow(newAns)
+
 	assignmentCSV.close()
 
 
@@ -123,10 +127,13 @@ def getQuestionsFromAssignment(assignmentID):
 	# return this list
 	return questions
 
-root = tk.Tk()
+def displayMenu(studentNum, assignmentID):
+	root = Tk()
+	displayAssignmentWindow(root, studentNum, assignmentID)
+	root.mainloop()
 
-# for testing
-displayAssignmentWindow(root, 1, 0)
 
-root.mainloop()
 
+if __name__ == "__main__":
+	# for testing
+	displayMenu(1, 0)
