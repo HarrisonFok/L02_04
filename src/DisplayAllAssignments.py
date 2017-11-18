@@ -54,9 +54,6 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo):
 	""" Creates a label for each assignment displaying it's information and
 	is stacked vertically. """
 
-	# create dictionary to hold label : button for each assignment
-	# button will take user to the specific assignment
-
 	rowNum = 0
 	# iterate through assignments
 	for a in assignmentsInfo:
@@ -73,5 +70,6 @@ def displaySpecificAssignment(assignmentId, studentNum):
 	displayMenu(studentNum, assignmentId)
 
 if __name__ == "__main__":
+	""" for testing when running from terminal """
 	displayListOfAssignments(1)
 
