@@ -42,13 +42,13 @@ to appear on an assignment\n", font=("Helvetica", 32))
         self._numCorrect = 0
         self._numQuestions = 0
         
-        self.assignment = None
+        self._assignment = None
 
     def display(self):
         # Read all the question formulas in questions.csv and display them to
         # the screen
-        with open("questions.csv", "r") as csvFile:
-            reader = csv.reader(csvFile, delimiter="\n")
+        with open("questions.csv", "rb") as csvFile:
+            reader = csv.reader(csvFile, delimiter="\n", dialect=csv.excel_tab)
             for row in reader:
                 splitRow = row[0].split(',')
                 self.singleQuestion = tk.Label(self, text=splitRow[0] + ":" + \
@@ -60,7 +60,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
     
             self._entry.pack()
             
-            self.display_button.config(state = 'disabled')
+            self._display_button.config(state = 'disabled')
 
     def create_window(self):
         # Create a new window for the assignment
@@ -87,10 +87,10 @@ to appear on an assignment\n", font=("Helvetica", 32))
         
         # Make an assignment and store it inside Assignment.csv (using the
         # function in randomalgo.py)
-        self.assignment = makeAssignment(self._chosenQuestionFormulas)
+        self._assignment = makeAssignment(self._chosenQuestionFormulas, "Unit 1 test")
         
         # Read from Assignment.csv and display the questions to the window
-        listOfQ = self.assignment.getListOfQuestions()
+        listOfQ = self._assignment.getListOfQuestions()
         self._numQuestions = len(listOfQ)
         for question in listOfQ:
             questionEntry = tk.Label(self._assignmentWindow, \
@@ -114,20 +114,20 @@ to appear on an assignment\n", font=("Helvetica", 32))
         
         # Update the Question objects in the Assignment object
         for i in range(len(assignmentAnswersList)):
-            for j in range(self.assignment.getNumQuestions()):
+            for j in range(self._assignment.getNumQuestions()):
                 if i == j:
-                    self.assignment.\
+                    self._assignment.\
                         setStudentAnswerAtIndex(j, assignmentAnswersList[i])
         
         # Create a new spreadsheet that stores only the question and the
         # student answer
         assignmentFileName = "assignment_"+ \
-            str(self.assignment.getAssignmentId()) + ".csv"
+            str(self._assignment.getAssignmentId()) + ".csv"
         
         questionAnswerCorrectness = []
         
         with open(assignmentFileName, 'w') as assignmentFile:
-            for question in self.assignment.getListOfQuestions():
+            for question in self._assignment.getListOfQuestions():
                 questionAnswerCorrectness.append([question.getStudentAnswer(),\
                                            question.getAnswer()])
             writer = csv.writer(assignmentFile)
@@ -136,7 +136,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
         # For every student answer in assignmentAnswersList, compare them with
         # the answers. If the student didn't answer all the questions, it would
         # still output "WRONG"
-        listOfQ = self.assignment.getListOfQuestions()
+        listOfQ = self._assignment.getListOfQuestions()
         for question in listOfQ:
             # if the student answer is correct, output "CORRECT"
             if int(question.getStudentAnswer()) == question.getAnswer():
@@ -150,7 +150,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
                 # if the student got perfect, then disable the hand in button
                 # and output the grade
-                if self.assignment.checkIfPerfect():
+                if self._assignment.checkIfPerfect():
                     self._handInBut.config(state='disabled')
                     tk.Label(self._assignmentWindow, text=str(self._numCorrect)\
                              + "/" + str(self._numQuestions)).pack()               

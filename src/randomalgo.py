@@ -91,7 +91,7 @@ def RandomInRange(L):
     """
     return random.randint(int(L[0]), int(L[1]))
 
-def makeAssignment(L):
+def makeAssignment(L, assignmentName):
     '''
     :param L: the list of all the selected questions [[q1], [q2], [q3]]
     '''
@@ -118,7 +118,7 @@ def makeAssignment(L):
         # Append the necessary question info into result
         result.append([question[0], question[2], Q_B, answer])
 
-    newAssignmentObj = Assignment(questionObjs)
+    newAssignmentObj = Assignment(questionObjs, assignmentName)
     newAssignmentId = newAssignmentObj.getAssignmentId()
     
     for questionInfo in result:

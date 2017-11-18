@@ -1,10 +1,15 @@
-from tkinter import *
+try:
+    # for Python2
+    import Tkinter as tk
+except ImportError:
+    # for Python3
+    import tkinter as tk
 import csv
 import io
 
 def displayAssignmentWindow(root, studentNum, assignmentID):
 	""" Displays the window for completing the assignment """
-	header = Label(root, text="Answer the following questions.").grid(row=0)
+	header = tk.Label(root, text="Answer the following questions.").grid(row=0)
 	# get a list of assignments and display them
 	questions = getQuestionsFromAssignment(assignmentID)
 	# dictionary to store the label to display the question and the entry for student's answer
@@ -12,8 +17,8 @@ def displayAssignmentWindow(root, studentNum, assignmentID):
 	# print out each question vertically with a textbox beside each question
 	for q in questions:
 		# create a label
-		questionLabel = Label(root, text=q)
-		answerEntry = Entry(root, width=50)
+		questionLabel = tk.Label(root, text=q)
+		answerEntry = tk.Entry(root, width=50)
 		questionStudentAnsPair[questionLabel] = answerEntry
 	# display the question body along with a field to answer it
 	rowNum = 1
@@ -22,7 +27,7 @@ def displayAssignmentWindow(root, studentNum, assignmentID):
 		questionStudentAnsPair[questionBody].grid(row = rowNum, column = 1)
 		rowNum+=1
 	# compare answers if the submit button is clicked
-	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID))
+	submitBtn = tk.Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID))
 	submitBtn.grid(row = rowNum)
 
 
@@ -63,7 +68,7 @@ def compareAnswers(questionStudentAnsPair, studentNum, assignmentID):
 			
 
 	numRows = len(questionStudentAnsPair)
-	totalMark = Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
+	totalMark = tk.Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
 	# write to the assignment_studentNo file
 	filename = "Assignment_" + str(studentNum) + ".csv"
 	csvFileWrite = open(filename, "w")
@@ -118,11 +123,10 @@ def getQuestionsFromAssignment(assignmentID):
 	# return this list
 	return questions
 
-root = Tk()
+root = tk.Tk()
 
-if __name__ == "__main__":
-	# for testing
-	displayAssignmentWindow(root, 1, 0)
+# for testing
+displayAssignmentWindow(root, 1, 0)
 
 root.mainloop()
 
