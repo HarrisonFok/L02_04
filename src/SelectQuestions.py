@@ -29,7 +29,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
         self._display_button.pack()
 
         self._entry = tk.Entry(self)
-        self._assignmentWindow = None
+        self.assignmentWindow = None
         
         # This will be the list of chosen question formulas
         self._chosenQuestionFormulas = []
@@ -47,7 +47,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
     def display(self):
         # Read all the question formulas in questions.csv and display them to
         # the screen
-        with open("questions.csv", "rb") as csvFile:
+        with open("questions.csv", "rU") as csvFile:
             reader = csv.reader(csvFile, delimiter="\n", dialect=csv.excel_tab)
             for row in reader:
                 splitRow = row[0].split(',')
@@ -64,9 +64,9 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
     def create_window(self):
         # Create a new window for the assignment
-        self._assignmentWindow = tk.Toplevel(self)
+        self.assignmentWindow = tk.Toplevel(self)
         root.withdraw()
-        self._assignmentWindow.wm_title("ASSIGNMENT")
+        self.assignmentWindow.wm_title("ASSIGNMENT")
         
         # Get the user input
         chosenQuestionNums = self._entry.get()
@@ -78,7 +78,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
         
         # Get the chosen question formulas and append to the list
         # self._chosenQuestionFormulas
-        with open("questions.csv", "r") as csvFile:
+        with open("questions.csv", "rU") as csvFile:
             for lineList in csv.reader(csvFile):
                 # if the question is one of the chosen questions, then add it
                 # to self._chosenQuestionFormulas
@@ -93,16 +93,16 @@ to appear on an assignment\n", font=("Helvetica", 32))
         listOfQ = self._assignment.getListOfQuestions()
         self._numQuestions = len(listOfQ)
         for question in listOfQ:
-            questionEntry = tk.Label(self._assignmentWindow, \
+            questionEntry = tk.Label(self.assignmentWindow, \
                                      text=question.getQuestion(), \
                                      font=("Helvetica", 28))
             questionEntry.pack()
 
-        self._handInBut = tk.Button(self._assignmentWindow, text="Hand in", \
+        self._handInBut = tk.Button(self.assignmentWindow, text="Hand in", \
                   font=("Helvetica", 28), command=self.validate)
         self._handInBut.pack()
         
-        self.assignmentAnswersEntry = tk.Entry(self._assignmentWindow, \
+        self.assignmentAnswersEntry = tk.Entry(self.assignmentWindow, \
                                               font=("Helvetica", 28))
         self.assignmentAnswersEntry.pack()
 
@@ -142,7 +142,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
             if int(question.getStudentAnswer()) == question.getAnswer():
                 self._numCorrect += 1
                 question.setCorrectness(True)
-                self._label = tk.Label(self._assignmentWindow, \
+                self._label = tk.Label(self.assignmentWindow, \
                                              text="CORRECT")
                 self._label.after(1000, self.clear_labels)
                 self._label.pack()
@@ -152,11 +152,11 @@ to appear on an assignment\n", font=("Helvetica", 32))
                 # and output the grade
                 if self._assignment.checkIfPerfect():
                     self._handInBut.config(state='disabled')
-                    tk.Label(self._assignmentWindow, text=str(self._numCorrect)\
+                    tk.Label(self.assignmentWindow, text=str(self._numCorrect)\
                              + "/" + str(self._numQuestions)).pack()               
             # if the student answers are incorrect, output "WRONG"
             else:
-                self._label = tk.Label(self._assignmentWindow, \
+                self._label = tk.Label(self.assignmentWindow, \
                                                text="WRONG")
                 self._label.after(1000, self.clear_labels)
                 self._label.pack()
