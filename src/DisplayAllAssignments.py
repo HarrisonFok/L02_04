@@ -9,24 +9,25 @@ def displayListOfAssignments(studentNum):
 	""" Creates a window to display all assignments for a student and its 
 	corresponding information. """
 	root = Tk()
-	# get the file with the name Assignment_studentNum
-	filename = "Assignment_" + str(studentNum) + ".csv"
-	studentFile = open(filename, "r")
-	reader = csv.reader(studentFile)
-
 	assignmentIdsList = []
-	# create a list of distinct assignmentIDs
-	for row in reader:
-		# if the the IDs 
-		if not (row[3] in assignmentIdsList):
-			assignmentIdsList.append(row[3].strip())
-
 	assignmentsInfo = []
 
 	# parse the Assignment.csv to get information for an assignment based on its ID
 	assignmentsFile = open("Assignment.csv", "r")
+
 	reader = csv.reader(assignmentsFile)
 
+	# get all the student's assignments by ID
+	for row in reader:
+		if row[8].strip() == str(studentNum):
+			if not (row[4].strip() in assignmentIdsList):
+				assignmentIdsList.append(row[4].strip())
+
+	# reset the reader
+	assignmentsFile.seek(0)
+	reader = csv.reader(assignmentsFile)
+	
+	print(assignmentIdsList)
 	for assignmentId in assignmentIdsList:
 		# reset the reader
 		assignmentsFile.seek(0)
@@ -47,7 +48,6 @@ def displayListOfAssignments(studentNum):
 	createAssignmentLabels(root, studentNum, assignmentsInfo)
 	# display the assignment name, due date and assignment ID
 	assignmentsFile.close()
-	studentFile.close()
 	root.mainloop()
 
 def createAssignmentLabels(root, studentNum, assignmentsInfo):
@@ -71,5 +71,5 @@ def displaySpecificAssignment(assignmentId, studentNum):
 
 if __name__ == "__main__":
 	""" for testing when running from terminal """
-	displayListOfAssignments(1)
+	displayListOfAssignments(0)
 
