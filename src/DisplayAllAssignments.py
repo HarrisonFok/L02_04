@@ -1,5 +1,6 @@
 from tkinter import *
 from DisplayAssignment import *
+from CheckUserType import *
 import csv
 import io
 
@@ -8,6 +9,16 @@ import io
 def displayListOfAssignments(studentNum):
 	""" Creates a window to display all assignments for a student and its 
 	corresponding information. """
+	studentCol = 8
+	profCol = 7
+
+	userType = checkUserType(studentNum)
+
+	if (userType == 'S'):
+		typeCol = studentCol
+	else:
+		typeCol = profCol
+
 	root = Tk()
 	assignmentIdsList = []
 	assignmentsInfo = []
@@ -19,7 +30,7 @@ def displayListOfAssignments(studentNum):
 
 	# get all the student's assignments by ID
 	for row in reader:
-		if row[8].strip() == str(studentNum):
+		if row[typeCol].strip() == str(studentNum):
 			if not (row[4].strip() in assignmentIdsList):
 				assignmentIdsList.append(row[4].strip())
 
@@ -59,6 +70,7 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo):
 		info = "Assignment Name: " + a[1] + "\nDue Date: " + a[2]
 		infoLabel = Label(root, text=info).grid(row=rowNum, column = 0)
 		a_id = a[0]
+
 		viewAssignmentBtn = Button(root, text="View", command = lambda a_id=a_id:displaySpecificAssignment(a_id, studentNum))
 		viewAssignmentBtn.grid(row=rowNum, column = 1)
 		rowNum+=1

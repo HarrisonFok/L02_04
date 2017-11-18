@@ -1,4 +1,5 @@
 from tkinter import *
+from CheckUserType import *
 import csv
 import io
 
@@ -21,8 +22,15 @@ def displayAssignmentWindow(root, studentNum, assignmentID):
 		questionBody.grid(row=rowNum, column = 0)
 		questionStudentAnsPair[questionBody].grid(row = rowNum, column = 1)
 		rowNum+=1
+
+	userType = checkUserType(studentNum)
+	# if user is a student, show this button.
+	if userType == 'S':
+		submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(root, questionStudentAnsPair, studentNum, assignmentID))
+	else:
+		submitBtn = Button(root, text="Submit", state=DISABLED)
+	# if user is a prof, don't allow for submission
 	# compare answers if the submit button is clicked
-	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(root, questionStudentAnsPair, studentNum, assignmentID))
 	submitBtn.grid(row = rowNum)
 
 
