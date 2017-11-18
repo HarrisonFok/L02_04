@@ -13,8 +13,8 @@ def displayListOfAssignments(studentNum):
 	profCol = 7
 
 	userType = checkUserType(studentNum)
-
-	if (userType == 'S'):
+	print("userType", userType)
+	if userType == 'S': 
 		typeCol = studentCol
 	else:
 		typeCol = profCol
@@ -55,12 +55,12 @@ def displayListOfAssignments(studentNum):
 				break
 
 	# create the necessary labels on the window
-	createAssignmentLabels(root, studentNum, assignmentsInfo)
+	createAssignmentLabels(root, studentNum, assignmentsInfo, userType)
 	# display the assignment name, due date and assignment ID
 	assignmentsFile.close()
 	root.mainloop()
 
-def createAssignmentLabels(root, studentNum, assignmentsInfo):
+def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 	""" Creates a label for each assignment displaying it's information and
 	is stacked vertically. """
 
@@ -74,6 +74,11 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo):
 		viewAssignmentBtn = Button(root, text="View", command = lambda a_id=a_id:displaySpecificAssignment(a_id, studentNum))
 		viewAssignmentBtn.grid(row=rowNum, column = 1)
 		rowNum+=1
+
+	# add button for creating a new assignment if it's a prof
+	print("userType", userType)
+	if userType == 'P':
+		createAssignmentBtn = Button(root, text="New Assignment").grid(row=rowNum)
 
 
 def displaySpecificAssignment(assignmentId, studentNum):

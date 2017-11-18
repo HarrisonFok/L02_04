@@ -7,7 +7,7 @@ def checkUserType(userId):
 	usersReader = csv.reader(usersCSV)
 	for row in usersReader:
 		if row[0].strip() == str(userId):
-			userType = row[5].split()
+			userType = row[5].strip()
 			break
 	# return 'S' for student, 'P' for professor
 	return userType
