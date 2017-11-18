@@ -6,6 +6,7 @@ import StudentProfileIndex
 import ProfessorProfileIndex
 import csv
 import io
+import os
 
 ## Parent Class for all users
 
@@ -90,12 +91,16 @@ def SignIn(event):
 
                 # open a new window with the credentials of the user
                 newWindow = Toplevel()
+                systemStr = ""
                 if Usr.getType() == 'S':
                     StudentProfileIndex.displayProfile(newWindow, Usr)
+                    systemStr = 'python DisplayAssignment.py'
                 elif Usr.getType() == 'P':
                     ProfessorProfileIndex.displayProfile(newWindow, Usr)
+                    systemStr = 'python SelectQuestions.py'
 
                 newWindow.geometry("400x400")
+                os.system(systemStr)
                 break
 
     if not (EmEx and PassEx):
