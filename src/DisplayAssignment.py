@@ -66,34 +66,35 @@ def compareAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 	totalMark = Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
 	# write to the assignment_studentNo file
 	filename = "Assignment_" + str(studentNum) + ".csv"
-	csvFileWrite = open(filename, "w")
-	csvFileRead = open(filename, "r")
-	writer = csv.writer(csvFileWrite)
-	reader = csv.reader(csvFileRead)
+	# CHANGING THE VALUES INLINE. IE. if the question has been answered before
+	r = csv.reader(open(filename, "r"))
+	lines = [l for l in r]
+	found = False
+	for line in lines:
+		print("assignmentID", assignmentID)
+		print("row[3]", line[3])
+		print((line[3].strip()) == str(assignmentID))
+		print(line)
+		if (line[3].strip()) == str(assignmentID):
+			found = True
+			line[1] = questionStudentAnsPair[line[0].strip()]
+		print(line)
 
-	firstAttempt = True
-	# updates the previous attempt stored in the .csv file
-	for row in reader:
-		if row[3] == assignmentID:
-			firstAttempt = False
-			# find that particular question and modify student's answer
-			q = row[0].strip()
-			# update the column with student's answer
-			row[1] = questionStudentAnsPair[q]
+	writer = csv.writer(open(filename, "w"))
+	writer.writerows(lines)
 
-	if (firstAttempt):
-		# appends the most recent attempt to the csv file
+	# if this is a new question, just append it to the end of the file
+	if not (found):
 		for q in questionStudentAnsPair:
-			data = []
-			data.append(q)
-			data.append(questionStudentAnsPair[q])
-			data.append(answersDict[q])
-			data.append(assignmentID)
-			# insert into the csv file
-			writer.writerow(data)
-	# close opened CSV files
-	csvFileRead.close()
-	csvFileWrite.close()
+			writer = csv.writer(open(filename, "a"))
+			newAns = []
+			newAns.append(q)
+			newAns.append(questionStudentAnsPair[q])
+			newAns.append(answersDict[q])
+			newAns.append(assignmentID)
+			# write to the file
+			writer.writerow(newAns)
+
 	assignmentCSV.close()
 
 
