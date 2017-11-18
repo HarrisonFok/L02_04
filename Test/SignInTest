@@ -10,6 +10,12 @@ class TestSignIn(unittest.TestCase):
   # How am I gonna test this without doing what the function is already doing?
   # ... Well, it's only noteworthy if it fails, so this is just a test that it hasn't changed...
   
+  csv_file = open("TestUsers.csv", "a")
+	writer = csv.writer(csv_file)
+	writer.writerow([0] + ["s"]*4 + ["S"])
+  writer.writerow([1] + ["p"]*4 + ["P"])
+  csv_file.close()
+  
   csv_file = open("TestUsers.csv", "r")
   Users = []
   lines = list(csv.reader(csv_file))
