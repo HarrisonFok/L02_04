@@ -22,12 +22,12 @@ def displayAssignmentWindow(root, studentNum, assignmentID):
 		questionStudentAnsPair[questionBody].grid(row = rowNum, column = 1)
 		rowNum+=1
 	# compare answers if the submit button is clicked
-	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID))
+	submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(root, questionStudentAnsPair, studentNum, assignmentID))
 	submitBtn.grid(row = rowNum)
 
 
 
-def getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID):
+def getStudentAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 	""" This method replaces the values of the questionStudentAnsPair dictionary with the entries 
 		in the form. """
 	questionStudentAnsCopy = dict()
@@ -36,9 +36,9 @@ def getStudentAnswers(questionStudentAnsPair, studentNum, assignmentID):
 		q_ans = questionStudentAnsPair[q].get().strip()
 		questionStudentAnsCopy[q_body] = q_ans
 
-	compareAnswers(questionStudentAnsCopy, studentNum, assignmentID)
+	compareAnswers(root, questionStudentAnsCopy, studentNum, assignmentID)
 
-def compareAnswers(questionStudentAnsPair, studentNum, assignmentID):
+def compareAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 	""" Retrieves the answers from the entry fields and compares it against
 	the correct answer. Also overwrites the answer.csv to store this latest
 	attempt. """
@@ -118,11 +118,14 @@ def getQuestionsFromAssignment(assignmentID):
 	# return this list
 	return questions
 
-root = Tk()
+def displayMenu(studentNum, assignmentID):
+	root = Tk()
+	displayAssignmentWindow(root, studentNum, assignmentID)
+	root.mainloop()
+
+
 
 if __name__ == "__main__":
 	# for testing
-	displayAssignmentWindow(root, 1, 0)
-
-root.mainloop()
+	displayMenu(1, 0)
 
