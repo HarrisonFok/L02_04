@@ -30,6 +30,8 @@ def createProfessor(root, nameEntry, emailEntry, passwordEntry, passwordDupEntry
 			passwordEntry.delete(0, 'end')
 			passwordDupEntry.delete(0, 'end')
 			pNumEntry.delete(0, 'end')
+			# close the window
+			root.destroy()
 		else:
 			resultLabel.config(text="Passwords don't match")
 
