@@ -14,10 +14,15 @@ def readUser():
     return readUserFile("Users.csv")
 
 def readUserFile(filename):
-    csv_file = open("Users.csv", "r")
 
     Users = []
 
+    try:
+        csv_file = open("Users.csv", "r")
+    except FileNotFoundError:
+        open("Users.csv", 'a').close()
+        return None
+    
     lines = list(csv.reader(csv_file)) # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
 
     for l in lines:
