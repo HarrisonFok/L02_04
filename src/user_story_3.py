@@ -8,17 +8,17 @@ root = Tk()
 def getRange(new_q):
     ''' Parses the new variables for their ranges '''
 
-    varRanges = ''
-    for i in range(len(new_q)):
-        if new_q[i].isnumeric():
-            if new_q[i - 1] != 'R':
-                varRanges += new_q[i]
-        elif new_q[i] == ',':
-            varRanges += '|'
-        elif new_q[i] == ')':
-            varRanges += ','
+    res = ''
+    while new_q.find('VAR') != -1:
 
-    return varRanges[:len(varRanges) - 1]
+        index1 = new_q.find('(')
+        index2 = new_q.find('|')
+        index3 = new_q.find(')')
+        res += (new_q[index1 +1 : index2] + '|' + new_q[index2+1:index3] + ' ')
+        new_q = new_q[index3+1:]
+
+    return res[:-1]
+
 
 
 def MCQ():
@@ -46,7 +46,7 @@ def MCQ():
         question_window.destroy()
 
     def insert_var():
-        new_question.insert('insert', ' VAR' + str(li[0]) + '(min, max)'
+        new_question.insert('insert', ' VAR' + str(li[0]) + '(min|max)'
                              + ' ')
         li[0] += 1
 
@@ -155,7 +155,7 @@ def FBQ():
         question_window.destroy()
 
     def insert_var():
-        new_question.insert('insert', ' VAR' + str(li[0]) + '(min, max)'
+        new_question.insert('insert', ' VAR' + str(li[0]) + '(min|max)'
                              + ' ')
         li[0] += 1
 
