@@ -35,6 +35,9 @@ Contains the 4th group deliverable that includes a revised product backlog and t
 2 taskboard snapshots before and after each sprint for sprints 1 and 2.
 Completed on November 6, 2017
 
+Deliverable 5: Verification and Validation
+The CSCC01 Code Review Debriefing Meeting.mp4 is a 5 minute video of our code review debriefing meeting where each team member gave general recommendations to the team on how to improve the quality of the development.
+
 All code regarding the project will be placed in the src/ folder.
 
 How to run the project
