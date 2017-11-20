@@ -25,9 +25,21 @@ class TestSignIn(unittest.TestCase):
     writer.writerow([1] + ["p"]*4 + ["P"])
     csv_file.close()
 
-    Users = [Student.Student("p", "p", "p", "p"), Professor.Professor("s", "s", "s", "s")]
+    Users = [Student.Student("s", "s", "s", "s"), Professor.Professor("p", "p", "p", "p")]
 
-    self.assertEqual(Users, SignIn.readUserFile("TestUsers.csv"))
+    U = SignIn.readUserFile("TestUsers.csv")
+
+    s = set()
+
+    for i in range(len(U)):
+      s.add(U[i].getName() == Users[i].getName())
+      s.add(U[i].getEmail() == Users[i].getEmail())
+      s.add(U[i].getPassword() == Users[i].getPassword())
+      s.add(U[i].getPersonnelNumber() == Users[i].getPersonnelNumber())
+      s.add(U[i].getType() == Users[i].getType())
+      s.add(U[i].getId() == Users[i].getId())
+
+    self.assertTrue(len(s) == 1)
 
 if __name__ == '__main__':
     unittest.main(exit=False)
