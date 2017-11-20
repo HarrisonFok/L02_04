@@ -20,8 +20,8 @@ class TestSignIn(unittest.TestCase):
   # ... Well, it's only noteworthy if it fails, so this is just a test that it hasn't changed...
 
     csv_file = open("TestUsers.csv", "a")
-    writer = csv.writer(csv_file)
-    writer.writerows([[0] + ["s"]*4 + ["S"], [1] + ["p"]*4 + ["P"]])
+    csv_file.write("0,s,s,s,s,S\n")
+    csv_file.write("1,p,p,p,p,P\n")
     csv_file.close()
 
     Users = [Student.Student("s", "s", "s", "s"), Professor.Professor("p", "p", "p", "p")]
@@ -30,7 +30,9 @@ class TestSignIn(unittest.TestCase):
 
     s = set()
 
-    for i in range(len(U)):
+    print(len(U))
+
+    for i in range(0,2):
       s.add(U[i].getName() == Users[i].getName())
       s.add(U[i].getEmail() == Users[i].getEmail())
       s.add(U[i].getPassword() == Users[i].getPassword())
