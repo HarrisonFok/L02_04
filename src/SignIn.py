@@ -42,7 +42,7 @@ def StudentRegistering(event):
     StudentProfileIndex.signUpIndex(newWindow)
 
 def ProfessorRegistering(event):
-    """ Execute the registration menu """ 
+    """ Execute the registration menu """
 
     newWindow = Toplevel()
     ProfessorProfileIndex.signUpIndex(newWindow)
@@ -101,65 +101,66 @@ def SignIn(event):
     if not (EmEx and PassEx):
         tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
 
+def SignInWindow():
 
-#### Okay... So bound functions can't take parameters...
+    #### Okay... So bound functions can't take parameters...
 
-root = Tk()
+    root = Tk()
 
-CredFrame = Frame(root)
-CredFrame.pack()
+    CredFrame = Frame(root)
+    CredFrame.pack()
 
-EmailText = StringVar()
-PassText = StringVar()
+    EmailText = StringVar()
+    PassText = StringVar()
 
-EmailLabel = Label(CredFrame, text="Email")
-PassLabel = Label(CredFrame, text="Password")
+    EmailLabel = Label(CredFrame, text="Email")
+    PassLabel = Label(CredFrame, text="Password")
 
-EmailEntry = Entry(CredFrame, textvariable=EmailText)
-PassEntry = Entry(CredFrame, show="*", textvariable=PassText)
+    EmailEntry = Entry(CredFrame, textvariable=EmailText)
+    PassEntry = Entry(CredFrame, show="*", textvariable=PassText)
 
-# widgets centered by default, sticky option to change
-EmailLabel.grid(row=1, sticky=E)
-PassLabel.grid(row=2, sticky=E)
+    # widgets centered by default, sticky option to change
+    EmailLabel.grid(row=1, sticky=E)
+    PassLabel.grid(row=2, sticky=E)
 
-EmailEntry.grid(row=1, column=1)
-PassEntry.grid(row=2, column=1)
+    EmailEntry.grid(row=1, column=1)
+    PassEntry.grid(row=2, column=1)
 
-checked = 0
+    checked = 0
 
-c = Checkbutton(CredFrame, text="Keep me logged in", variable=checked)
-c.grid(columnspan=2)
+    c = Checkbutton(CredFrame, text="Keep me logged in", variable=checked)
+    c.grid(columnspan=2)
 
-BottomFrame = Frame(root)
-BottomFrame.pack(side=BOTTOM)
+    BottomFrame = Frame(root)
+    BottomFrame.pack(side=BOTTOM)
 
-ButtonFrame = Frame(BottomFrame)
-ButtonFrame.pack(side=BOTTOM)
+    ButtonFrame = Frame(BottomFrame)
+    ButtonFrame.pack(side=BOTTOM)
 
-if checked: print("hi!") #Do stuff
+    if checked: print("hi!") #Do stuff
 
-global Usrs
+    global Usrs
 
-Usrs = readUser()
+    Usrs = readUser()
 
-global CurrentUsr
+    global CurrentUsr
 
-CurrentUsr = None
+    CurrentUsr = None
 
-RegisterButton = Button(ButtonFrame, text="Student Registration")
-RegisterButton.pack(side=LEFT)
-RegisterButton.bind("<Button-1>", StudentRegistering)
+    RegisterButton = Button(ButtonFrame, text="Student Registration")
+    RegisterButton.pack(side=LEFT)
+    RegisterButton.bind("<Button-1>", StudentRegistering)
 
-RegisterButton = Button(ButtonFrame, text="Professor Registration")
-RegisterButton.pack(side=LEFT)
-RegisterButton.bind("<Button-1>", ProfessorRegistering)
+    RegisterButton = Button(ButtonFrame, text="Professor Registration")
+    RegisterButton.pack(side=LEFT)
+    RegisterButton.bind("<Button-1>", ProfessorRegistering)
 
-SignInButton = Button(ButtonFrame, text="Sign In")
-SignInButton.bind("<Button-1>", SignIn)
+    SignInButton = Button(ButtonFrame, text="Sign In")
+    SignInButton.bind("<Button-1>", SignIn)
 
-if Usrs is not None:
-    SignInButton.pack(side=RIGHT)
+    if Usrs is not None:
+        SignInButton.pack(side=RIGHT)
 
-root.mainloop()
+    root.mainloop()
 
-### You can also put the form code inside the def function to make a form pop up when you click that button...:
+    ### You can also put the form code inside the def function to make a form pop up when you click that button...:
