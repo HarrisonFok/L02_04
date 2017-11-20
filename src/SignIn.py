@@ -13,7 +13,7 @@ def readUser():
     return readUserFile("Users.csv")
 
 def readUserFile(filename):
-    csv_file = open("Users.csv", "r")
+    csv_file = open(filename, "r")
 
     Users = []
 
