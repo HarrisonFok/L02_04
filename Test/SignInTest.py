@@ -19,14 +19,15 @@ class TestSignIn(unittest.TestCase):
   # How am I gonna test this without doing what the function is already doing?
   # ... Well, it's only noteworthy if it fails, so this is just a test that it hasn't changed...
 
-    csv_file = open("TestUsers.csv", "a")
+    os.remove("Users.csv")
+    csv_file = open("Users.csv", "a")
     csv_file.write("0,s,s,s,s,S\n")
     csv_file.write("1,p,p,p,p,P\n")
     csv_file.close()
 
     Users = [Student.Student("s", "s", "s", "s"), Professor.Professor("p", "p", "p", "p")]
 
-    U = SignIn.readUserFile("TestUsers.csv")
+    U = SignIn.readUserFile("Users.csv")
 
     s = set()
 
@@ -41,8 +42,6 @@ class TestSignIn(unittest.TestCase):
       s.add(U[i].getId() == Users[i].getId())
 
     self.assertTrue(len(s) == 1)
-
-    os.remove("TestUsers.csv")
 
 if __name__ == '__main__':
     unittest.main(exit=False)
