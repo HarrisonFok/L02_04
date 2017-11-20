@@ -3,6 +3,7 @@ from DisplayAssignment import *
 from CheckUserType import *
 import csv
 import io
+import os
 
 # display a new window 
 
@@ -76,12 +77,15 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 
 	# add button for creating a new assignment if it's a prof
 	if userType == 'P':
-		createAssignmentBtn = Button(root, text="New Assignment").grid(row=rowNum)
+		createAssignmentBtn = Button(root, text="New Assignment", command=callMakeAssignments).grid(row=rowNum)
 
 
 def displaySpecificAssignment(assignmentId, studentNum):
 	# launch window from DisplayAssignment.py
 	displayMenu(studentNum, assignmentId)
+
+def callMakeAssignments():
+	os.system('python3 SelectQuestions.py')
 
 if __name__ == "__main__":
 	""" for testing when running from terminal """

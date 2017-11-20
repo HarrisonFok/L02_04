@@ -94,10 +94,10 @@ def SignIn(event):
                 systemStr = ""
                 if Usr.getType() == 'S':
                     StudentProfileIndex.displayProfile(newWindow, Usr)
-                    systemStr = 'python DisplayAssignment.py'
+                    systemStr = 'python3 StudentTransitionScreen.py'
                 elif Usr.getType() == 'P':
                     ProfessorProfileIndex.displayProfile(newWindow, Usr)
-                    systemStr = 'python SelectQuestions.py'
+                    systemStr = 'python3 ProfessorTransitionScreen.py'
 
                 newWindow.geometry("400x400")
                 os.system(systemStr)
@@ -105,7 +105,6 @@ def SignIn(event):
 
     if not (EmEx and PassEx):
         tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
-
 
 #### Okay... So bound functions can't take parameters...
 

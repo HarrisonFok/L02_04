@@ -1,80 +1,109 @@
+# MCQ - multiple choice
+# FIB - fill in blanks
+# The assignment creates one for each student
+
 try:
     # for Python2
     import Tkinter as tk
 except ImportError:
     # for Python3
     import tkinter as tk
+    
+import random
+import io
+import csv
+
+from randomalgo import *
 
 class SelectQuestions(tk.Frame):
 
     def __init__(self, *args, **kwargs):
         tk.Frame.__init__(self, *args, **kwargs)
 
-        self.label = tk.Label(self, text="WELCOME!!\nPlease choose questions\
-to appear on an assignment\n")
-        self.label.pack()
+        self._label = tk.Label(self, text="WELCOME!!\nPlease choose questions \
+to appear on an assignment\n", font=("Helvetica", 32))
+        self._label.pack()
 
-        self.display_button = tk.Button(self, text="Display Questions", \
+        self._display_button = tk.Button(self, text="Display Questions", \
                                         command=self.display)
-        self.display_button.pack()
+        self._display_button.pack()
 
-        self.submit_button = tk.Button(self, text="Submit", \
-                                       command=self.create_window)
-
-        self.entry = tk.Entry(self)
+        self._entry = tk.Entry(self)
+        self.assignmentWindow = None
+        
+        # This will be the list of chosen question formulas
+        self._chosenQuestionFormulas = []
+        
+        self._handInBut = None
+        
+        self._label = None
+        self._labels = []
+        
+        self._numCorrect = 0
+        self._numQuestions = 0
+        
+        self._assignment = None
 
     def display(self):
-        # Display every question below and have a checkbox beside everyone
-        # of them
-        with open('questions.txt', 'r') as f:
-            # read the file and then split them by newline character
-            self.questions = f.read()
-            self.allQuestions = self.questions.split('\n')
-
-            # add every question to the GUI
-            for i in range(len(self.allQuestions)-1):
-                # TODO (FEATURE)
-                '''
-                is_checked = IntVar()
-                # create a checkbox 
-                c = Checkbutton(self.master, variable=is_checked, \
-                command=lambda: self.update(is_checked))
-                c.pack(side="left")
-                '''
-
-                # display the question
-                self.singleQuestion = tk.Label(self, text=str(i) + ":" + \
-                                               self.allQuestions[i])
-                self.singleQuestion.pack(side="left")
-
-        self.submit_button.pack(side="bottom")
-
-        # TODO: To be user-friendly, add a label telling the user that the 
-        # question numbers start from 1
-        # IMPORTANT: For now, we will have the user choose the questions in the
-        # format of a, b, c, etc., where a,b,c are integers
-        self.entry.pack()
+        # Read all the question formulas in questions.csv and display them to
+        # the screen
+        with open("questions.csv", "rU") as csvFile:
+            reader = csv.reader(csvFile, delimiter="\n", dialect=csv.excel_tab)
+            for row in reader:
+                splitRow = row[0].split(',')
+                self.singleQuestion = tk.Label(self, text=splitRow[0] + ":" + \
+                                               splitRow[3],\
+                                               font=("Helvetica", 28))
+                self.singleQuestion.pack()
+                
+            tk.Button(self, text="Submit", command=self.create_window).pack()
+    
+            self._entry.pack()
+            
+            self._display_button.config(state = 'disabled')
 
     def create_window(self):
         # Create a new window for the assignment
-        assignmentWindow = tk.Toplevel(self)
-        assignmentWindow.wm_title("ASSIGNMENT")
+        self.assignmentWindow = tk.Toplevel(self)
+        self.assignmentWindow.wm_title("ASSIGNMENT")
+        
+        # Get the user input
+        chosenQuestionNums = self._entry.get()
+        questionNumChosen = chosenQuestionNums.split(',')
+        chosenQ = []
+        for qNumWithSpace in questionNumChosen:
+            qNum = qNumWithSpace.replace(' ','')
+            chosenQ.append(qNum)
 
-        # Get the list of question numbers the user chose and search in the 
-        # text file
-        chosenQuestionNums = self.entry.get().split(',')
+        tk.Label(self.assignmentWindow, text="These are the questions created on the\
+assignment:\n", font=("Times New Romans", 30)).pack()
+        
+        # Get the chosen question formulas and append to the list
+        # self._chosenQuestionFormulas
+        with open("questions.csv", "rU") as csvFile:
+            for lineList in csv.reader(csvFile):
+                # if the question is one of the chosen questions, then add it
+                # to self._chosenQuestionFormulas
+                if lineList[0] in chosenQ:
+                    self._chosenQuestionFormulas.append(lineList)
+        
+        # Make an assignment and store it inside Assignment.csv (using the
+        # function in randomalgo.py)
+        self._assignment = makeAssignment(self._chosenQuestionFormulas, "Unit 1 test")
+        
+        # Read from Assignment.csv and display the questions to the window
+        listOfQ = self._assignment.getListOfQuestions()
+        self._numQuestions = len(listOfQ)
+        for question in listOfQ:
+            questionEntry = tk.Label(self.assignmentWindow, \
+                                     text=question.getQuestion(), \
+                                     font=("Helvetica", 28))
+            questionEntry.pack()
 
-        # Read all the questions in questions.txt and split them into a list
-        with open('questions.txt', 'r') as f:
-            self.questions = f.read()
-            self.allQuestions = self.questions.split('\n') 
-            for questionNum in range(len(self.allQuestions)):
-                if str(questionNum) in chosenQuestionNums:
-                    self.question = tk.Label\
-                        (assignmentWindow,text=self.allQuestions[questionNum])
-                    self.question.pack()
-
+        tk.Button(self.assignmentWindow, text="Close", command=self.assignmentWindow.destroy).pack()
+        
 root = tk.Tk()
+root.geometry('%sx%s' % (2000, 2000))
 main = SelectQuestions(root)
 main.pack(side="top", fill="both", expand=True)
 root.mainloop()
