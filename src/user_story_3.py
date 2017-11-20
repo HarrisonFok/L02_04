@@ -248,5 +248,5 @@ top_Label.pack()
 button1.pack(side=LEFT)
 button2.pack(side=LEFT)
 
-root.mainloop()
-
+if __name__ == "__main__":
+    root.mainloop()
