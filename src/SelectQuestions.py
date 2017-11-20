@@ -2,13 +2,7 @@
 # FIB - fill in blanks
 # The assignment creates one for each student
 
-try:
-    # for Python2
-    import Tkinter as tk
-except ImportError:
-    # for Python3
-    import tkinter as tk
-    
+import tkinter as tk   
 import random
 import io
 import csv
@@ -89,7 +83,7 @@ assignment:\n", font=("Times New Romans", 30)).pack()
         
         # Make an assignment and store it inside Assignment.csv (using the
         # function in randomalgo.py)
-        self._assignment = makeAssignment(self._chosenQuestionFormulas, "Unit 1 test")
+        self._assignment = makeAssignment(self._chosenQuestionFormulas)
         
         # Read from Assignment.csv and display the questions to the window
         listOfQ = self._assignment.getListOfQuestions()

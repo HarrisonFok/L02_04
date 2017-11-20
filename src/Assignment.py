@@ -5,7 +5,7 @@ from random import randint
 class Assignment:
     '''Class for an assignment'''
     
-    def __init__(self, list_of_questions, name):
+    def __init__(self, list_of_questions):
         '''(Assignment, String, [Question]) -> NoneType
         Initialize an Assignment object
         '''
@@ -13,7 +13,6 @@ class Assignment:
         self._visibility = False
         self._list_of_questions = list_of_questions
         self._deadline = None
-        self._name = name
         
     def getDeadline(self):
         return self._deadline
