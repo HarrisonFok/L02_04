@@ -21,8 +21,7 @@ class TestSignIn(unittest.TestCase):
 
     csv_file = open("TestUsers.csv", "a")
     writer = csv.writer(csv_file)
-    writer.writerow([0] + ["s"]*4 + ["S"])
-    writer.writerow([1] + ["p"]*4 + ["P"])
+    writer.writerows([[0] + ["s"]*4 + ["S"], [1] + ["p"]*4 + ["P"]])
     csv_file.close()
 
     Users = [Student.Student("s", "s", "s", "s"), Professor.Professor("p", "p", "p", "p")]
@@ -40,6 +39,8 @@ class TestSignIn(unittest.TestCase):
       s.add(U[i].getId() == Users[i].getId())
 
     self.assertTrue(len(s) == 1)
+
+    os.remove("TestUsers.csv")
 
 if __name__ == '__main__':
     unittest.main(exit=False)
