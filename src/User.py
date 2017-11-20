@@ -17,25 +17,25 @@ class User(object):
 		return self._name
 
 	def setName(self, name):
-		this._name = name
+		self._name = name
 
 	def getEmail(self):
 		return self._email
 
 	def setEmail(self, email):
-		this._email = email
+		self._email = email
 
 	def getPassword(self):
 		return self._password
 
 	def setPassword(self, password):
-		this._password = password
+		self._password = password
 
 	def getPersonnelNumber(self):
 		return self._personnelNumber
 
 	def setPersonnelNumber(self, pn):
-		this._personnelNumber = pn
+		self._personnelNumber = pn
 
 	def getType(self):
 		return self._type
