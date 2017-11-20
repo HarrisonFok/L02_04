@@ -2,11 +2,11 @@ import sys, inspect, os, csv
 import unittest
 
  # script directory
-os.chdir(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))[:-5] + "/src")
+os.chdir(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))[:-6] + "/src")
 
 sys.path.append("../src")
 
-sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))[:-5] + "/src")
+sys.path.append(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))[:-6] + "/src")
 
 import SignIn, Professor, Student
 
