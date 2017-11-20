@@ -14,7 +14,7 @@ def getRange(new_q):
         index1 = new_q.find('(')
         index2 = new_q.find('|')
         index3 = new_q.find(')')
-        res += (new_q[index1 +1 : index2] + '|' + new_q[index2+1:index3] + ' ')
+        res += (new_q[index1 +1 : index2] + '|' + new_q[index2+1:index3] + ',')
         new_q = new_q[index3+1:]
 
     return res[:-1]
