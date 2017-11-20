@@ -35,16 +35,27 @@ Contains the 4th group deliverable that includes a revised product backlog and t
 2 taskboard snapshots before and after each sprint for sprints 1 and 2.
 Completed on November 6, 2017
 
-Deliverable 5: Verification and Validation
+Deliverable 5: Project Validation.pdf and CSCC01 Code Review Debriefing Meeting.mp4
 The CSCC01 Code Review Debriefing Meeting.mp4 is a 5 minute video of our code review debriefing meeting where each team member gave general recommendations to the team on how to improve the quality of the development.
+All code regarding the project will be placed in the src/ folder. The PDF document includes information about the Product Backlog, Sprint Backlog and Verification and Validation of the software for sprints 3 and 4.
 
-All code regarding the project will be placed in the src/ folder.
+Dependencies
+------------
+1. Python3 to get python3 go to https://www.python.org/downloads/
+2. Recommended to have a .csv reader like Microsoft Excel to be able to open the files with data. The primary storage
+   of data is via .csv files
 
 How to run the project
 ----------------------
+Make sure all dependencies have been downloaded and installed before doing this.
 
 1. Open the terminal and create a directory where you want the project to be in.
 
 2. Execute the command `git clone https://github.com/CSCC01F17/L02_04.git` in the terminal to clone the project.
 
-3. To run the project, executre `python3 SignIn.py`. This will prompt a Sign In page where the user can login and sign up as a Professor or Student.
+3. To run the project, execute `python3 SignIn.py`. This will prompt a Sign In page where the user can login and sign up as a Professor or Student.
+
+Get Started
+------------
+To get started, first make a new profile as a student or professor. Once you have made a profile, you should be able to sign in with the credentials you registered with. If you registered as a student, a menu will be prompted with the features available to you such as viewing any assignments that have been assignment to you and answer them. 
+If you registered as a professor, a menu will be prompted with the features available to you such as viewing any assignments you've previously created or creating a new assignment.
