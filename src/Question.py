@@ -23,7 +23,7 @@ class Question:
         self._question_id = question_id
         
     def getQuestionType(self):
-        return self.question_type
+        return self._question_type
     
     def setQuestionType(self, question_type):
         self._question_type = question_type
@@ -75,21 +75,19 @@ class Question:
     
     def setStudentAnswer(self, student_answer):
         self._student_answer = student_answer
-        
-    def getCorrect(self):
-        return self._correct
     
     def getCorrectness(self):
-        return self._correctness
-    
-    def setCorrectness(self, correctness):
-        '''(Question, bool) -> NoneType
-        Sets whether the question is answered correctly
-        '''
-        self._correctness = correctness
+        return self.getAnswer() == self.getStudentAnswer()
         
     def __eq__(self, otherQ):
         return ((self._question_id == otherQ._question_id) and
                 (self._question_type == otherQ._question_type) and 
                 (self._question == otherQ._question) and 
-                (self._answer == otherQ._answer))
+                (self._answer == otherQ._answer) and (self._assignment_id == otherQ.assignment_id)
+                and (self._assignment_name == otherQ._assignment_name) and 
+                (self._due_date == otherQ._due_date) and (self._professor_id == otherQ._professor_id)
+                and (self._student_id == otherQ._student_id))
+
+if __name__ == '__main__':
+    question_a = Question("25306175", "MCQ", "What is 13 + 13", "26", "1", "Unit 1 Test", "01-Nov-17", "1", "1")
+    print(question_a.getQuestion())
