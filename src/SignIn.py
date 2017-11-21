@@ -163,7 +163,8 @@ SignInButton.bind("<Button-1>", SignIn)
 
 if Usrs is not None:
     SignInButton.pack(side=RIGHT)
-
-root.mainloop()
+if __name__ == '__main__':
+    
+    root.mainloop()
 
 ### You can also put the form code inside the def function to make a form pop up when you click that button...:
