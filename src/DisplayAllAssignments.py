@@ -77,7 +77,7 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 
 	# add button for creating a new assignment if it's a prof
 	if userType == 'P':
-		createAssignmentBtn = Button(root, text="New Assignment", command=callMakeAssignments).grid(row=rowNum)
+		createAssignmentBtn = Button(root, text="Add question to assignments", command=callMakeAssignments).grid(row=rowNum)
 
 
 def displaySpecificAssignment(assignmentId, studentNum):
