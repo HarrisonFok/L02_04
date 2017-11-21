@@ -119,5 +119,15 @@ class TestQuestion(unittest.TestCase):
 		question_a.setStudentAnswer("25")
 		self.assertFalse(question_a.getCorrectness())
 
+	def test_equals(self):
+		question_a = Question.Question("25306175", "MCQ", "What is 13 + 13", "26", "1", "Unit 1 Test", "01-Nov-17", "1", "1")
+		question_b = Question.Question("25306175", "MCQ", "What is 13 + 13", "26", "1", "Unit 1 Test", "01-Nov-17", "1", "1")
+		self.assertTrue(question_a == question_b)
+
+	def test_not_equals(self):
+		question_a = Question.Question("25306175", "MCQ", "What is 13 + 13", "26", "1", "Unit 1 Test", "01-Nov-17", "1", "1")
+		question_b = Question.Question("25306175", "FIB", "What is 13 + 13", "26", "1", "Unit 1 Test", "01-Nov-17", "1", "1")
+		self.assertFalse(question_a == question_b)
+
 if __name__ == '__main__':
     unittest.main(exit=False)
