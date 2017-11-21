@@ -5,6 +5,32 @@ import Question
 
 class TestQuestion(unittest.TestCase):
 
+	def test_init(self):
+		question_a = Question.Question("25306175", "MCQ", "What is 13 + 13", "26", "1", "Unit 1 Test", "01-Nov-17", "1", "1")
+		
+		question_id = "25306175"
+		question_type = "MCQ"
+		question = "What is 13 + 13"
+		answer = "26"
+		assignment_id = "1"
+		assignment_name = "Unit 1 Test"
+		dueDate = "01-Nov-17"
+		professor_id = "1"
+		student_id = "1"
+		student_answer = None
+		correctness = False
+
+		creationSuccess = ((question_a.getQuestionId() == question_id) and
+			(question_a.getQuestionType() == question_type) and 
+			(question_a.getQuestion() == question) and (question_a.getAnswer() == answer)
+			and (question_a.getAssignmentId() == assignment_id) and 
+			(question_a.getAssignmentName() == assignment_name) and 
+			(question_a.getDueDate() == dueDate) and (question_a.getProfessorId() == professor_id)
+			and (question_a.getStudentId() == student_id) and 
+			(question_a.getStudentAnswer() == student_answer) and (question_a.getCorrectness() == correctness))
+
+		self.assertTrue(creationSuccess)
+
 	def test_get_question_id(self):
 		question_a = Question.Question("25306175", "MCQ", "What is 13 + 13", "26", "1", "Unit 1 Test", "01-Nov-17", "1", "1")
 		question_id = "25306175"
