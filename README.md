@@ -51,7 +51,7 @@ Make sure all dependencies have been downloaded and installed before doing this.
 
 1. Open the terminal and create a directory where you want the project to be in.
 
-2. Execute the command `git clone https://github.com/CSCC01F17/L02_04.git` in the terminal to clone the project.
+2. Execute the commands `git clone https://github.com/CSCC01F17/L02_04.git` `cd src` in the terminal to clone the project.
 
 3. To run the project, execute `python3 SignIn.py`. This will prompt a Sign In page where the user can login and sign up as a Professor or Student.
 
