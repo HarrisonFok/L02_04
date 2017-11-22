@@ -83,7 +83,7 @@ class Question:
         return ((self._question_id == otherQ._question_id) and
                 (self._question_type == otherQ._question_type) and 
                 (self._question == otherQ._question) and 
-                (self._answer == otherQ._answer) and (self._assignment_id == otherQ.assignment_id)
+                (self._answer == otherQ._answer) and (self._assignment_id == otherQ._assignment_id)
                 and (self._assignment_name == otherQ._assignment_name) and 
                 (self._due_date == otherQ._due_date) and (self._professor_id == otherQ._professor_id)
                 and (self._student_id == otherQ._student_id))

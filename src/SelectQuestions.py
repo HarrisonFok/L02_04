@@ -18,8 +18,7 @@ class SelectQuestions(tk.Frame):
 to appear on an assignment\n", font=("Helvetica", 32))
         self._label.pack()
 
-        self._display_button = tk.Button(self, text="Display Questions", \
-                                        command=self.display)
+        self._display_button = tk.Button(self, text="Display Questions", command=self.display)
         self._display_button.pack()
 
         self._entry = tk.Entry(self)
@@ -94,10 +93,13 @@ assignment:\n", font=("Times New Romans", 30)).pack()
                                      font=("Helvetica", 28))
             questionEntry.pack()
 
-        tk.Button(self.assignmentWindow, text="Close", command=self.assignmentWindow.destroy).pack()
-        
+        tk.Button(self.assignmentWindow, text="Close", command=self.destroyWindows).pack()
+
+    def destroyWindows(self):
+        self.assignmentWindow.destroy()
+        self.destroy()
+
 root = tk.Tk()
-root.geometry('%sx%s' % (2000, 2000))
 main = SelectQuestions(root)
-main.pack(side="top", fill="both", expand=True)
+main.pack(side="top", expand=True)
 root.mainloop()

@@ -77,14 +77,15 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 
 	# add button for creating a new assignment if it's a prof
 	if userType == 'P':
-		createAssignmentBtn = Button(root, text="Add question to assignments", command=callMakeAssignments).grid(row=rowNum)
+		createAssignmentBtn = Button(root, text="Add question to assignments", command= lambda: callMakeAssignments(root)).grid(row=rowNum)
 
 
 def displaySpecificAssignment(assignmentId, studentNum):
 	# launch window from DisplayAssignment.py
 	displayMenu(studentNum, assignmentId)
 
-def callMakeAssignments():
+def callMakeAssignments(root):
+	root.destroy()
 	os.system('python3 SelectQuestions.py')
 
 if __name__ == "__main__":

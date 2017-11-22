@@ -9,10 +9,11 @@ class Assignment:
         '''(Assignment, String, [Question]) -> NoneType
         Initialize an Assignment object
         '''
-        self._assignment_id = randint(000000000, 999999999)
+        self._assignment_id = str(randint(000000000, 999999999))
         self._visibility = False
         self._list_of_questions = list_of_questions
         self._deadline = None
+        self._name = None
         
     def getDeadline(self):
         return self._deadline
@@ -66,13 +67,10 @@ class Assignment:
             perfect = True
             
         return perfect
-        
-    def assignTo(self, student):
-        '''(Assignment, Student) -> NoneType
-        Assigns an Assignment to a Student
-        '''
-        student.assignTo(self)
-        
+    
+    def getVisibility(self):
+        return self._visibility
+
     def setVisibility(self, visibility):
         '''(Assignment, bool) -> NoneType
         Sets the visibility of an Assignment

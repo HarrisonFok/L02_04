@@ -127,8 +127,6 @@ def displayMenu(studentNum, assignmentID):
 	displayAssignmentWindow(root, studentNum, assignmentID)
 	root.mainloop()
 
-
-
 if __name__ == "__main__":
 	# for testing
 	displayMenu(1, 0)
