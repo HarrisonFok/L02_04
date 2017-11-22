@@ -96,6 +96,7 @@ def SignIn(event):
 
 def goToTransitionScreen(user):
     newWindow = Toplevel()
+    newWindow.attributes('-topmost', 'true')
     Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(newWindow, user)).pack()
 
     if (user.getType() == 'S'):

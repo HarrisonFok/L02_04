@@ -20,6 +20,7 @@ def displayListOfAssignments(studentNum):
 		typeCol = profCol
 
 	root = Tk()
+	root.attributes('-topmost', 'true')
 	assignmentIdsList = []
 	assignmentsInfo = []
 
@@ -91,4 +92,3 @@ def callMakeAssignments(root):
 if __name__ == "__main__":
 	""" for testing when running from terminal """
 	displayListOfAssignments(0)
-

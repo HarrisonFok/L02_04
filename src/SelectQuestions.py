@@ -2,26 +2,26 @@
 # FIB - fill in blanks
 # The assignment creates one for each student
 
-import tkinter as tk   
+from tkinter import *
 import random
 import io
 import csv
 
 from randomalgo import *
 
-class SelectQuestions(tk.Frame):
+class SelectQuestions(Frame):
 
     def __init__(self, *args, **kwargs):
-        tk.Frame.__init__(self, *args, **kwargs)
+        Frame.__init__(self, *args, **kwargs)
 
-        self._label = tk.Label(self, text="WELCOME!!\nPlease choose questions \
+        self._label = Label(self, text="WELCOME!!\nPlease choose questions \
 to appear on an assignment\n", font=("Helvetica", 32))
         self._label.pack()
 
-        self._display_button = tk.Button(self, text="Display Questions", command=self.display)
+        self._display_button = Button(self, text="Display Questions", command=self.display)
         self._display_button.pack()
 
-        self._entry = tk.Entry(self)
+        self._entry = Entry(self)
         self.assignmentWindow = None
         
         # This will be the list of chosen question formulas
@@ -44,12 +44,12 @@ to appear on an assignment\n", font=("Helvetica", 32))
             reader = csv.reader(csvFile, delimiter="\n", dialect=csv.excel_tab)
             for row in reader:
                 splitRow = row[0].split(',')
-                self.singleQuestion = tk.Label(self, text=splitRow[0] + ":" + \
+                self.singleQuestion = Label(self, text=splitRow[0] + ":" + \
                                                splitRow[3],\
                                                font=("Helvetica", 28))
                 self.singleQuestion.pack()
                 
-            tk.Button(self, text="Submit", command=self.create_window).pack()
+            Button(self, text="Submit", command=self.create_window).pack()
     
             self._entry.pack()
             
@@ -57,7 +57,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
 
     def create_window(self):
         # Create a new window for the assignment
-        self.assignmentWindow = tk.Toplevel(self)
+        self.assignmentWindow = Toplevel(self)
         self.assignmentWindow.wm_title("ASSIGNMENT")
         
         # Get the user input
@@ -88,18 +88,18 @@ assignment:\n", font=("Times New Romans", 30)).pack()
         listOfQ = self._assignment.getListOfQuestions()
         self._numQuestions = len(listOfQ)
         for question in listOfQ:
-            questionEntry = tk.Label(self.assignmentWindow, \
+            questionEntry = Label(self.assignmentWindow, \
                                      text=question.getQuestion(), \
                                      font=("Helvetica", 28))
             questionEntry.pack()
 
-        tk.Button(self.assignmentWindow, text="Close", command=self.destroyWindows).pack()
+        Button(self.assignmentWindow, text="Close", command=self.destroyWindows).pack()
 
     def destroyWindows(self):
         self.assignmentWindow.destroy()
         self.destroy()
 
-root = tk.Tk()
+root = Tk()
 main = SelectQuestions(root)
 main.pack(side="top", expand=True)
 root.mainloop()
