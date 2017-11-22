@@ -96,15 +96,17 @@ def SignIn(event):
 
 def goToTransitionScreen(user):
     newWindow = Toplevel()
-    newWindow.geometry("400x400")
-    Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(user)).pack()
-    
-    if (user.getType() == 'S'):
-        Button(newWindow, text="My Info", command=lambda:StudentProfileIndex.displayProfile(newWindow, user)).pack()
-    elif (user.getType() == 'P'):
-        Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user)).pack()
+    Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(newWindow, user)).pack()
 
-def callDisplayAllAssignments(user):
+    if (user.getType() == 'S'):
+        studInfoBut = Button(newWindow, text="My Info", command=lambda:StudentProfileIndex.displayProfile(newWindow, user, studInfoBut))
+        studInfoBut.pack()
+    elif (user.getType() == 'P'):
+        profInfoBut = Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user, profInfoBut))
+        profInfoBut.pack()
+
+def callDisplayAllAssignments(newWindow, user):
+    newWindow.destroy()
     if (user.getType() == 'S'):
         os.system('python3 DisplayAllAssignments.py')
     elif (user.getType() == 'P'):

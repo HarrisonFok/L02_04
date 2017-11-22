@@ -81,7 +81,8 @@ def signUpIndex(root):
 	# set fixed window size
 	root.resizable(width=False, height=False)
 
-def displayProfile(root, user):
+def displayProfile(root, user, button):
+	button['state'] = 'disabled'
 	""" Display the information about a user in a window with these widgets. """
 	nameLabel = Label(root, text="Name: " + user.getName()).pack()
 	emailLabel = Label(root, text="Email: " + user.getEmail()).pack()
