@@ -88,23 +88,27 @@ def SignIn(event):
 
             if (EmEx & PassEx):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
-
-                # open a new window with the credentials of the user
-                newWindow = Toplevel()
-                systemStr = ""
-                if Usr.getType() == 'S':
-                    StudentProfileIndex.displayProfile(newWindow, Usr)
-                    systemStr = 'python3 StudentTransitionScreen.py'
-                elif Usr.getType() == 'P':
-                    ProfessorProfileIndex.displayProfile(newWindow, Usr)
-                    systemStr = 'python3 ProfessorTransitionScreen.py'
-
-                newWindow.geometry("400x400")
-                os.system(systemStr)
+                goToTransitionScreen(Usr)
                 break
 
     if not (EmEx and PassEx):
         tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
+
+def goToTransitionScreen(user):
+    newWindow = Toplevel()
+    newWindow.geometry("400x400")
+    Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(user)).pack()
+    
+    if (user.getType() == 'S'):
+        Button(newWindow, text="My Info", command=lambda:StudentProfileIndex.displayProfile(newWindow, user)).pack()
+    elif (user.getType() == 'P'):
+        Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user)).pack()
+
+def callDisplayAllAssignments(user):
+    if (user.getType() == 'S'):
+        os.system('python3 DisplayAllAssignments.py')
+    elif (user.getType() == 'P'):
+        os.system('python3 DisplayProfessorsAssignments.py')
 
 #### Okay... So bound functions can't take parameters...
 
