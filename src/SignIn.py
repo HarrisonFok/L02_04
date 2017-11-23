@@ -14,7 +14,7 @@ def readUser():
     return readUserFile("Users.csv")
 
 def readUserFile(filename):
-    csv_file = open("Users.csv", "r")
+    csv_file = open(filename, "r")
 
     Users = []
 
@@ -183,14 +183,17 @@ global CurrentUsr
 
 CurrentUsr = None
 
+# Add a button for users to register as a student
 RegisterButton = Button(ButtonFrame, text="Student Registration")
 RegisterButton.pack(side=LEFT)
 RegisterButton.bind("<Button-1>", StudentRegistering)
 
+# Add a button for users to register as a professor
 RegisterButton = Button(ButtonFrame, text="Professor Registration")
 RegisterButton.pack(side=LEFT)
 RegisterButton.bind("<Button-1>", ProfessorRegistering)
 
+# Add a sign in button for users to sign in
 SignInButton = Button(ButtonFrame, text="Sign In")
 SignInButton.bind("<Button-1>", SignIn)
 
