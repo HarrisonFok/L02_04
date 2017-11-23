@@ -123,6 +123,7 @@ def callAddQuestionFormulas(newWindow):
 
 root = Tk()
 root.title("Sign In Page")
+root.attributes('-topmost', 'true')
 
 CredFrame = Frame(root)
 CredFrame.pack()
