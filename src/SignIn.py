@@ -116,6 +116,7 @@ def callDisplayAllAssignments(newWindow, user):
 #### Okay... So bound functions can't take parameters...
 
 root = Tk()
+root.title("Sign In Page")
 
 CredFrame = Frame(root)
 CredFrame.pack()

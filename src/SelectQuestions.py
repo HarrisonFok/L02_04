@@ -68,7 +68,7 @@ to appear on an assignment\n", font=("Helvetica", 32))
             qNum = qNumWithSpace.replace(' ','')
             chosenQ.append(qNum)
 
-        tk.Label(self.assignmentWindow, text="These are the questions created on the\
+        Label(self.assignmentWindow, text="These are the questions created on the\
 assignment:\n", font=("Times New Romans", 30)).pack()
         
         # Get the chosen question formulas and append to the list
