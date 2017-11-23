@@ -103,10 +103,10 @@ def goToTransitionScreen(user):
         studInfoBut = Button(newWindow, text="My Info", command=lambda:StudentProfileIndex.displayProfile(newWindow, user, studInfoBut))
         studInfoBut.pack()
     elif (user.getType() == 'P'):
-        profInfoBut = Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user, profInfoBut))
-        profInfoBut.pack()
         addQuestionFormsBtn = Button(newWindow, text="Add a question formula", command=lambda:callAddQuestionFormulas(newWindow))
         addQuestionFormsBtn.pack()
+        profInfoBut = Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user, profInfoBut))
+        profInfoBut.pack()
 
 def callDisplayAllAssignments(newWindow, user):
     newWindow.destroy()
