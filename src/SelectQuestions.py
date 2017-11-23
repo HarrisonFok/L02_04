@@ -89,6 +89,7 @@ class SelectQuestions(Frame):
         Button(self._assignmentWindow, text="Close", command=self.destroyWindows).pack()
 
     def destroyWindows(self):
+        # Close the assignment window and clear the main frame
         self._assignmentWindow.destroy()
         self.destroy()
 
