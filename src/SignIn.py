@@ -105,6 +105,8 @@ def goToTransitionScreen(user):
     elif (user.getType() == 'P'):
         profInfoBut = Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user, profInfoBut))
         profInfoBut.pack()
+        addQuestionFormsBtn = Button(newWindow, text="Add a question formula", command=lambda:callAddQuestionFormulas(newWindow))
+        addQuestionFormsBtn.pack()
 
 def callDisplayAllAssignments(newWindow, user):
     newWindow.destroy()
@@ -112,6 +114,10 @@ def callDisplayAllAssignments(newWindow, user):
         os.system('python3 DisplayAllAssignments.py')
     elif (user.getType() == 'P'):
         os.system('python3 DisplayProfessorsAssignments.py')
+
+def callAddQuestionFormulas(newWindow):
+    newWindow.destroy()
+    os.system('python3 user_story_3.py')
 
 #### Okay... So bound functions can't take parameters...
 
