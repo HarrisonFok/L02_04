@@ -94,6 +94,7 @@ class SelectQuestions(Frame):
         self.destroy()
 
 root = Tk()
+root.wm_attributes("-topmost", 'true')
 main = SelectQuestions(root)
 main.pack(side="top", expand=True)
 root.mainloop()
