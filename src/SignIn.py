@@ -18,11 +18,12 @@ def readUserFile(filename):
 
     Users = []
 
-    lines = list(csv.reader(csv_file)) # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
+    # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
+    lines = list(csv.reader(csv_file))
 
     for l in lines:
 
-        # Could make the user and email pair now, instead of doing it when making the object...
+        # Make the user and email pair
 
         if l[5] == "P":
             Users.append(Professor(l[1], l[2], l[3], l[4]))
@@ -34,7 +35,8 @@ def readUserFile(filename):
 
     return Users
 
-## Remember, Python or Tkinter or whatever doesn't check if these frames exist. these functions, when called by a buttonpress, act as if they're in the same scope as the button, or something.
+## Python or Tkinter or whatever doesn't check if these frames exist. 
+## These functions, when called by a button press, act as if they're in the same scope as the button.
 
 def StudentRegistering(event):
     """ Execute the registration menu """
@@ -50,26 +52,28 @@ def ProfessorRegistering(event):
 
 def SignIn(event):
 
-    # Need to declare globals locally, if modifying them, from inside a function?
+    # Need to declare globals locally
 
     global CurrentUsr
     global Usrs
 
+    # Read all the users in Users.csv
     Usrs = readUser()
 
+    # Get the email and password that the user entered
     Em = EmailEntry.get()
-
     Pass = PassEntry.get()
 
-    # Check if either name or email exist separately. Bad for security? Maybe not.
+    # Variables to check if either name or email exist separately
     EmEx = False
     PassEx = False
 
+    # Iterate through the list of users to see if any matches the user input
     for Usr in Usrs:
 
+        # If we have no idea who the correct user could be
         if CurrentUsr is None:
 
-            #If we have no idea who the correct user could be...
             if (Usr.getEmail() == Em):
                 EmEx = True
                 CurrentUsr = Usr
@@ -78,6 +82,7 @@ def SignIn(event):
                 PassEx = True
                 CurrentUsr = Usr
 
+        # If any user profile matches the one entered
         if not (CurrentUsr is None):
 
             if (Usr.getEmail() == Em):
@@ -86,19 +91,25 @@ def SignIn(event):
             if (Usr.getPassword() == Pass):
                 PassEx = True
 
+            # Log in and transition to a different screen depending on the type of user
             if (EmEx & PassEx):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
                 goToTransitionScreen(Usr)
                 break
 
+    # If either the email or the password or both don't match any existing user profile
     if not (EmEx and PassEx):
         tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
 
 def goToTransitionScreen(user):
+    # Create a new window
     newWindow = Toplevel()
     newWindow.attributes('-topmost', 'true')
+
+    # Create a button that calls the method callDisplayAllAssignments when clicked
     Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(newWindow, user)).pack()
 
+    # Create a different transition screen based on the type of user
     if (user.getType() == 'S'):
         studInfoBut = Button(newWindow, text="My Info", command=lambda:StudentProfileIndex.displayProfile(newWindow, user, studInfoBut))
         studInfoBut.pack()
@@ -109,18 +120,25 @@ def goToTransitionScreen(user):
         profInfoBut.pack()
 
 def callDisplayAllAssignments(newWindow, user):
+    # Destroy the previous window
     newWindow.destroy()
+
+    # Run different files depending on the type of user
     if (user.getType() == 'S'):
         os.system('python3 DisplayAllAssignments.py')
     elif (user.getType() == 'P'):
         os.system('python3 DisplayProfessorsAssignments.py')
 
 def callAddQuestionFormulas(newWindow):
+    # Destroy the previous window
     newWindow.destroy()
+
+    # Run the file that allows professors to add question formulas
     os.system('python3 user_story_3.py')
 
-#### Okay... So bound functions can't take parameters...
+# Note: Bound functions can't take parameters
 
+# Create the window
 root = Tk()
 root.title("Sign In Page")
 root.attributes('-topmost', 'true')
