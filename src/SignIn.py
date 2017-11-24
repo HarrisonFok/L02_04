@@ -42,12 +42,14 @@ def StudentRegistering(event):
     """ Execute the registration menu """
 
     newWindow = Toplevel()
+    newWindow.attributes('-topmost', 'true')
     StudentProfileIndex.signUpIndex(newWindow)
 
 def ProfessorRegistering(event):
     """ Execute the registration menu """ 
 
     newWindow = Toplevel()
+    newWindow.attributes('-topmost', 'true')
     ProfessorProfileIndex.signUpIndex(newWindow)
 
 def SignIn(event):

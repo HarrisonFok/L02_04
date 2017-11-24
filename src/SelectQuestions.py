@@ -21,8 +21,8 @@ class SelectQuestions(Frame):
         # Initialize an entry
         self._entry = Entry(self)
 
-        # Initialize the assignment window
-        self._assignmentWindow = None
+        # Initialize the window for showing what questions are added
+        self._addedQWindow = None
         
         # This will be the list of chosen question formulas
         self._chosenQuestionFormulas = []
@@ -53,9 +53,10 @@ class SelectQuestions(Frame):
             self._display_button.config(state = 'disabled')
 
     def create_window(self):
-        # Create a new window for the assignment
-        self._assignmentWindow = Toplevel(self)
-        self._assignmentWindow.wm_title("ASSIGNMENT")
+        # Create a new window
+        self._addedQWindow = Toplevel(self)
+        self._addedQWindow.wm_title("ASSIGNMENT")
+        self._addedQWindow.attributes('-topmost', 'true')
         
         # Get the user input
         chosenQuestionNums = self._entry.get()
@@ -65,7 +66,7 @@ class SelectQuestions(Frame):
             qNum = qNumWithSpace.replace(' ','')
             chosenQ.append(qNum)
 
-        Label(self._assignmentWindow, text="These are the questions created on the assignment:\n", font=("Times New Romans", 30)).pack()
+        Label(self._addedQWindow, text="These are the questions created on the assignment:\n", font=("Times New Romans", 30)).pack()
         
         # Get the chosen question formulas and append to the list self._chosenQuestionFormulas
         with open("questions.csv", "rU") as csvFile:
@@ -83,14 +84,14 @@ class SelectQuestions(Frame):
         listOfQ = self._assignment.getListOfQuestions()
         self._numQuestions = len(listOfQ)
         for question in listOfQ:
-            questionEntry = Label(self._assignmentWindow, text=question.getQuestion(), font=("Helvetica", 28))
+            questionEntry = Label(self._addedQWindow, text=question.getQuestion(), font=("Helvetica", 28))
             questionEntry.pack()
 
-        Button(self._assignmentWindow, text="Close", command=self.destroyWindows).pack()
+        Button(self._addedQWindow, text="Close", command=self.destroyWindows).pack()
 
     def destroyWindows(self):
         # Close the assignment window and clear the main frame
-        self._assignmentWindow.destroy()
+        self._addedQWindow.destroy()
         self.destroy()
 
 root = Tk()
