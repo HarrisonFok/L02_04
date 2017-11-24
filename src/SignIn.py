@@ -39,20 +39,21 @@ def readUserFile(filename):
 ## These functions, when called by a button press, act as if they're in the same scope as the button.
 
 def StudentRegistering(event):
-    """ Execute the registration menu """
+    """ Execute the registration menu for students."""
 
     newWindow = Toplevel()
     newWindow.attributes('-topmost', 'true')
     StudentProfileIndex.signUpIndex(newWindow)
 
 def ProfessorRegistering(event):
-    """ Execute the registration menu """ 
+    """ Execute the registration menu for profesors."""
 
     newWindow = Toplevel()
     newWindow.attributes('-topmost', 'true')
     ProfessorProfileIndex.signUpIndex(newWindow)
 
 def SignIn(event):
+    """ Check that the person signing in has credentials that correspond to a actual user, and setting them as the current user."""
 
     # Need to declare globals locally
 
@@ -104,6 +105,8 @@ def SignIn(event):
         tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
 
 def goToTransitionScreen(user):
+    """ Display the transistion screen between signing in / registering and User specific functions."""
+    
     # Create a new window
     newWindow = Toplevel()
     newWindow.attributes('-topmost', 'true')
