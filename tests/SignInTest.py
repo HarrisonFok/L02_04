@@ -19,21 +19,19 @@ class TestSignIn(unittest.TestCase):
   # How am I gonna test this without doing what the function is already doing?
   # ... Well, it's only noteworthy if it fails, so this is just a test that it hasn't changed...
 
-    os.remove("Users.csv")
-    csv_file = open("Users.csv", "a")
-    csv_file.write("0,s,s,s,s,S\n")
-    csv_file.write("1,p,p,p,p,P\n")
+    csv_file = open("TestUsers.csv", "a")
+    writer = csv.writer(csv_file)
+    writer.writerow([0] + ["s"]*4 + ["S"])
+    writer.writerow([1] + ["p"]*4 + ["P"])
     csv_file.close()
 
     Users = [Student.Student("s", "s", "s", "s"), Professor.Professor("p", "p", "p", "p")]
 
-    U = SignIn.readUserFile("Users.csv")
+    U = SignIn.readUserFile("TestUsers.csv")
 
     s = set()
 
-    print(len(U))
-
-    for i in range(0,2):
+    for i in range(len(U)):
       s.add(U[i].getName() == Users[i].getName())
       s.add(U[i].getEmail() == Users[i].getEmail())
       s.add(U[i].getPassword() == Users[i].getPassword())
