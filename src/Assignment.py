@@ -5,11 +5,11 @@ from random import randint
 class Assignment:
     '''Class for an assignment'''
     
-    def __init__(self, list_of_questions=None):
+    def __init__(self, assignmentId, list_of_questions=None):
         '''(Assignment, String, [Question]) -> NoneType
         Initialize an Assignment object
         '''
-        self._assignment_id = str(randint(000000000, 999999999))
+        self._assignment_id = assignmentId
         self._visibility = False
         self._list_of_questions = list_of_questions
         self._deadline = None

@@ -92,9 +92,9 @@ def RandomInRange(L):
     """
     return random.randint(int(L[0]), int(L[1]))
 
-def makeAssignment(L, addInfo, profId):
-    '''(list, list, str) -> Assignment
-    Return an Assignment object based on the given questions in L, the additional information in addInfo, and the professor id
+def makeAssignment(L, addInfo, profId, assignmentId):
+    '''(list, list, str, str) -> Assignment
+    Return an Assignment object based on the given questions in L, the additional information in addInfo, the professor id, and the assignment id
     Note: the returned Assignment object will consist of Question objects
     Note: L is the list of all the selected questions [[q1], [q2], [q3], ...], where each q consists of the question id, question topic, question type, question body, range of variables, and question formula
     '''
@@ -115,11 +115,11 @@ def makeAssignment(L, addInfo, profId):
             i += 1
         answer = cal_exp(mixed_operation(Q_A))
         # Initialize a new Question object
-        newQ = Question(question[0], question[2], Q_B, answer, "", addInfo[0], addInfo[1], profId, addInfo[2])
+        newQ = Question(question[0], question[2], Q_B, answer, assignmentId, addInfo[0], addInfo[1], profId, addInfo[2])
         # Append the new question into questionObjs
         questionObjs.append(newQ)
         # Append the necessary question info into result
-        result.append([question[0], question[2], Q_B, answer, "", addInfo[0], addInfo[1], profId, addInfo[2]])
+        result.append([question[0], question[2], Q_B, answer, assignmentId, addInfo[0], addInfo[1], profId, addInfo[2]])
 
     newAssignmentObj = Assignment(questionObjs)
     
