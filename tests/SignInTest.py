@@ -7,15 +7,15 @@ sys.path.append("../src")
 
 import SignIn, Professor, Student
 
-## You just gotta your read. WriteUserFile has been obsoleted by the ProfileIndex-s' functions. I forgot that.
-
 class TestSignIn(unittest.TestCase):
 
   def test_readUserFile(self):
     '''If everything's coded right, this should never encounter an empty Users.csv, nor Users with missing values, so testing for any number of Users should be the same and so there's only 1 test.'''
-    # How am I gonna test this without doing what the function is already doing?
-    # ... Well, it's only noteworthy if it fails, so this is just a test that it hasn't changed...
-
+    
+    # Generating Testing-only version of Users.csv.
+    
+    # Not using CSV Writer, as it doesn't write lines, just writes everything on one line.
+    
     csv_file = open("TestUsers.csv", "w")
     csv_file.write("0,s,s,s,s,S\n")
     csv_file.write("1,p,p,p,p,P\n")
