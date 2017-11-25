@@ -41,7 +41,10 @@ class SelectQuestions(Frame):
         with open("questions.csv", "rU") as csvFile:
             reader = csv.reader(csvFile, delimiter="\n", dialect=csv.excel_tab)
             for row in reader:
-                splitRow = row[0].split(',')
+                splitRow = row[0].split(",")
+                # temporary solution: break out of this loop if it's the end of the record .csv
+                if (splitRow[0] == ""):
+                    break;
                 self.singleQuestion = Label(self, text=splitRow[0] + ":" + splitRow[3], font=("Helvetica", 28))
                 self.singleQuestion.pack()
             
