@@ -82,18 +82,21 @@ def cal_exp(exp_list):
 
 def RandomInRange(L):
     """
+    A function that return a integer randomly in the range(min,max)
     len(L) == 2
     list[int(min), int(max)] -> int
     min <= max
-    a function that return a integer randomly in the range(min,max)
-    //RandomInRange(2, 6)
-    //5
+    
+    >>> RandomInRange(2, 6)
+    >>> 5
     """
     return random.randint(int(L[0]), int(L[1]))
 
 def makeAssignment(L, addInfo, profId):
-    '''
-    :param L: the list of all the selected questions [[q1], [q2], [q3]]
+    '''(list, list, str) -> Assignment
+    Return an Assignment object based on the given questions in L, the additional information in addInfo, and the professor id
+    Note: the returned Assignment object will consist of Question objects
+    Note: L is the list of all the selected questions [[q1], [q2], [q3], ...], where each q consists of the question id, question topic, question type, question body, range of variables, and question formula
     '''
     questionObjs = []
     result = []
