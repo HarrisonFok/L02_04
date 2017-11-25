@@ -5,7 +5,7 @@ import csv
 import io
 import os
 
-# display a new window 
+# display a new window
 
 def displayListOfAssignments(studentNum):
 	""" Creates a window to display all assignments for a student and its 
@@ -78,15 +78,17 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 
 	# add button for creating a new assignment if it's a prof
 	if userType == 'P':
-		Button(root, text="Add Questions To Existing Assignments Based On Existing Question Formulas", command= lambda: callMakeAssignments(root)).grid(row=rowNum)
+		Button(root, text="Add Questions To Existing Assignments Based On Existing Question Formulas", command= lambda: callMakeAssignments(root, studentNum)).grid(row=rowNum)
 
 def displaySpecificAssignment(assignmentId, studentNum):
 	# launch window from DisplayAssignment.py
 	displayMenu(studentNum, assignmentId)
 
-def callMakeAssignments(root):
+def callMakeAssignments(root, p_id):
 	root.destroy()
-	os.system('python3 SelectQuestions.py')
+	profId = p_id
+	#print(profId)
+	import SelectQuestions
 
 if __name__ == "__main__":
 	""" for testing when running from terminal """

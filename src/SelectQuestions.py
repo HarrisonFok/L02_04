@@ -4,6 +4,7 @@ import io
 import csv
 
 from randomalgo import *
+from __main__ import *
 
 class SelectQuestions(Frame):
 
@@ -85,7 +86,7 @@ class SelectQuestions(Frame):
         
         # Make an assignment and store it inside Assignment.csv (using the
         # function makeAssignment() in randomalgo.py)
-        self._assignment = makeAssignment(self._chosenQuestionFormulas, addInfoList)
+        self._assignment = makeAssignment(self._chosenQuestionFormulas, addInfoList, profId)
         
         # Read from Assignment.csv and display the questions to the window
         listOfQ = self._assignment.getListOfQuestions()
