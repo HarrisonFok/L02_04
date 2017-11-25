@@ -87,7 +87,6 @@ def displaySpecificAssignment(assignmentId, studentNum):
 def callMakeAssignments(root, p_id):
 	root.destroy()
 	profId = p_id
-	#print(profId)
 	import SelectQuestions
 
 if __name__ == "__main__":

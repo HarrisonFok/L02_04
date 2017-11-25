@@ -5,6 +5,7 @@ import csv
 
 from randomalgo import *
 from __main__ import *
+#print(profId)
 
 class SelectQuestions(Frame):
 
@@ -35,11 +36,14 @@ class SelectQuestions(Frame):
         # This will be the Assignment object that randomalgo.py returns
         self._assignment = None
 
+        # This will be the id of the professor
+        self._prof_id = profId
+
     def display(self):
         # Read all the question formulas in questions.csv and display them to
         # the screen
         with open("questions.csv", "rU") as csvFile:
-            reader = csv.reader(csvFile, delimiter="\n", dialect=csv.excel_tab)
+            reader = csv.reader(csvFile, dialect=csv.excel_tab)
             for row in reader:
                 splitRow = row[0].split(",")
                 # temporary solution: break out of this loop if it's the end of the record .csv
@@ -82,6 +86,7 @@ class SelectQuestions(Frame):
         # Get the chosen question formulas and append to the list self._chosenQuestionFormulas
         with open("questions.csv", "rU") as csvFile:
             for lineList in csv.reader(csvFile):
+                lineList[5] = lineList[5].strip()
                 # if the question is one of the chosen questions, then add it
                 # to self._chosenQuestionFormulas
                 if lineList[0] in chosenQ:
@@ -90,7 +95,7 @@ class SelectQuestions(Frame):
         # Make an assignment and store it inside Assignment.csv (using the
         # function makeAssignment() in randomalgo.py)
         assignmentId = str(randint(000000000, 999999999))
-        self._assignment = makeAssignment(self._chosenQuestionFormulas, addInfoList, profId, assignmentId)
+        self._assignment = makeAssignment(self._chosenQuestionFormulas, addInfoList, self._prof_id, assignmentId)
         
         # Read from Assignment.csv and display the questions to the window
         listOfQ = self._assignment.getListOfQuestions()

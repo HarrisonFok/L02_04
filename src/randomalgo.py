@@ -121,7 +121,7 @@ def makeAssignment(L, addInfo, profId, assignmentId):
         # Append the necessary question info into result
         result.append([question[0], question[2], Q_B, answer, assignmentId, addInfo[0], addInfo[1], profId, addInfo[2]])
 
-    newAssignmentObj = Assignment(questionObjs)
+    newAssignmentObj = Assignment(assignmentId, questionObjs)
     
     with open("Assignment.csv", "a") as csvfile:
         csvfile.seek(0)
@@ -131,5 +131,5 @@ def makeAssignment(L, addInfo, profId, assignmentId):
     return newAssignmentObj
 
 if __name__ == '__main__':
-    makeAssignment([["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"],["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"] ])
+    makeAssignment([["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"],["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"] ], ["Unit 20 Test", "01-Nov-19", "2"], "1", "12")
     #makeAssignment([["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1", "1", "Unit 1 Test", "01-Nov-17", "1", "1"], ["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1", "1", "Unit 1 Test", "01-Nov-17", "1", "1"]])
