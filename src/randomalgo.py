@@ -91,7 +91,7 @@ def RandomInRange(L):
     """
     return random.randint(int(L[0]), int(L[1]))
 
-def makeAssignment(L):
+def makeAssignment(L, addInfo):
     '''
     :param L: the list of all the selected questions [[q1], [q2], [q3]]
     '''
@@ -112,20 +112,21 @@ def makeAssignment(L):
             i += 1
         answer = cal_exp(mixed_operation(Q_A))
         # Initialize a new Question object
-        newQ = Question(question[0], question[2], Q_B, answer, question[6], question[7], question[8], question[9], question[10])
+        newQ = Question(question[0], question[2], Q_B, answer, "", addInfo[0], addInfo[1], "1", addInfo[2])
         # Append the new question into questionObjs
         questionObjs.append(newQ)
         # Append the necessary question info into result
-        result.append([question[0], question[2], Q_B, answer, question[6], question[7], question[8], question[9], question[10]])
+        result.append([question[0], question[2], Q_B, answer, "", addInfo[0], addInfo[1], "1", addInfo[2]])
 
     newAssignmentObj = Assignment(questionObjs)
     
     with open("Assignment.csv", "a") as csvfile:
+        csvfile.seek(0)
         writer = csv.writer(csvfile)
         writer.writerows(result)
 
     return newAssignmentObj
 
 if __name__ == '__main__':
-    #makeAssignment([["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"],["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"] ])
-    makeAssignment([["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1", "1", "Unit 1 Test", "01-Nov-17", "1", "1"], ["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1", "1", "Unit 1 Test", "01-Nov-17", "1", "1"]])
+    makeAssignment([["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"],["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1"] ])
+    #makeAssignment([["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1", "1", "Unit 1 Test", "01-Nov-17", "1", "1"], ["25306175", "Topic_5", "MCQ", "What is VAR0 + VAR1", "12|15, 13|16", "VAR0+VAR1", "1", "Unit 1 Test", "01-Nov-17", "1", "1"]])

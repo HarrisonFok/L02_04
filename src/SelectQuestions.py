@@ -18,8 +18,9 @@ class SelectQuestions(Frame):
         self._display_button = Button(self, text="Display Questions", command=self.display)
         self._display_button.pack()
 
-        # Initialize an entry
+        # Initialize entrys
         self._entry = Entry(self)
+        self._additionalInfoEntry = None
 
         # Initialize the window for showing what questions are added
         self._addedQWindow = None
@@ -52,7 +53,13 @@ class SelectQuestions(Frame):
             # Disable the display button once clicked
             self._display_button.config(state = 'disabled')
 
+            # Allow the user to allow the user to give additional info of assignment name, due date, and student id
+            Label(self, text="Please enter the additional information of assignment name, due date, and student id").pack()
+            self._additionalInfoEntry = Entry(self)
+            self._additionalInfoEntry.pack()
+
     def create_window(self):
+        addInfoList = self._additionalInfoEntry.get().split(',')
         # Create a new window
         self._addedQWindow = Toplevel(self)
         self._addedQWindow.wm_title("ASSIGNMENT")
@@ -78,7 +85,7 @@ class SelectQuestions(Frame):
         
         # Make an assignment and store it inside Assignment.csv (using the
         # function makeAssignment() in randomalgo.py)
-        self._assignment = makeAssignment(self._chosenQuestionFormulas)
+        self._assignment = makeAssignment(self._chosenQuestionFormulas, addInfoList)
         
         # Read from Assignment.csv and display the questions to the window
         listOfQ = self._assignment.getListOfQuestions()

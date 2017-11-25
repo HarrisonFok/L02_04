@@ -5,7 +5,7 @@ from random import randint
 class Assignment:
     '''Class for an assignment'''
     
-    def __init__(self, list_of_questions):
+    def __init__(self, list_of_questions=None):
         '''(Assignment, String, [Question]) -> NoneType
         Initialize an Assignment object
         '''
@@ -14,6 +14,20 @@ class Assignment:
         self._list_of_questions = list_of_questions
         self._deadline = None
         self._name = None
+        self._studentId = None
+        self._profId = None
+
+    def getProfId():
+        return self._profId
+
+    def setProfId(newProfId):
+        self._profId = newProfId
+
+    def getStudentId():
+        return self._studentId
+
+    def setStudentId(newStudentId):
+        self._studentId = newStudentId
         
     def getDeadline(self):
         return self._deadline
