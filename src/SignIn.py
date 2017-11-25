@@ -14,15 +14,16 @@ def readUser():
     return readUserFile("Users.csv")
 
 def readUserFile(filename):
-    csv_file = open("Users.csv", "r")
+    csv_file = open(filename, "r")
 
     Users = []
 
-    lines = list(csv.reader(csv_file)) # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
+    # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
+    lines = list(csv.reader(csv_file))
 
     for l in lines:
 
-        # Could make the user and email pair now, instead of doing it when making the object...
+        # Make the user and email pair
 
         if l[5] == "P":
             Users.append(Professor(l[1], l[2], l[3], l[4]))
@@ -34,42 +35,48 @@ def readUserFile(filename):
 
     return Users
 
-## Remember, Python or Tkinter or whatever doesn't check if these frames exist. these functions, when called by a buttonpress, act as if they're in the same scope as the button, or something.
+## Python or Tkinter or whatever doesn't check if these frames exist. 
+## These functions, when called by a button press, act as if they're in the same scope as the button.
 
 def StudentRegistering(event):
-    """ Execute the registration menu """
+    """ Execute the registration menu for students."""
 
     newWindow = Toplevel()
+    newWindow.attributes('-topmost', 'true')
     StudentProfileIndex.signUpIndex(newWindow)
 
 def ProfessorRegistering(event):
-    """ Execute the registration menu """ 
+    """ Execute the registration menu for profesors."""
 
     newWindow = Toplevel()
+    newWindow.attributes('-topmost', 'true')
     ProfessorProfileIndex.signUpIndex(newWindow)
 
 def SignIn(event):
+    """ Check that the person signing in has credentials that correspond to a actual user, and setting them as the current user."""
 
-    # Need to declare globals locally, if modifying them, from inside a function?
+    # Need to declare globals locally
 
     global CurrentUsr
     global Usrs
 
+    # Read all the users in Users.csv
     Usrs = readUser()
 
+    # Get the email and password that the user entered
     Em = EmailEntry.get()
-
     Pass = PassEntry.get()
 
-    # Check if either name or email exist separately. Bad for security? Maybe not.
+    # Variables to check if either name or email exist separately
     EmEx = False
     PassEx = False
 
+    # Iterate through the list of users to see if any matches the user input
     for Usr in Usrs:
 
+        # If we have no idea who the correct user could be
         if CurrentUsr is None:
 
-            #If we have no idea who the correct user could be...
             if (Usr.getEmail() == Em):
                 EmEx = True
                 CurrentUsr = Usr
@@ -78,6 +85,7 @@ def SignIn(event):
                 PassEx = True
                 CurrentUsr = Usr
 
+        # If any user profile matches the one entered
         if not (CurrentUsr is None):
 
             if (Usr.getEmail() == Em):
@@ -86,30 +94,59 @@ def SignIn(event):
             if (Usr.getPassword() == Pass):
                 PassEx = True
 
+            # Log in and transition to a different screen depending on the type of user
             if (EmEx & PassEx):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
-
-                # open a new window with the credentials of the user
-                newWindow = Toplevel()
-                systemStr = ""
-                if Usr.getType() == 'S':
-                    StudentProfileIndex.displayProfile(newWindow, Usr)
-                    systemStr = 'python DisplayAssignment.py'
-                elif Usr.getType() == 'P':
-                    ProfessorProfileIndex.displayProfile(newWindow, Usr)
-                    systemStr = 'python SelectQuestions.py'
-
-                newWindow.geometry("400x400")
-                os.system(systemStr)
+                goToTransitionScreen(Usr)
                 break
 
+    # If either the email or the password or both don't match any existing user profile
     if not (EmEx and PassEx):
         tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
 
+def goToTransitionScreen(user):
+    """ Display the transistion screen between signing in / registering and User specific functions."""
+    
+    # Create a new window
+    newWindow = Toplevel()
+    newWindow.attributes('-topmost', 'true')
 
-#### Okay... So bound functions can't take parameters...
+    # Create a button that calls the method callDisplayAllAssignments when clicked
+    Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(newWindow, user)).pack()
 
+    # Create a different transition screen based on the type of user
+    if (user.getType() == 'S'):
+        studInfoBut = Button(newWindow, text="My Info", command=lambda:StudentProfileIndex.displayProfile(newWindow, user, studInfoBut))
+        studInfoBut.pack()
+    elif (user.getType() == 'P'):
+        addQuestionFormsBtn = Button(newWindow, text="Add a question formula", command=lambda:callAddQuestionFormulas(newWindow))
+        addQuestionFormsBtn.pack()
+        profInfoBut = Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user, profInfoBut))
+        profInfoBut.pack()
+
+def callDisplayAllAssignments(newWindow, user):
+    # Destroy the previous window
+    newWindow.destroy()
+
+    # Run different files depending on the type of user
+    if (user.getType() == 'S'):
+        os.system('python3 DisplayAllAssignments.py')
+    elif (user.getType() == 'P'):
+        os.system('python3 DisplayProfessorsAssignments.py')
+
+def callAddQuestionFormulas(newWindow):
+    # Destroy the previous window
+    newWindow.destroy()
+
+    # Run the file that allows professors to add question formulas
+    os.system('python3 user_story_3.py')
+
+# Note: Bound functions can't take parameters
+
+# Create the window
 root = Tk()
+root.title("Sign In Page")
+root.attributes('-topmost', 'true')
 
 CredFrame = Frame(root)
 CredFrame.pack()
@@ -151,20 +188,25 @@ global CurrentUsr
 
 CurrentUsr = None
 
+# Add a button for users to register as a student
 RegisterButton = Button(ButtonFrame, text="Student Registration")
 RegisterButton.pack(side=LEFT)
 RegisterButton.bind("<Button-1>", StudentRegistering)
 
+# Add a button for users to register as a professor
 RegisterButton = Button(ButtonFrame, text="Professor Registration")
 RegisterButton.pack(side=LEFT)
 RegisterButton.bind("<Button-1>", ProfessorRegistering)
 
+# Add a sign in button for users to sign in
 SignInButton = Button(ButtonFrame, text="Sign In")
 SignInButton.bind("<Button-1>", SignIn)
 
 if Usrs is not None:
     SignInButton.pack(side=RIGHT)
 
-root.mainloop()
+if __name__ == '__main__':
+    
+    root.mainloop()
 
 ### You can also put the form code inside the def function to make a form pop up when you click that button...:

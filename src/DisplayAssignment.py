@@ -33,8 +33,6 @@ def displayAssignmentWindow(root, studentNum, assignmentID):
 	# compare answers if the submit button is clicked
 	submitBtn.grid(row = rowNum)
 
-
-
 def getStudentAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 	""" This method replaces the values of the questionStudentAnsPair dictionary with the entries 
 		in the form. """
@@ -124,10 +122,9 @@ def getQuestionsFromAssignment(assignmentID):
 
 def displayMenu(studentNum, assignmentID):
 	root = Tk()
+	root.attributes('-topmost', 'true')
 	displayAssignmentWindow(root, studentNum, assignmentID)
 	root.mainloop()
-
-
 
 if __name__ == "__main__":
 	# for testing

@@ -3,6 +3,7 @@ from DisplayAssignment import *
 from CheckUserType import *
 import csv
 import io
+import os
 
 # display a new window 
 
@@ -19,6 +20,7 @@ def displayListOfAssignments(studentNum):
 		typeCol = profCol
 
 	root = Tk()
+	root.attributes('-topmost', 'true')
 	assignmentIdsList = []
 	assignmentsInfo = []
 
@@ -76,14 +78,16 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 
 	# add button for creating a new assignment if it's a prof
 	if userType == 'P':
-		createAssignmentBtn = Button(root, text="New Assignment").grid(row=rowNum)
-
+		Button(root, text="Add Questions To Existing Assignments Based On Existing Question Formulas", command= lambda: callMakeAssignments(root)).grid(row=rowNum)
 
 def displaySpecificAssignment(assignmentId, studentNum):
 	# launch window from DisplayAssignment.py
 	displayMenu(studentNum, assignmentId)
 
+def callMakeAssignments(root):
+	root.destroy()
+	os.system('python3 SelectQuestions.py')
+
 if __name__ == "__main__":
 	""" for testing when running from terminal """
 	displayListOfAssignments(0)
-

@@ -3,7 +3,7 @@ import random
 import csv
 
 root = Tk()
-
+root.attributes('-topmost', 'true')
 
 def getRange(new_q):
     ''' Parses the new variables for their ranges '''
@@ -67,6 +67,7 @@ def MCQ():
 
     question_window = Toplevel(root)
     question_window.geometry('600x530')
+    question_window.attributes('-topmost', 'true')
     question_window.title('Multiple Choice window')
 
     topic_L = Label(question_window, text='Related topic:', font=20,
@@ -175,6 +176,7 @@ def FBQ():
         return topic_num.get()
 
     question_window = Toplevel(root)
+    question_window.attributes('-topmost', 'true')
     question_window.geometry('600x530')
     question_window.title('Fill in the blank window')
 
