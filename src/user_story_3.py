@@ -66,7 +66,7 @@ def MCQ():
         return topic_num.get()
 
     question_window = Toplevel(root)
-    question_window.geometry('600x530')
+    question_window.geometry('810x750')
     question_window.attributes('-topmost', 'true')
     question_window.title('Multiple Choice window')
 
@@ -88,18 +88,20 @@ def MCQ():
     topic.pack()
     topic.place(bordermode=OUTSIDE, x=10, y=50)
 
-    Label(question_window, text='Type your question here: ', font=20,
+
+    Label(question_window, text='Type your question here:', font=20,
           pady=20).pack()
-    new_question = Text(question_window, width=40, height=10)
+
+    new_question = Text(question_window, relief=GROOVE, width=40, height=10, borderwidth=2, highlightthickness=0)
     new_question.pack()
 
-    var_button = Button(question_window, text='insert Variable',
+    var_button = Button(question_window, text='Insert Variable',
                         command=insert_var)
     var_button.pack()
 
     Label(question_window, text='Type your answer formula here: ',
           font=20, pady=20).pack()
-    answer_formula = Text(question_window, width=40, height=5)
+    answer_formula = Text(question_window, width=40, height=5, relief=GROOVE, borderwidth=2, highlightthickness=0)
     answer_formula.pack()
 
     operator_button1 = Button(question_window, text="insert ' + '",
@@ -115,20 +117,35 @@ def MCQ():
     operator_button3 = Button(question_window, text="insert ' * '",
                               command=insert_time)
     operator_button3.pack()
-    operator_button3.place(bordermode=OUTSIDE, x=480, y=320)
+    operator_button3.place(bordermode=OUTSIDE, x=620, y=320)
 
     operator_button4 = Button(question_window, text="insert ' / '",
                               command=insert_divided)
     operator_button4.pack()
-    operator_button4.place(bordermode=OUTSIDE, x=480, y=370)
+    operator_button4.place(bordermode=OUTSIDE, x=620, y=370)
 
     Label(question_window, text='', font=20, pady=20).pack()
     confirm_button = Button(question_window, text='Confirm',
                             command=write_questions)
+    
+    instructions = """ Instructions:\n\n 1. Choose a topic from the 'Related Topic'\n 
+        2. Type your question in the first text field and use the "Insert
+        Variable" button to insert a new variable into the question. Set the max and min
+        values for the range of possible random variables for each variable as follows: VAR0(1|20).\n
+        3. Type your answer formula in the second text field. (ie. VAR0 + VAR1) This will be used to calculate the
+        correct answer for the question based on the random values generated for each variable. Use the insert <operator>
+        buttons to add an operator to your question formula. """
+
+    Label(question_window, text=instructions, font=20, pady=20).pack()
+
     exit_button = Button(question_window, text='Exit',
                          command=question_window.destroy)
     confirm_button.pack(side=LEFT, padx=150)
     exit_button.pack(side=LEFT, padx=50)
+
+    exit_button.place(x=400, y=680)
+    confirm_button.place(x=300, y=680)
+
 
 
 def FBQ():
@@ -177,7 +194,7 @@ def FBQ():
 
     question_window = Toplevel(root)
     question_window.attributes('-topmost', 'true')
-    question_window.geometry('600x530')
+    question_window.geometry('810x750')
     question_window.title('Fill in the blank window')
 
     topic_L = Label(question_window, text='Related topic:', font=20,
@@ -215,29 +232,43 @@ def FBQ():
     operator_button1 = Button(question_window, text="insert ' + '",
                               command=insert_plus)
     operator_button1.pack()
-    operator_button1.place(bordermode=OUTSIDE, x=50, y=320)
+    operator_button1.place(bordermode=OUTSIDE, x=50, y=300)
 
     operator_button2 = Button(question_window, text="insert ' - '",
                               command=insert_minus)
     operator_button2.pack()
-    operator_button2.place(bordermode=OUTSIDE, x=50, y=370)
+    operator_button2.place(bordermode=OUTSIDE, x=50, y=350)
 
     operator_button3 = Button(question_window, text="insert ' * '",
                               command=insert_time)
     operator_button3.pack()
-    operator_button3.place(bordermode=OUTSIDE, x=480, y=320)
+    operator_button3.place(bordermode=OUTSIDE, x=620, y=300)
 
     operator_button4 = Button(question_window, text="insert ' / '",
                               command=insert_divided)
     operator_button4.pack()
-    operator_button4.place(bordermode=OUTSIDE, x=480, y=370)
+    operator_button4.place(bordermode=OUTSIDE, x=620, y=350)
+
+    instructions = """ Instructions:\n\n 1. Choose a topic from the 'Related Topic'\n 
+        2. Type your question in the first text field and use the "Insert
+        Variable" button to insert a new variable into the question. Set the max and min
+        values for the range of possible random variables for each variable as follows: VAR0(1|20).\n
+        3. Type your answer formula in the second text field. (ie. VAR0 + VAR1) This will be used to calculate the
+        correct answer for the question based on the random values generated for each variable. Use the insert <operator>
+        buttons to add an operator to your question formula. """
+
+    Label(question_window, text=instructions, font=20, pady=20).pack()
 
     confirm_button = Button(question_window, text='Confirm',
                             command=write_questions)
     exit_button = Button(question_window, text='Exit',
                          command=question_window.destroy)
+
     confirm_button.pack(side=LEFT, padx=150)
     exit_button.pack(side=LEFT, padx=50)
+
+    exit_button.place(x=400, y=680)
+    confirm_button.place(x=300, y=680)
 
 
 top_Label = Label(root, text='Choose your question type here:')
@@ -246,6 +277,7 @@ button1 = Button(text='Multiple Choice', command=MCQ)
 button2 = Button(text='Fill in the blanks', command=FBQ)
 
 root.title('Create Questions')
+# set the size of the window
 top_Label.pack()
 button1.pack(side=LEFT)
 button2.pack(side=LEFT)
