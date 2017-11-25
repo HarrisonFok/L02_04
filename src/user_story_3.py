@@ -198,7 +198,7 @@ def FBQ():
     topic.pack()
     topic.place(bordermode=OUTSIDE, x=10, y=50)
 
-    Label(question_window, text='Type your quetion here: ', font=20,
+    Label(question_window, text='Type your question here: ', font=20,
           pady=20).pack()
     new_question = Text(question_window, width=40, height=10)
     new_question.pack()

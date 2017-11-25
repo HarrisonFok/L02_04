@@ -167,18 +167,11 @@ PassLabel.grid(row=2, sticky=E)
 EmailEntry.grid(row=1, column=1)
 PassEntry.grid(row=2, column=1)
 
-checked = 0
-
-c = Checkbutton(CredFrame, text="Keep me logged in", variable=checked)
-c.grid(columnspan=2)
-
 BottomFrame = Frame(root)
 BottomFrame.pack(side=BOTTOM)
 
 ButtonFrame = Frame(BottomFrame)
 ButtonFrame.pack(side=BOTTOM)
-
-if checked: print("hi!") #Do stuff
 
 global Usrs
 
