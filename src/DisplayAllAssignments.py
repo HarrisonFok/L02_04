@@ -67,7 +67,7 @@ def displayListOfAssignments(usr):
 				assignmentsInfo.append(tempValues)
 				break
 
-	description = """ Here is a list of all your created assignments. """
+	description = """ Here is a list of all your created assignments. Assignments will be opened in new windows."""
 	desc = Label(root, text=description).grid(row=0, columnspan=2)
 	# create the necessary labels on the window
 	createAssignmentLabels(root, studentNum, assignmentsInfo, userType)

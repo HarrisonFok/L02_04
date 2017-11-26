@@ -59,10 +59,6 @@ def ProfessorRegistering(event):
 def SignIn(root):
     """ Check that the person signing in has credentials that correspond to a actual user, and setting them as the current user."""
 
-    # Need to declare globals locally
-    global CurrentUsr
-    global Usrs
-
     # Read all the users in Users.csv
     Usrs = readUser()
 
@@ -71,40 +67,24 @@ def SignIn(root):
     Pass = PassEntry.get()
 
     # Variables to check if either name or email exist separately
-    EmEx = False
-    PassEx = False
+    authenticated = False
 
     # Iterate through the list of users to see if any matches the user input
     for Usr in Usrs:
-
-        # If we have no idea who the correct user could be
-        if CurrentUsr is None:
-
-            if (Usr.getEmail() == Em):
-                EmEx = True
-                CurrentUsr = Usr
-
-            if (Usr.getPassword() == Pass):
-                PassEx = True
-                CurrentUsr = Usr
-
         # If any user profile matches the one entered
-        if not (CurrentUsr is None):
-
-            if (Usr.getEmail() == Em):
-                EmEx = True
-
-            if (Usr.getPassword() == Pass):
-                PassEx = True
+        if (Usr.getEmail() == Em and Usr.getPassword() == Pass):
+            authenticated = True
 
             # Log in and transition to a different screen depending on the type of user
-            if (EmEx & PassEx):
+            if (authenticated):
                 tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
                 goToTransitionScreen(Usr)
+                # hide the sign in menu
+                root.withdraw()
                 break
 
     # If either the email or the password or both don't match any existing user profile
-    if not (EmEx and PassEx):
+    if not (authenticated):
         tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
 
 def goToTransitionScreen(user):
@@ -114,12 +94,13 @@ def goToTransitionScreen(user):
     newWindow = Toplevel()
     newWindow.attributes('-topmost', 'true')
     newWindow.title("Options Menu")
-    newWindow.geometry("650x300")
+    newWindow.geometry("650x400")
 
     description = """ Please choose from the following:\n
     Display Assignment: Display all assignments you have created.\n
     Add Question: Add a question to the .csv file to be used in an assignment.\n
-    My Info: View your account information such as name, email and personnel number.
+    My Info: View your account information such as name, email and personnel number.\n
+    Sign Out: Log out and return to the sign in page.
     """
     Label(newWindow, text=description).pack()
 
@@ -135,6 +116,18 @@ def goToTransitionScreen(user):
         addQuestionFormsBtn.pack()
         profInfoBut = Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user, profInfoBut))
         profInfoBut.pack()
+
+    Button(newWindow, text="Sign Out", command=lambda:signOut(newWindow)).pack()
+
+def signOut(newWindow):
+    # destroy the options menu
+    newWindow.destroy()
+    # clear entries first
+    EmailEntry.delete(0, 'end')
+    PassEntry.delete(0, 'end')
+    # redisplay the sign in menu
+    root.deiconify()
+
 
 def callDisplayAllAssignments(newWindow, user):
     # Destroy the previous window
