@@ -36,7 +36,7 @@ class SelectQuestions(Frame):
         self._assignment = None
 
         # This will be the id of the professor
-        self._prof_id = profId
+        # self._prof_id = profId
 
     def display(self):
         # Read all the question formulas in questions.csv and display them to
@@ -96,7 +96,7 @@ class SelectQuestions(Frame):
         # Make an assignment and store it inside Assignment.csv (using the
         # function makeAssignment() in randomalgo.py)
         assignmentId = str(randint(000000000, 999999999))
-        self._assignment = makeAssignment(self._chosenQuestionFormulas, addInfoList, self._prof_id, assignmentId)
+        self._assignment = makeAssignment(self._chosenQuestionFormulas, addInfoList, profId, assignmentId)
         
         # Read from Assignment.csv and display the questions to the window
         listOfQ = self._assignment.getListOfQuestions()
@@ -112,8 +112,13 @@ class SelectQuestions(Frame):
         self._addedQWindow.destroy()
         self.destroy()
 
-root = Tk()
-root.wm_attributes("-topmost", 'true')
-main = SelectQuestions(root)
-main.pack(side="top", expand=True)
-root.mainloop()
+def runSelectQuestions(user):
+    root = Tk()
+    root.wm_attributes("-topmost", 'true')
+    # make a global variable to hold the prof's id throughout this script
+    global profId
+    profId = user.getId()
+    main = SelectQuestions(root)
+    main.pack(side="top", expand=True)
+
+    root.mainloop()

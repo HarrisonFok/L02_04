@@ -1,15 +1,22 @@
 from tkinter import *
 from DisplayAssignment import *
 from CheckUserType import *
+from Quit import *
+import SelectQuestions
 import csv
 import io
 import os
 
 # display a new window
 
-def displayListOfAssignments(user):
+def displayListOfAssignments(usr):
 	""" Creates a window to display all assignments for a student and its 
 	corresponding information. """
+
+	# declare a global variable for the current user
+	global user
+	user = usr
+
 	studentCol = 8
 	profCol = 7
 	studentNum = user.getId()
@@ -34,6 +41,7 @@ def displayListOfAssignments(user):
 
 	# get all the student's assignments by ID
 	for row in reader:
+		print("row", row)
 		if row[typeCol].strip() == str(studentNum):
 			if not (row[4].strip() in assignmentIdsList):
 				assignmentIdsList.append(row[4].strip())
@@ -81,14 +89,16 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 
 	# add button for creating a new assignment if it's a prof
 	if userType == 'P':
-		Button(root, text="Create new assignment", command= lambda: callMakeAssignments(root, studentNum)).grid(row=rowNum)
+		Button(root, text="Create new assignment", command= lambda: callMakeAssignments(root, user)).grid(row=rowNum, column=0)
+
+	Button(root, text="Back", command = lambda:quit(root, user)).grid(row = rowNum, column=1)
+
 
 def displaySpecificAssignment(assignmentId, studentNum, userType):
 	# launch window from DisplayAssignment.py
 	displayMenu(studentNum, assignmentId, userType)
 
-def callMakeAssignments(root, p_id):
+def callMakeAssignments(root, user):
 	root.destroy()
-	profId = p_id
-	import SelectQuestions
+	SelectQuestions.runSelectQuestions(user)
 

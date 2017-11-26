@@ -122,7 +122,7 @@ def goToTransitionScreen(user):
         studInfoBut = Button(newWindow, text="My Info", command=lambda:StudentProfileIndex.displayProfile(newWindow, user, studInfoBut))
         studInfoBut.pack()
     elif (user.getType() == 'P'):
-        addQuestionFormsBtn = Button(newWindow, text="Add a question formula", command=lambda:callAddQuestionFormulas(newWindow, user))
+        addQuestionFormsBtn = Button(newWindow, text="Add Question", command=lambda:callAddQuestionFormulas(newWindow, user))
         addQuestionFormsBtn.pack()
         profInfoBut = Button(newWindow, text="My Info", command=lambda:ProfessorProfileIndex.displayProfile(newWindow, user, profInfoBut))
         profInfoBut.pack()
@@ -140,7 +140,6 @@ def callAddQuestionFormulas(newWindow, user):
 
     # Run the file that allows professors to add question formulas
     user_story_3.runUserStory3(user)
-    os.system('python3 user_story_3.py')
 
 # Note: Bound functions can't take parameters
 
