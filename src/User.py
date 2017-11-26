@@ -3,14 +3,17 @@ import csv
 
 class User(object):
 	"""docstring for User"""
-	def __init__(self, name, email, password, personnelNumber, userType):
+	def __init__(self, name, email, password, personnelNumber, userType, _id=None):
 		""" Constructor for Student object """
 		self._name = name
 		self._email = email
 		self._password = password
 		self._personnelNumber = personnelNumber
 		self._type = userType
-		self._id = int(self.getLatestId())
+		if _id is None:
+			self._id = int(self.getLatestId())
+		else:
+			self._id = _id
 
 	# getters and setters for class attributes
 	def getName(self):

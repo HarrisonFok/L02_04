@@ -2,8 +2,10 @@ from tkinter import *
 import tkinter.messagebox
 from Student import *
 from Professor import *
+import DisplayAllAssignments
 import StudentProfileIndex
 import ProfessorProfileIndex
+import DisplayProfessorsAssignments
 import user_story_3
 import csv
 import io
@@ -27,9 +29,10 @@ def readUserFile(filename):
         # Make the user and email pair
 
         if l[5] == "P":
-            Users.append(Professor(l[1], l[2], l[3], l[4]))
+            Users.append(Professor(l[0], l[1], l[2], l[3], l[4]))
         elif l[5] == "S":
-            Users.append(Student(l[1], l[2], l[3], l[4]))
+            s = Student(l[0], l[1], l[2], l[3], l[4])
+            Users.append(s)
 
     csv_file.close()
     # Should set it so it returns 0 if the file isn't there, then report that to the user.
@@ -130,10 +133,11 @@ def callDisplayAllAssignments(newWindow, user):
 
     # Run different files depending on the type of user
     if (user.getType() == 'S'):
-        os.system('python3 DisplayAllAssignments.py')
+        DisplayAllAssignments.displayListOfAssignments(user.getId())
     elif (user.getType() == 'P'):
-        os.system('python3 DisplayProfessorsAssignments.py')
-
+        print(user.getId())
+        DisplayProfessorsAssignments.getProfessorsAssignments(user.getId())
+        
 def callAddQuestionFormulas(newWindow, user):
     # Destroy the previous window
     newWindow.destroy()

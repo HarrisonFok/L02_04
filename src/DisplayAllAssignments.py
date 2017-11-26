@@ -12,7 +12,7 @@ def displayListOfAssignments(studentNum):
 	corresponding information. """
 	studentCol = 8
 	profCol = 7
-
+	
 	userType = checkUserType(studentNum)
 	if userType == 'S': 
 		typeCol = studentCol
@@ -89,6 +89,3 @@ def callMakeAssignments(root, p_id):
 	profId = p_id
 	import SelectQuestions
 
-if __name__ == "__main__":
-	""" for testing when running from terminal """
-	displayListOfAssignments(0)

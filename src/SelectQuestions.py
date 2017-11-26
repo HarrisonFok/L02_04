@@ -5,7 +5,6 @@ import csv
 
 from randomalgo import *
 from __main__ import *
-#print(profId)
 
 class SelectQuestions(Frame):
 
