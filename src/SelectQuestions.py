@@ -63,10 +63,10 @@ class SelectQuestions(Frame):
 
             # Allow the user to allow the user to give additional info of assignment name, due date, and student id
             Label(self, text="Please enter the additional information of assignment name, due date, and student id").pack()
+            Label(self, text="Date format: DD-MONTH-YY (04-Mar-17)").pack()
+
             self._additionalInfoEntry = Entry(self)
             self._additionalInfoEntry.pack()
-
-            Label(self, text="Date format: DD-MONTH-YY (04-Mar-17)").pack()
                # Have a button for the user to submit
             Button(self, text="Submit", command=self.create_window).pack()
 

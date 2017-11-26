@@ -31,6 +31,8 @@ def displayListOfAssignments(usr):
 
 	root = Tk()
 	root.attributes('-topmost', 'true')
+	root.title("View Assignments")
+
 	assignmentIdsList = []
 	assignmentsInfo = []
 
@@ -65,6 +67,8 @@ def displayListOfAssignments(usr):
 				assignmentsInfo.append(tempValues)
 				break
 
+	description = """ Here is a list of all your created assignments. """
+	desc = Label(root, text=description).grid(row=0, columnspan=2)
 	# create the necessary labels on the window
 	createAssignmentLabels(root, studentNum, assignmentsInfo, userType)
 	# display the assignment name, due date and assignment ID
@@ -75,7 +79,7 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 	""" Creates a label for each assignment displaying it's information and
 	is stacked vertically. """
 
-	rowNum = 0
+	rowNum = 1
 	# iterate through assignments
 	for a in assignmentsInfo:
 		info = "Assignment Name: " + a[1] + "\nDue Date: " + a[2]

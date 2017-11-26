@@ -56,7 +56,7 @@ def ProfessorRegistering(event):
     newWindow.attributes('-topmost', 'true')
     ProfessorProfileIndex.signUpIndex(newWindow)
 
-def SignIn(event):
+def SignIn(root):
     """ Check that the person signing in has credentials that correspond to a actual user, and setting them as the current user."""
 
     # Need to declare globals locally
@@ -113,6 +113,15 @@ def goToTransitionScreen(user):
     # Create a new window
     newWindow = Toplevel()
     newWindow.attributes('-topmost', 'true')
+    newWindow.title("Options Menu")
+    newWindow.geometry("650x300")
+
+    description = """ Please choose from the following:\n
+    Display Assignment: Display all assignments you have created.\n
+    Add Question: Add a question to the .csv file to be used in an assignment.\n
+    My Info: View your account information such as name, email and personnel number.
+    """
+    Label(newWindow, text=description).pack()
 
     # Create a button that calls the method callDisplayAllAssignments when clicked
     Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(newWindow, user)).pack()
@@ -148,11 +157,14 @@ if __name__ == '__main__':
         
     # Create the window
     root = Tk()
-    root.title("Sign In Page")
+    root.title("Sign In")
     root.attributes('-topmost', 'true')
+
+    Label(root, text="Welcome! Enter your credentials to sign in or register.").pack()
 
     CredFrame = Frame(root)
     CredFrame.pack()
+
 
     EmailText = StringVar()
     PassText = StringVar()
@@ -195,8 +207,7 @@ if __name__ == '__main__':
     RegisterButton.bind("<Button-1>", ProfessorRegistering)
 
     # Add a sign in button for users to sign in
-    SignInButton = Button(ButtonFrame, text="Sign In")
-    SignInButton.bind("<Button-1>", SignIn)
+    SignInButton = Button(ButtonFrame, text="Sign In", command=lambda:SignIn(root))
 
     if Usrs is not None:
         SignInButton.pack(side=RIGHT)
