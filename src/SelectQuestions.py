@@ -119,11 +119,13 @@ class SelectQuestions(Frame):
         DisplayAllAssignments.displayListOfAssignments(user)
 
     def quit(self, window, user):
+        """ Destroy the appropriate windows when quitting """
         Quit.quit(window, user)
         root.destroy()
 
 
 def runSelectQuestions(usr):
+    """ Run the GUI for the SelectQuestion.py """
     global root
     root = Tk()
     root.wm_attributes("-topmost", 'true')

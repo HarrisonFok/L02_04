@@ -102,6 +102,7 @@ def displaySpecificAssignment(assignmentId, studentNum, userType):
 	displayMenu(studentNum, assignmentId, userType)
 
 def callMakeAssignments(root, user):
+	""" destroys the current root window and launches the SelectQuestion.py UI. """
 	root.destroy()
 	SelectQuestions.runSelectQuestions(user)
 

@@ -2,6 +2,9 @@ import io
 import csv
 
 def checkUserType(userId):
+	""" Given a userId, this function will return a char 'S' if the user is a student
+	and 'P' if the user is a professor. """
+	
 	# determine the type of param passed in (either prof id or student id)
 	usersCSV = open("Users.csv", "r")
 	usersReader = csv.reader(usersCSV)

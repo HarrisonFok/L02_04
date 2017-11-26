@@ -82,9 +82,9 @@ def signUpIndex(root):
 	root.resizable(width=False, height=False)
 
 def displayProfile(root, user, button):
+	""" Display the information about a user in a window. """
 	button['state'] = 'disabled'
 	root.attributes('-topmost', 'true')
-	""" Display the information about a user in a window with these widgets. """
 	nameLabel = Label(root, text="Name: " + user.getName()).pack()
 	emailLabel = Label(root, text="Email: " + user.getEmail()).pack()
 	studentNumLabel = Label(root, text="Student Number: " + user.getPersonnelNumber()).pack()

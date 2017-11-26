@@ -89,5 +89,6 @@ class Question:
                 and (self._student_id == otherQ._student_id))
 
 if __name__ == '__main__':
+    """ Used this for testing when running main. """
     question_a = Question("25306175", "MCQ", "What is 13 + 13", "26", "1", "Unit 1 Test", "01-Nov-17", "1", "1")
     print(question_a.getQuestion())

@@ -106,8 +106,6 @@ def compareAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 
 def getQuestionsFromAssignment(assignmentID):
 	""" Returns a list of questions for that assignment """
-	''' Assume 1 file stores all questions'''
-
 	# get the CSV file with all chosen assignment questions
 	csvFile = open("Assignment.csv", "r")
 	reader = csv.reader(csvFile)
@@ -126,6 +124,7 @@ def getQuestionsFromAssignment(assignmentID):
 	return questions
 
 def displayMenu(studentNum, assignmentID, userType):
+	"""  Displays a particular assignment given a studentNum, assignmentId and userType. """
 	root = Tk()
 	root.attributes('-topmost', 'true')
 	displayAssignmentWindow(root, studentNum, assignmentID, userType)
