@@ -46,6 +46,8 @@ class SelectQuestions(Frame):
             reader = csv.reader(csvFile, dialect=csv.excel_tab)
             for row in reader:
                 splitRow = row[0].split(",")
+                # remove any \n characters
+                splitRow[0] = splitRow[0].strip()
                 # temporary solution: break out of this loop if it's the end of the record .csv
                 if (splitRow[0] == ""):
                     break;
@@ -105,7 +107,7 @@ class SelectQuestions(Frame):
             questionEntry.pack()
 
         Button(self._addedQWindow, text="Close", command=self.destroyWindows).pack()
-
+        
     def destroyWindows(self):
         # Close the assignment window and clear the main frame
         self._addedQWindow.destroy()
