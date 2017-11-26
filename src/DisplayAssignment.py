@@ -2,6 +2,7 @@ from tkinter import *
 from CheckUserType import *
 import csv
 import io
+import os
 
 def displayAssignmentWindow(root, studentNum, assignmentID):
 	""" Displays the window for completing the assignment """
@@ -72,8 +73,13 @@ def compareAnswers(root, questionStudentAnsPair, studentNum, assignmentID):
 	totalMark = Label(root, text="Your mark is: " + str(mark) + "/" + str(total)).grid(row = numRows + 2)
 	# write to the assignment_studentNo file
 	filename = "Assignment_" + str(studentNum) + ".csv"
+	# open the file if it's there, else make a new one
+	if os.path.exists(filename):
+		r = csv.reader(open(filename, "r"))
+	else:
+		r = csv.reader(open(filename, "w"))
+		r = csv.reader(open(filename, "r"))
 	# CHANGING THE VALUES INLINE. IE. if the question has been answered before
-	r = csv.reader(open(filename, "r"))
 	lines = [l for l in r]
 	found = False
 	for line in lines:
