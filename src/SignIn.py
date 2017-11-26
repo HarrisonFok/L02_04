@@ -132,11 +132,7 @@ def callDisplayAllAssignments(newWindow, user):
     newWindow.destroy()
 
     # Run different files depending on the type of user
-    if (user.getType() == 'S'):
-        DisplayAllAssignments.displayListOfAssignments(user)
-    elif (user.getType() == 'P'):
-        print(user.getId())
-        DisplayProfessorsAssignments.getProfessorsAssignments(user)
+    DisplayAllAssignments.displayListOfAssignments(user)
 
 def callAddQuestionFormulas(newWindow, user):
     # Destroy the previous window
