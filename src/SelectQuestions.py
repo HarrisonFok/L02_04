@@ -51,10 +51,7 @@ class SelectQuestions(Frame):
                     break;
                 self.singleQuestion = Label(self, text=splitRow[0] + ":" + splitRow[3], font=("Helvetica", 28))
                 self.singleQuestion.pack()
-            
-            # Have a button for the user to submit
-            Button(self, text="Submit", command=self.create_window).pack()
-        
+
             # Have an entry for the user to enter question ids
             self._entry.pack()
             
@@ -65,6 +62,9 @@ class SelectQuestions(Frame):
             Label(self, text="Please enter the additional information of assignment name, due date, and student id").pack()
             self._additionalInfoEntry = Entry(self)
             self._additionalInfoEntry.pack()
+
+               # Have a button for the user to submit
+            Button(self, text="Submit", command=self.create_window).pack()
 
     def create_window(self):
         addInfoList = self._additionalInfoEntry.get().split(',')
