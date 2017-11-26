@@ -4,7 +4,7 @@ import csv
 import io
 import os
 
-def displayAssignmentWindow(root, studentNum, assignmentID):
+def displayAssignmentWindow(root, studentNum, assignmentID, userType):
 	""" Displays the window for completing the assignment """
 	header = Label(root, text="Answer the following questions.").grid(row=0)
 	# get a list of assignments and display them
@@ -24,7 +24,6 @@ def displayAssignmentWindow(root, studentNum, assignmentID):
 		questionStudentAnsPair[questionBody].grid(row = rowNum, column = 1)
 		rowNum+=1
 
-	userType = checkUserType(studentNum)
 	# if user is a student, show this button.
 	if userType == 'S':
 		submitBtn = Button(root, text="Submit", command = lambda: getStudentAnswers(root, questionStudentAnsPair, studentNum, assignmentID))
@@ -126,10 +125,10 @@ def getQuestionsFromAssignment(assignmentID):
 	# return this list
 	return questions
 
-def displayMenu(studentNum, assignmentID):
+def displayMenu(studentNum, assignmentID, userType):
 	root = Tk()
 	root.attributes('-topmost', 'true')
-	displayAssignmentWindow(root, studentNum, assignmentID)
+	displayAssignmentWindow(root, studentNum, assignmentID, userType)
 	root.mainloop()
 
 if __name__ == "__main__":

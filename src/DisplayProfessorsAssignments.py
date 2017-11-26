@@ -1,9 +1,8 @@
 from tkinter import *
 from DisplayAllAssignments import *
 
-def getProfessorsAssignments(profId):
-	print("profId", profId)
-	displayListOfAssignments(profId)
+def getProfessorsAssignments(user):
+	displayListOfAssignments(user)
 
 
 if __name__ == "__main__":

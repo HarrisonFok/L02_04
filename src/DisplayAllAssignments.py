@@ -7,15 +7,18 @@ import os
 
 # display a new window
 
-def displayListOfAssignments(studentNum):
+def displayListOfAssignments(user):
 	""" Creates a window to display all assignments for a student and its 
 	corresponding information. """
 	studentCol = 8
 	profCol = 7
-	
+	studentNum = user.getId()
+
 	userType = checkUserType(studentNum)
+
 	if userType == 'S': 
 		typeCol = studentCol
+		studentNum = user.getPersonnelNumber()
 	else:
 		typeCol = profCol
 
@@ -72,7 +75,7 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 		infoLabel = Label(root, text=info).grid(row=rowNum, column = 0)
 		a_id = a[0]
 
-		viewAssignmentBtn = Button(root, text="View", command = lambda a_id=a_id:displaySpecificAssignment(a_id, studentNum))
+		viewAssignmentBtn = Button(root, text="View", command = lambda a_id=a_id:displaySpecificAssignment(a_id, studentNum, userType))
 		viewAssignmentBtn.grid(row=rowNum, column = 1)
 		rowNum+=1
 
@@ -80,9 +83,9 @@ def createAssignmentLabels(root, studentNum, assignmentsInfo, userType):
 	if userType == 'P':
 		Button(root, text="Create new assignment", command= lambda: callMakeAssignments(root, studentNum)).grid(row=rowNum)
 
-def displaySpecificAssignment(assignmentId, studentNum):
+def displaySpecificAssignment(assignmentId, studentNum, userType):
 	# launch window from DisplayAssignment.py
-	displayMenu(studentNum, assignmentId)
+	displayMenu(studentNum, assignmentId, userType)
 
 def callMakeAssignments(root, p_id):
 	root.destroy()
