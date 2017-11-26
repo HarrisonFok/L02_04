@@ -111,6 +111,9 @@ def makeAssignment(L, addInfo, profId, assignmentId):
         for val in vals:
             old = 'VAR'+ str(i)
             Q_B = Q_B.replace(old, str(vals[i]))
+            leftk = Q_B.find('(')
+            rightk = Q_B.find(')')
+            Q_B = Q_B[:leftk] + Q_B[rightk + 1:]
             Q_A = Q_A.replace(old, str(vals[i]))
             i += 1
         answer = cal_exp(mixed_operation(Q_A))
