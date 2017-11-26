@@ -1,9 +1,8 @@
 from tkinter import *
+import SignIn
 import random
 import csv
 
-root = Tk()
-root.attributes('-topmost', 'true')
 
 def getRange(new_q):
     ''' Parses the new variables for their ranges '''
@@ -21,8 +20,14 @@ def getRange(new_q):
 
 
 
-def MCQ():
+def MCQ(user):
     li = [0]
+
+    def quit(question_window, user):
+        # destroy this window
+        question_window.destroy()
+        # call the transition screen
+        SignIn.goToTransitionScreen(user)
 
     def write_questions():
         new_q = new_question.get('1.0', END).strip()
@@ -65,7 +70,7 @@ def MCQ():
     def get_topic():
         return topic_num.get()
 
-    question_window = Toplevel(root)
+    question_window = Tk()
     question_window.geometry('810x750')
     question_window.attributes('-topmost', 'true')
     question_window.title('Multiple Choice window')
@@ -139,14 +144,14 @@ def MCQ():
     Label(question_window, text=instructions, font=20, pady=20).pack()
 
     exit_button = Button(question_window, text='Exit',
-                         command=question_window.destroy)
+                         command=lambda:quit(question_window, user))
     confirm_button.pack(side=LEFT, padx=150)
     exit_button.pack(side=LEFT, padx=50)
 
     exit_button.place(x=400, y=680)
     confirm_button.place(x=300, y=680)
 
-
+    question_window.mainloop()
 
 def FBQ():
     li = [0]
@@ -271,16 +276,8 @@ def FBQ():
     confirm_button.place(x=300, y=680)
 
 
-top_Label = Label(root, text='Choose your question type here:')
+def runUserStory3(user):
+    MCQ(user)
 
-button1 = Button(text='Multiple Choice', command=MCQ)
-button2 = Button(text='Fill in the blanks', command=FBQ)
 
-root.title('Create Questions')
-# set the size of the window
-top_Label.pack()
-button1.pack(side=LEFT)
-button2.pack(side=LEFT)
 
-if __name__ == "__main__":
-    root.mainloop()
