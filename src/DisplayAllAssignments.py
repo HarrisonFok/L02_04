@@ -41,7 +41,6 @@ def displayListOfAssignments(usr):
 
 	# get all the student's assignments by ID
 	for row in reader:
-		print("row", row)
 		if row[typeCol].strip() == str(studentNum):
 			if not (row[4].strip() in assignmentIdsList):
 				assignmentIdsList.append(row[4].strip())

@@ -1,4 +1,6 @@
 from tkinter import *
+import DisplayAllAssignments
+import Quit
 import random
 import io
 import csv
@@ -12,12 +14,15 @@ class SelectQuestions(Frame):
         Frame.__init__(self, *args, **kwargs)
 
         # Give instructions to the user
-        self._label = Label(self, text="WELCOME!!\nPlease choose questions to appear on an assignment\n", font=("Helvetica", 32))
+        self._label = Label(self, text="Press 'Display Questions' to see all available questions.\nEnter its ID to select it.", font=("Helvetica", 20))
         self._label.pack()
 
         # Initialize a button for users to display the existing questions
         self._display_button = Button(self, text="Display Questions", command=self.display)
         self._display_button.pack()
+
+        self._back_button = Button(self, text="Back", command=lambda:self.quit(self, user))
+        self._back_button.pack()
 
         # Initialize entrys
         self._entry = Entry(self)
@@ -35,9 +40,6 @@ class SelectQuestions(Frame):
         # This will be the Assignment object that randomalgo.py returns
         self._assignment = None
 
-        # This will be the id of the professor
-        # self._prof_id = profId
-
     def display(self):
         # Read all the question formulas in questions.csv and display them to
         # the screen
@@ -50,7 +52,7 @@ class SelectQuestions(Frame):
                 # temporary solution: break out of this loop if it's the end of the record .csv
                 if (splitRow[0] == ""):
                     break;
-                self.singleQuestion = Label(self, text=splitRow[0] + ":" + splitRow[3], font=("Helvetica", 28))
+                self.singleQuestion = Label(self, text=splitRow[0] + ":" + splitRow[3], font=("Helvetica", 20))
                 self.singleQuestion.pack()
 
             # Have an entry for the user to enter question ids
@@ -64,10 +66,12 @@ class SelectQuestions(Frame):
             self._additionalInfoEntry = Entry(self)
             self._additionalInfoEntry.pack()
 
+            Label(self, text="Date format: DD-MONTH-YY (04-Mar-17)").pack()
                # Have a button for the user to submit
             Button(self, text="Submit", command=self.create_window).pack()
 
     def create_window(self):
+
         addInfoList = self._additionalInfoEntry.get().split(',')
         # Create a new window
         self._addedQWindow = Toplevel(self)
@@ -106,18 +110,28 @@ class SelectQuestions(Frame):
             questionEntry.pack()
 
         Button(self._addedQWindow, text="Close", command=self.destroyWindows).pack()
-        
+
     def destroyWindows(self):
         # Close the assignment window and clear the main frame
         self._addedQWindow.destroy()
         self.destroy()
+        root.destroy()
+        DisplayAllAssignments.displayListOfAssignments(user)
 
-def runSelectQuestions(user):
+    def quit(self, window, user):
+        Quit.quit(window, user)
+        root.destroy()
+
+
+def runSelectQuestions(usr):
+    global root
     root = Tk()
     root.wm_attributes("-topmost", 'true')
     # make a global variable to hold the prof's id throughout this script
     global profId
-    profId = user.getId()
+    global user
+    user = usr
+    profId = usr.getId()
     main = SelectQuestions(root)
     main.pack(side="top", expand=True)
 
