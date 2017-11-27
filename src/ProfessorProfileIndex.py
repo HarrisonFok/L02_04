@@ -20,7 +20,7 @@ def createProfessor(root, nameEntry, emailEntry, passwordEntry, passwordDupEntry
 	else:
 		if matchPasswords(pwd, pwdDup):
 			# create professor object
-			p = Professor(name, email, pwd, pNum)
+			p = Professor(None, name, email, pwd, pNum)
 			resultLabel.config(text="Profile Successfully Created!")
 			# insert into CSV
 			p.insertProfessor()

@@ -20,7 +20,7 @@ def createStudent(root, nameEntry, emailEntry, passwordEntry, passwordDupEntry, 
 	else:
 		if matchPasswords(pwd, pwdDup):
 			# create student object
-			s = Student(name, email, pwd, studentNum)
+			s = Student(None, name, email, pwd, studentNum)
 			resultLabel.config(text="Profile Successfully Created!")
 			# insert into CSV
 			s.insertStudent()
