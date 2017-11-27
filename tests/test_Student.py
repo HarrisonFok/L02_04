@@ -9,7 +9,7 @@ class Test_Student(unittest.TestCase):
         '''
         basic cases
         '''
-        setup = Student.Student("s_name", "s_email", "s_pwd", "s_num")
+        setup = Student.Student('s_id',"s_name", "s_email", "s_pwd", "s_num")
         self.assertEqual(setup.getName(), 's_name')
         self.assertEqual(setup.getEmail(), 's_email')
         self.assertEqual(setup.getPassword(), 's_pwd')
@@ -20,7 +20,7 @@ class Test_Student(unittest.TestCase):
         '''
         cases with new functions
         '''
-        setup = Student.Student("s_name", "s_email", "s_pwd", "s_num")        
+        setup = Student.Student('s_id',"s_name", "s_email", "s_pwd", "s_num")        
         setup.addAssignment('12345678')
         setup.addAssignment('87654321')
         setup.addAssignment('66666666')

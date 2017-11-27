@@ -9,7 +9,7 @@ class test_Professor(unittest.TestCase):
         '''
         basic cases
         '''
-        setup = Professor.Professor("p_name", "p_email", "p_pwd", "p_num")
+        setup = Professor.Professor('p_id',"p_name", "p_email", "p_pwd", "p_num")
         self.assertEqual(setup.getName(), 'p_name')
         self.assertEqual(setup.getEmail(), 'p_email')
         self.assertEqual(setup.getPassword(), 'p_pwd')
@@ -20,7 +20,7 @@ class test_Professor(unittest.TestCase):
         '''
         cases with new functions
         '''
-        setup = Professor.Professor("p_name", "p_email", "p_pwd", "p_num")        
+        setup = Professor.Professor('p_id',"p_name", "p_email", "p_pwd", "p_num")        
         setup.addCourse('CSCC01')
         setup.addCourse('CSCC02')
         setup.addCourse('CSCC03')
