@@ -59,22 +59,13 @@ def ProfessorRegistering(event):
 def SignIn(root):
     """ Check that the person signing in has credentials that correspond to a actual user, and setting them as the current user."""
 
-    # Read all the users in Users.csv
-    Usrs = readUser()
-
-    # Get the email and password that the user entered
-    Em = EmailEntry.get()
-    Pass = PassEntry.get()
-
-    # Variables to check if either name or email exist separately
-    authenticated = False
-
-    # Iterate through the list of users to see if any matches the user input
-    for Usr in Usrs:
+    # Iterate through the list of users from readUser to see if any matches the user input
+    
+    for Usr in readUser():
         
-        # If any user profile matches the one entered...
+        # If any user profile matches the one entered... And the "and True" is needed because "False and False == True".
         
-        if (Usr.getEmail() == Em and Usr.getPassword() == Pass):
+        if (Usr.getEmail() == EmailEntry.get() and Usr.getPassword() == PassEntry.get() and True):
             
             # Log in and transition to a different screen depending on the type of user.
             
