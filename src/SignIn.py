@@ -191,7 +191,7 @@ if __name__ == '__main__':
     # Add a sign in button for users to sign in
     SignInButton = Button(ButtonFrame, text="Sign In", command=lambda:SignIn(root, Usrs))
 
-    if ((Usrs is not None) or (Usrs == [])):
+    if ((Usrs is not None) or (Usrs != [])):
         SignInButton.pack(side=RIGHT)
 
     root.mainloop()
