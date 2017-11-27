@@ -77,6 +77,8 @@ def signUpIndex(root):
 	submitBtn = Button(root, text="Submit", command = lambda: createStudent(root, nameEntry, emailEntry, passwordEntry, passwordDupEntry, studentNumEntry))
 	submitBtn.grid(row=6, column=1)
 
+	Label(root, text="Please restart the application after registration").grid(row=8, column=1)
+
 
 	# set fixed window size
 	root.resizable(width=False, height=False)
