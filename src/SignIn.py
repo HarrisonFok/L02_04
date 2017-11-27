@@ -9,7 +9,7 @@ import DisplayProfessorsAssignments
 import user_story_3
 import csv
 import io
-import os
+import sys
 
 ## Parent Class for all users
 
@@ -96,7 +96,7 @@ def goToTransitionScreen(user):
     description = """ Please choose from the following:\n""" + AssignmentsDescription + """
     Add Question: Add a question to the .csv file to be used in an assignment.\n
     My Info: View your account information such as name, email and personnel number.\n
-    Sign Out: Log out and return to the sign in page.
+    Sign Out: Log out and exit the program.
     """
     Label(newWindow, text=description).pack()
 
@@ -120,12 +120,8 @@ def goToTransitionScreen(user):
 def signOut(newWindow):
     # destroy the options menu
     newWindow.destroy()
-    # clear entries first
-    EmailEntry.delete(0, 'end')
-    PassEntry.delete(0, 'end')
     # redisplay the sign in menu
-    root.deiconify()
-
+    sys.exit()
 
 def callDisplayAllAssignments(newWindow, user):
     # Destroy the previous window
