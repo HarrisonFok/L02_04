@@ -90,11 +90,12 @@ def goToTransitionScreen(user):
 
     if (user.getType() == 'S'):
         AssignmentsDescription = "Display Assignment: Display all your assignments.\n"
+        AddQuestionDescription = ""
     if (user.getType() == 'P'):
         AssignmentsDescription = "Display Assignment: Display all assignments you have created.\n"
+        AddQuestionDescription = "Add Question: Add a question to the .csv file to be used in an assignment.\n"
 
-    description = """ Please choose from the following:\n""" + AssignmentsDescription + """
-    Add Question: Add a question to the .csv file to be used in an assignment.\n
+    description = """ Please choose from the following:\n""" + AssignmentsDescription + AddQuestionDescription + """
     My Info: View your account information such as name, email and personnel number.\n
     Sign Out: Log out and exit the program.
     """
