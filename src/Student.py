@@ -1,7 +1,7 @@
 from User import *
 class Student(User):
 	"""docstring for Student"""
-	def __init__(self, name, email, password, studentNumber, _id=None, assigmentIds=[]):
+	def __init__(self, _id, name, email, password, studentNumber, assigmentIds=[]):
 		""" Constructor for Student object """
 		super().__init__(name, email, password, studentNumber, "S", _id)
 		self._assignmentIds = assigmentIds

@@ -92,7 +92,7 @@ def goToTransitionScreen(user):
         AssignmentsDescription = "Display Assignment: Display all your assignments.\n"
         AddQuestionDescription = ""
     if (user.getType() == 'P'):
-        AssignmentsDescription = "Display Assignment: Display all assignments you have created.\n"
+        AssignmentsDescription = "Display Assignment: Display all assignments you have created.\n\n"
         AddQuestionDescription = "Add Question: Add a question to the .csv file to be used in an assignment.\n"
 
     description = """ Please choose from the following:\n""" + AssignmentsDescription + AddQuestionDescription + """

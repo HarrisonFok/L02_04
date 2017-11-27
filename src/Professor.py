@@ -2,7 +2,7 @@ from User import *
 
 class Professor(User):
 	"""docstring for Professor"""
-	def __init__(self, name, email, password, employeeNumber, _id=None):
+	def __init__(self, _id, name, email, password, employeeNumber):
 		""" Constructor for Professor object """
 		super().__init__(name, email, password, employeeNumber, "P", _id)
 		self._courses = []
