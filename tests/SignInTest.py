@@ -21,7 +21,7 @@ class TestSignIn(unittest.TestCase):
     csv_file.write("1,p,p,p,p,P\n")
     csv_file.close()
 
-    Users = [Student.Student("s", "s", "s", "s"), Professor.Professor("p", "p", "p", "p")]
+    Users = [Student.Student('0',"s", "s", "s", "s"), Professor.Professor('1',"p", "p", "p", "p")]
 
     U = SignIn.readUserFile("TestUsers.csv")
 
@@ -36,7 +36,7 @@ class TestSignIn(unittest.TestCase):
       s.add(U[i].getPersonnelNumber() == Users[i].getPersonnelNumber())
       s.add(U[i].getType() == Users[i].getType())
       s.add(U[i].getId() == Users[i].getId())
-
+      
     self.assertTrue(len(s) == 1)
 
 if __name__ == '__main__':
