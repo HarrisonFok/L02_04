@@ -89,10 +89,10 @@ def goToTransitionScreen(user):
     newWindow.geometry("650x400")
 
     if (user.getType() == 'S'):
-        AssignmentsDescription = "Display Assignment: Display all your assignments.\n"
+        AssignmentsDescription = "Display Assignments: Display all your assignments.\n"
         AddQuestionDescription = ""
     if (user.getType() == 'P'):
-        AssignmentsDescription = "Display Assignment: Display all assignments you have created.\n\n"
+        AssignmentsDescription = "Display Assignments: Display all assignments you have created.\n\n"
         AddQuestionDescription = "Add Question: Add a question to the .csv file to be used in an assignment.\n"
 
     description = """ Please choose from the following:\n""" + AssignmentsDescription + AddQuestionDescription + """
@@ -102,7 +102,7 @@ def goToTransitionScreen(user):
     Label(newWindow, text=description).pack()
 
     # Create a button that calls the method callDisplayAllAssignments when clicked
-    Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(newWindow, user)).pack()
+    Button(newWindow, text="Display Assignments", command=lambda:callDisplayAllAssignments(newWindow, user)).pack()
 
     # Create a different transition screen based on the type of user
 

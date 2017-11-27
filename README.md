@@ -42,6 +42,8 @@ All code regarding the project will be placed in the src/ folder. The PDF docume
 Final Deliverable: Final Deliverable.pdf
 This pdf contains the project management documentation for the final sprint.
 
+Validation Tests: Validation Tests.pdf holds the validation testing of our user stories.
+
 Dependencies
 ------------
 1. Python3 to get python3 go to https://www.python.org/downloads/
