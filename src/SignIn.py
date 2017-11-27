@@ -39,7 +39,7 @@ def readUserFile(filename):
 
     return Users
 
-## Python or Tkinter or whatever doesn't check if these frames exist. 
+## Python or Tkinter or whatever doesn't check if these frames exist.
 ## These functions, when called by a button press, act as if they're in the same scope as the button.
 
 def StudentRegistering(event):
@@ -56,22 +56,22 @@ def ProfessorRegistering(event):
     newWindow.attributes('-topmost', 'true')
     ProfessorProfileIndex.signUpIndex(newWindow)
 
-def SignIn(root):
+def SignIn(root, Usrs):
     """ Check that the person signing in has credentials that correspond to a actual user, and setting them as the current user."""
 
-    # Iterate through the list of users from readUser to see if any matches the user input
-    
-    for Usr in readUser():
-        
+    # Iterate through the provided list of users from readUser to see if any matches the user input.
+
+    for Usr in Usrs:
+
         # If any user profile matches the one entered... And the "and True" is needed because "False and False == True".
-        
+
         if (Usr.getEmail() == EmailEntry.get() and Usr.getPassword() == PassEntry.get() and True):
-            
+
             # Log in and transition to a different screen depending on the type of user.
-            
+
             tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
             goToTransitionScreen(Usr)
-            
+
             # hide the sign in menu
             root.withdraw()
             return 0
@@ -81,15 +81,19 @@ def SignIn(root):
 
 def goToTransitionScreen(user):
     """ Display the transistion screen between signing in / registering and User specific functions."""
-    
+
     # Create a new window
     newWindow = Toplevel()
     newWindow.attributes('-topmost', 'true')
     newWindow.title("Options Menu")
     newWindow.geometry("650x400")
 
-    description = """ Please choose from the following:\n
-    Display Assignment: Display all assignments you have created.\n
+    if (user.getType() == 'S'):
+        AssignmentsDescription = "Display Assignment: Display all your assignments.\n"
+    if (user.getType() == 'P'):
+        AssignmentsDescription = "Display Assignment: Display all assignments you have created.\n"
+
+    description = """ Please choose from the following:\n""" + AssignmentsDescription + """
     Add Question: Add a question to the .csv file to be used in an assignment.\n
     My Info: View your account information such as name, email and personnel number.\n
     Sign Out: Log out and return to the sign in page.
@@ -100,9 +104,11 @@ def goToTransitionScreen(user):
     Button(newWindow, text="Display Assignment", command=lambda:callDisplayAllAssignments(newWindow, user)).pack()
 
     # Create a different transition screen based on the type of user
+
     if (user.getType() == 'S'):
         studInfoBut = Button(newWindow, text="My Info", command=lambda:StudentProfileIndex.displayProfile(newWindow, user, studInfoBut))
         studInfoBut.pack()
+
     elif (user.getType() == 'P'):
         addQuestionFormsBtn = Button(newWindow, text="Add Question", command=lambda:callAddQuestionFormulas(newWindow, user))
         addQuestionFormsBtn.pack()
@@ -139,7 +145,7 @@ def callAddQuestionFormulas(newWindow, user):
 
 
 if __name__ == '__main__':
-        
+
     # Create the window
     root = Tk()
     root.title("Sign In")
@@ -173,13 +179,7 @@ if __name__ == '__main__':
     ButtonFrame = Frame(BottomFrame)
     ButtonFrame.pack(side=BOTTOM)
 
-    global Usrs
-
     Usrs = readUser()
-
-    global CurrentUsr
-
-    CurrentUsr = None
 
     # Add a button for users to register as a student
     RegisterButton = Button(ButtonFrame, text="Student Registration")
@@ -192,7 +192,7 @@ if __name__ == '__main__':
     RegisterButton.bind("<Button-1>", ProfessorRegistering)
 
     # Add a sign in button for users to sign in
-    SignInButton = Button(ButtonFrame, text="Sign In", command=lambda:SignIn(root))
+    SignInButton = Button(ButtonFrame, text="Sign In", command=lambda:SignIn(root, Usrs))
 
     if Usrs is not None:
         SignInButton.pack(side=RIGHT)
