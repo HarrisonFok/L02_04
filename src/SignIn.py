@@ -21,12 +21,12 @@ def readUserFile(filename):
 
     Users = []
 
-    # Represents file as List of Lists, first list is of rows, deeper list is of row contents.
-    lines = list(csv.reader(csv_file))
+    # list([open_csv_file]) represents lines in CSV as List of Lists.
+    # First list is of rows, deeper lists are of row contents.
 
-    for l in lines:
+    for l in list(csv.reader(csv_file)):
 
-        # Make the user and email pair
+        # Make the users.
 
         if l[5] == "P":
             Users.append(Professor(l[0], l[1], l[2], l[3], l[4]))
