@@ -71,7 +71,7 @@ def MCQ(user):
         return topic_num.get()
 
     question_window = Tk()
-    question_window.geometry('810x750')
+    question_window.geometry('825x750')
     question_window.attributes('-topmost', 'true')
     question_window.title('Multiple Choice window')
 
@@ -146,11 +146,11 @@ def MCQ(user):
     exit_button = Button(question_window, text='Exit',
                          command = lambda:quit(question_window, user))
 
-    confirm_button.pack(side=LEFT, padx=150)
+    confirm_button.pack(side=LEFT,padx=150)
     exit_button.pack(side=LEFT, padx=50)
 
-    exit_button.place(x=400, y=680)
-    confirm_button.place(x=300, y=680)
+    exit_button.place(x=400, y=700)
+    confirm_button.place(x=300, y=700)
 
     question_window.mainloop()
 
