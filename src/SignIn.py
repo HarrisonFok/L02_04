@@ -120,7 +120,7 @@ def goToTransitionScreen(user):
 def signOut(newWindow):
     # destroy the options menu
     newWindow.destroy()
-    # redisplay the sign in menu
+    # close the application
     sys.exit()
 
 def callDisplayAllAssignments(newWindow, user):
