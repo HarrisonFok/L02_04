@@ -83,7 +83,7 @@ def SignIn(root):
             
             # hide the sign in menu
             root.withdraw()
-            break
+            return 0
 
     # If this runs, then either the email or the password or both don't match any existing user profile
     tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
