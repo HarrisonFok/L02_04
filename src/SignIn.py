@@ -26,6 +26,10 @@ def readUserFile(filename):
 
     for l in list(csv.reader(csv_file)):
 
+        # If there's an empty line in the file, which only happens if it's empty.
+        if l == []:
+            continue
+        
         # Make the users.
 
         if l[5] == "P":
