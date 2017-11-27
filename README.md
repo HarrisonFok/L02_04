@@ -39,6 +39,9 @@ Deliverable 5: Project Validation.pdf and CSCC01 Code Review Debriefing Meeting.
 The CSCC01 Code Review Debriefing Meeting.mp4 is a 5 minute video of our code review debriefing meeting where each team member gave general recommendations to the team on how to improve the quality of the development.
 All code regarding the project will be placed in the src/ folder. The PDF document includes information about the Product Backlog, Sprint Backlog and Verification and Validation of the software for sprints 3 and 4.
 
+Final Deliverable: Final Deliverable.pdf
+This pdf contains the project management documentation for the final sprint.
+
 Dependencies
 ------------
 1. Python3 to get python3 go to https://www.python.org/downloads/
