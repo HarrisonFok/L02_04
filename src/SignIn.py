@@ -71,21 +71,22 @@ def SignIn(root):
 
     # Iterate through the list of users to see if any matches the user input
     for Usr in Usrs:
-        # If any user profile matches the one entered
+        
+        # If any user profile matches the one entered...
+        
         if (Usr.getEmail() == Em and Usr.getPassword() == Pass):
-            authenticated = True
+            
+            # Log in and transition to a different screen depending on the type of user.
+            
+            tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
+            goToTransitionScreen(Usr)
+            
+            # hide the sign in menu
+            root.withdraw()
+            break
 
-            # Log in and transition to a different screen depending on the type of user
-            if (authenticated):
-                tkinter.messagebox.showinfo('Logged In', ('You are now logged in,' + " " + Usr.getName() + "."))
-                goToTransitionScreen(Usr)
-                # hide the sign in menu
-                root.withdraw()
-                break
-
-    # If either the email or the password or both don't match any existing user profile
-    if not (authenticated):
-        tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
+    # If this runs, then either the email or the password or both don't match any existing user profile
+    tkinter.messagebox.showinfo('Invalid Credentials', "Invalid Credentials")
 
 def goToTransitionScreen(user):
     """ Display the transistion screen between signing in / registering and User specific functions."""
