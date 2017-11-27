@@ -42,4 +42,4 @@ class TestRandomalgo(unittest.TestCase):
     # make assignment method i messed up with the question object u may just skip it.
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(exit=False)
