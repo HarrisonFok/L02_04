@@ -16,6 +16,9 @@ HI! - Ka-Kit Jason Cheung here! You can call me Jason.
 
 Info on WeBWorK if anyone wants: https://github.com/openwebwork
 
+This project is a desktop application developed in Python that allows professors to create questions and form assignments for students. Students can then answer these assignments and submit their work for grading. Each question will have random value(s) associated with it so that no single question will be duplicated.
+This project is built as a possible replacement for WebWork.
+
 Repository Structure:
 ---
 Deliverable 1: Team Setup.pdf
